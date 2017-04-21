@@ -43,7 +43,8 @@ public class FinestraDue {
 		JButton provaPrimaCommissione=new JButton("Prova prima commissione");
 		List<Docente> docDisponibiliPrimaCommissione=new ArrayList<>();
 		for(Docente d:docenti){
-			if(d.getDisponibilita().get(1).equals("SI"))
+			for(Integer i:d.getDisponibilita())
+				if(i==2)
 				docDisponibiliPrimaCommissione.add(d);
 		}
 		provaPrimaCommissione.addActionListener(new LogicaPaginaDue(docDisponibiliPrimaCommissione, f));
