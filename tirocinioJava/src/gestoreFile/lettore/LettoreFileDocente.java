@@ -59,7 +59,7 @@ public class LettoreFileDocente extends LettoreFile{
 	//metodo che prende in input un array di stringhe(una linea di un file) e restituisce in output un docente inizializzato 
 
 	private Docente inizializzaDocente(String[] docente){
-		List<String> disponibilita=new ArrayList<>();
+		List<Integer> disponibilita=new ArrayList<>();
 		disponibilita=inserimentoDisponibilita(disponibilita, docente);
 		Docente doc= new Docente(docente[0],selezionaStringa(docente,this.indiceNote+1), disponibilita,selezionaStringa(docente, this.indiceNote));
 		return doc;
@@ -68,9 +68,10 @@ public class LettoreFileDocente extends LettoreFile{
 
 	//metodo per inserire all'interno di un docente le sue disponibilta
 	//da discutere l'implementazione del concetto di disponibilita all'interno della classe docente
-	public List<String> inserimentoDisponibilita(List<String> disp,String[] docente){
+	public List<Integer> inserimentoDisponibilita(List<Integer> disp,String[] docente){
 		for(int i=1;i<this.indiceNote;i++){
-			disp.add(docente[i]);
+			if(docente[i].equals("SI"))
+				disp.add(i);
 		}
 		return disp;
 	}

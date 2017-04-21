@@ -8,14 +8,14 @@ public class Docente{
 	private String nome;
 	private String ruolo;
 	private String note;
-	private List<String> disponibilita;
+	private List<Integer> disponibilita;
 	private List<Studente> laureandi;
 
-	public Docente(String nome,String ruolo,List<String> disponibilita,String note){
+	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
 		this.ruolo=ruolo;
 		this.note=note;
-		this.disponibilita=disponibilita;
+		this.disponibilita=disponibilita2;
 		this.laureandi=new ArrayList<>();
 	}
 
@@ -53,12 +53,12 @@ public class Docente{
 	}
 
 
-	public List<String> getDisponibilita(){
+	public List<Integer> getDisponibilita(){
 		return this.disponibilita;
 	}
 
 
-	public void setDisponibilita(List<String> list){
+	public void setDisponibilita(List<Integer> list){
 		this.disponibilita=list;
 	}
 
