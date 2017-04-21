@@ -1,0 +1,4 @@
+COMMISSARI_TRIENNALI=3
+COMMISSARI_MAGISTRALI=5
+NUMERO_MAX_STUDENTI_PER_COMMISSIONE_TRIENNALE=5//da modificare per chiedere da input il numero di studenti/numero di commissioni da fare
+NUMERO_SUPPLENTI_TRIENNALE=10
