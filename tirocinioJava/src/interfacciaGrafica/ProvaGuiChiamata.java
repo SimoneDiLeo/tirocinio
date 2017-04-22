@@ -6,29 +6,28 @@ import java.util.List;
 import gestoreFile.lettore.LettoreFileDocente;
 import gestoreFile.lettore.LettoreFileStudenti;
 import tirocinioJava.classi.Docente;
+import tirocinioJava.classi.ListaDocenti;
 import tirocinioJava.classi.Studente;
 
 public class ProvaGuiChiamata {
-	private List<Docente> docenti;
+	private ListaDocenti docenti;
 	private List<Studente> studenti;
 
-	public ProvaGuiChiamata(){
-		this.docenti=new ArrayList<>();
-	}
+	
 
 	public void inizializza(String docenti,String studenti){
 
 		LettoreFileDocente lettoreDoc= new LettoreFileDocente("./dati/"+docenti+".csv",";");
-		this.docenti=lettoreDoc.inizializzaElementiDaFile();
+		this.docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
 		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti("./dati/"+ studenti +".csv",";");
 		this.studenti=lettoreStudente.inizializzaElementiDaFile(this.docenti);
 	}
 
-	public List<Docente> getDocenti() {
+	public ListaDocenti getDocenti() {
 		return docenti;
 	}
 
-	public void setDocenti(List<Docente> docenti) {
+	public void setDocenti(ListaDocenti docenti) {
 		this.docenti = docenti;
 	}
 }

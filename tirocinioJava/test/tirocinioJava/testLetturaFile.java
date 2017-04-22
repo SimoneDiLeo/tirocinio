@@ -9,6 +9,7 @@ import gestoreFile.LettoreFile;
 import gestoreFile.lettore.LettoreFileDocente;
 import gestoreFile.lettore.LettoreFileStudenti;
 import tirocinioJava.classi.Docente;
+import tirocinioJava.classi.ListaDocenti;
 import tirocinioJava.classi.Studente;
 
 public class testLetturaFile {
@@ -25,18 +26,14 @@ public class testLetturaFile {
 
 			LettoreFileDocente lettoreDoc= new LettoreFileDocente("./dati/"+ fileDocenti +".csv",";");
 
-			
-			List<Docente> docenti=lettoreDoc.inizializzaElementiDaFile();
+			ListaDocenti docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
 
 			List<Studente> studenti=lettoreStudente.inizializzaElementiDaFile(docenti);
 
 			for(Studente s:studenti){
 				System.out.println(s.getNome());
 			}
-//			for(Docente d: docenti){
-//				System.out.println(d.toString());
-//
-//			}
+			System.out.println(docenti.toString());
 
 		}
 		catch(Exception e){

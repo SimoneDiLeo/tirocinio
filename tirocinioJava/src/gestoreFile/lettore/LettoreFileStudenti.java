@@ -9,6 +9,7 @@ import java.util.List;
 
 import gestoreFile.LettoreFile;
 import tirocinioJava.classi.Docente;
+import tirocinioJava.classi.ListaDocenti;
 import tirocinioJava.classi.Studente;
 
 public class LettoreFileStudenti extends LettoreFile{
@@ -36,7 +37,7 @@ public class LettoreFileStudenti extends LettoreFile{
 		return trovato;
 	}
 	//metodo per inizializzare una lista s di input di studenti con dei dati letti da un file e associandogli i relatori e correlatori in base alla lista docenti di input
-	public List<Studente> inizializzaElementiDaFile(List<Docente> docenti) {
+	public List<Studente> inizializzaElementiDaFile(ListaDocenti docenti) {
 		List<Studente> studenti=new ArrayList<>();
 		try {
 			boolean trovato=false;
@@ -73,7 +74,7 @@ public class LettoreFileStudenti extends LettoreFile{
 	}
 
 	//metodo che dato un array di stringhe una lista docenti e un booleano(che serve solo in caso di cognome(utile?)) da un output un oggetto studente inizializzato con i dati dell'array
-	private Studente inizializzaStudente(String[] lineaFile, List<Docente> docenti,boolean trovato) throws Exception {
+	private Studente inizializzaStudente(String[] lineaFile, ListaDocenti docenti,boolean trovato) throws Exception {
 		String nome="";
 		if(trovato)
 			nome = lineaFile[this.indiceNome]+ " " + lineaFile[this.indiceCognome];
@@ -84,9 +85,9 @@ public class LettoreFileStudenti extends LettoreFile{
 		String note=lineaFile[this.indiceNote];
 		String argomento=lineaFile[this.indiceArgomento];
 		String nomeRelatore=lineaFile[this.indiceRelatore];
-		Docente relatore = trovaDocenteDaNome(nomeRelatore.toUpperCase(),docenti);
+		Docente relatore = docenti.trovaDocenteDaNome(nomeRelatore.toUpperCase());
 		String nomeCorrelatore=lineaFile[this.indiceCorelatore];
-		Docente correlatore = trovaDocenteDaNome(nomeCorrelatore.toUpperCase(),docenti);
+		Docente correlatore = docenti.trovaDocenteDaNome(nomeCorrelatore.toUpperCase());
 		Studente stud=new Studente(Integer.parseInt(lineaFile[0]),nome,matricola,relatore,correlatore,this.tipoLaurea,argomento,note);
 		relatore.addLaureando(stud);
 		return stud;

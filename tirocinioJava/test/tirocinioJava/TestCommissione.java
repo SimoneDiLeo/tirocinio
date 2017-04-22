@@ -14,13 +14,14 @@ import gestoreFile.lettore.LettoreFileStudenti;
 import tirocinioJava.classi.BozzaAlgoritmo;
 import tirocinioJava.classi.Commissione;
 import tirocinioJava.classi.Docente;
+import tirocinioJava.classi.ListaDocenti;
 import tirocinioJava.classi.Studente;
 
 public class TestCommissione {
 
 	public TestCommissione() throws IOException{
 
-		List<Docente> docenti= inizializzazioneDocenti();
+		ListaDocenti docenti= new ListaDocenti(inizializzazioneDocenti());
 		List<Studente> studenti= inizializzazioneStudenti(docenti);
 		Properties prop = new Properties(); 
 		URL url = this.getClass().getClassLoader().getSystemResource("properties");
@@ -64,7 +65,7 @@ public class TestCommissione {
 		}
 	}
 
-	private List<Studente> inizializzazioneStudenti(List<Docente> docenti) {
+	private List<Studente> inizializzazioneStudenti(ListaDocenti docenti) {
 		System.out.println("inserire nome file degli studenti");
 		Scanner input= new Scanner(System.in);
 		String fileStudenti=input.nextLine();

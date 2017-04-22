@@ -11,27 +11,17 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 public class BozzaAlgoritmo {
 	private Commissione commissione;
 	private Docente commissario;
-	private List<Docente> commissariDisponibili;
+	private ListaDocenti commissariDisponibili;
 	private List<Docente> commissariPotenziali;
 	private List<Studente> laureandi;
 	private List<Docente> sostituti;
 
-	public BozzaAlgoritmo(Commissione commissioneVuota,List<Docente>docentiDisponibili){
+	public BozzaAlgoritmo(Commissione commissioneVuota,ListaDocenti docenti){
 		this.commissione=commissioneVuota;
-		this.commissariDisponibili=docentiDisponibili;
+		this.commissariDisponibili=docenti;
 	}
 
-	//metodo gia usato in lettoreFileStudenti 
-	//molto probabilemnte dovra essere fatto il refactoring del metodo
-	private Docente trovaDocenteDaNome(String nomeDocente, List<Docente> docenti) {
-		Docente trovato = null;
-		for(Docente d:docenti){
-			if(d.getNome().equals(nomeDocente))
-				trovato=d;
-		}
 
-		return trovato;
-	}
 
 	public void riempiCommissione(){
 		System.out.println("questi sono i commissari disponibili");
@@ -39,7 +29,7 @@ public class BozzaAlgoritmo {
 		System.out.println("seleziona un presidente");
 		Scanner input= new Scanner(System.in);
 		String nomePresidente= input.nextLine();
-		Docente presidente=trovaDocenteDaNome(nomePresidente.toUpperCase(), this.commissariDisponibili);
+		Docente presidente=this.commissariDisponibili.trovaDocenteDaNome(nomePresidente.toUpperCase());
 		this.commissione.inserisciPresidente(presidente);
 		if(this.commissione.getTipoLaurea().toUpperCase().contains("TRIENNALE"))
 			this.commissione.inserisciGruppoStudenti(presidente.getLaureandiTriennali());

@@ -14,6 +14,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import tirocinioJava.classi.Docente;
+import tirocinioJava.classi.ListaDocenti;
 
 final class LogicaPaginaUno implements ActionListener {
 	private final JFrame fFrame;
@@ -33,15 +34,15 @@ final class LogicaPaginaUno implements ActionListener {
 		ProvaGuiChiamata call=new ProvaGuiChiamata();
 
 		call.inizializza(nomeFileDocenti,nomeFileStudenti);
-		List<Docente> docenti=call.getDocenti();
+		ListaDocenti docenti=call.getDocenti();
 		List<JLabel> nomiDocenti=new ArrayList<>();
-		for(Docente d:docenti){ 	
+		for(Docente d:docenti.getDocenti()){ 	
 			JLabel nomeDocente = new JLabel(d.getNome()+"\n numero laureandi Triennali : "+d.getNumeroLaureandiTriennali() +"\n numero laureandi Magistrali : " + d.getNumeroLaureandiMagistrali() + "\n Disponibilità : " +d.getDisponibilita());
 			nomiDocenti.add(nomeDocente);
 			}
 
 		fFrame.dispose();
-		new FinestraDue(nomiDocenti,docenti);
+		new FinestraDue(nomiDocenti,docenti.getDocenti());
 	}
 
 }
