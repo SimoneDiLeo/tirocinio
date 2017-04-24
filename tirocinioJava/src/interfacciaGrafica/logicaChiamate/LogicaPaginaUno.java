@@ -1,4 +1,4 @@
-package interfacciaGrafica;
+package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,15 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import interfacciaGrafica.FinestraDue;
 import tirocinioJava.classi.Docente;
 import tirocinioJava.classi.ListaDocenti;
 
-final class LogicaPaginaUno implements ActionListener {
+public final class LogicaPaginaUno implements ActionListener {
 	private final JFrame fFrame;
 	private JTextField docenti;
 	private JTextField studenti;
 	
-	LogicaPaginaUno(final JFrame aFrame,JTextField testoInputDocenti,JTextField testoInputStudenti) {
+	public LogicaPaginaUno(final JFrame aFrame,JTextField testoInputDocenti,JTextField testoInputStudenti){
 		fFrame = aFrame;
 		docenti=testoInputDocenti;
 		studenti=testoInputStudenti;
@@ -32,17 +33,16 @@ final class LogicaPaginaUno implements ActionListener {
 		String nomeFileDocenti=this.docenti.getText();
 		String nomeFileStudenti=this.studenti.getText();
 		ProvaGuiChiamata call=new ProvaGuiChiamata();
-
 		call.inizializza(nomeFileDocenti,nomeFileStudenti);
 		ListaDocenti docenti=call.getDocenti();
 		List<JLabel> nomiDocenti=new ArrayList<>();
 		for(Docente d:docenti.getDocenti()){ 	
-			JLabel nomeDocente = new JLabel(d.getNome()+"\n numero laureandi Triennali : "+d.getNumeroLaureandiTriennali() +"\n numero laureandi Magistrali : " + d.getNumeroLaureandiMagistrali() + "\n Disponibilità : " +d.getDisponibilita());
+			JLabel nomeDocente = new JLabel(d.getNome()+" numero laureandi Triennali : "+d.getNumeroLaureandiTriennali() +" numero laureandi Magistrali : " + d.getNumeroLaureandiMagistrali() + " Disponibilità : " +d.getDisponibilita());
 			nomiDocenti.add(nomeDocente);
 			}
 
 		fFrame.dispose();
-		new FinestraDue(nomiDocenti,docenti.getDocenti());
+		new FinestraDue(nomiDocenti,docenti);
 	}
 
 }

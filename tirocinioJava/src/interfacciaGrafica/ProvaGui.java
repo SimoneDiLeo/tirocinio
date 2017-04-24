@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 
 import javax.swing.JTextField;
 
+import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
 import tirocinioJava.classi.Docente;
 
 
@@ -46,6 +47,7 @@ public final class ProvaGui {
 		nomeFileDocenti.setSize(100, 50);
 		JTextField nomeFileStudenti = new JTextField ();
 		nomeFileStudenti.setSize(100, 50);
+		
 
 		final JButton okButton = new JButton("Start");
 		Box box = Box.createVerticalBox(); 

@@ -1,4 +1,4 @@
-package interfacciaGrafica;
+package interfacciaGrafica.logicaChiamate;
 
 import java.util.ArrayList;
 import java.util.List;
