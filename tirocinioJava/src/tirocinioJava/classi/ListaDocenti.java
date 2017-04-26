@@ -34,6 +34,15 @@ public List<Docente> docentiConDisponibilita(Integer i){
 
 }
 
+public void inizializzaRuoloDocenti(List<Personale> personale){
+	for(Personale p:personale){
+		for(Docente d: this.docenti){
+			if(p.getCognome().toUpperCase().contains((d.getNome())))
+					d.setRuolo(p.getRuolo());
+		}
+	}
+}
+
 
 public List<Docente> getDocenti() {
 	return docenti;

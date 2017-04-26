@@ -1,16 +1,19 @@
 package tirocinioJava.classi;
 
 public class Controrelatore {
+	private String nome;
     private String disponibilita;
-    private String gruppoRicerca;
     private String anzianita;
+    private String gruppoRic;
     
     
     
-    public Controrelatore(String dis,String grup,String anz){
+    public Controrelatore(String nome,String dis ,String anz,String gruppoRic){
+    	this.setNome(nome);
     	this.setDisponibilita(dis);
-    	this.setGruppoRicerca(grup);
+    	
     	this.setAnzianita(anz);
+    	this.setGruppoRic(gruppoRic);
     	
     }
 
@@ -28,16 +31,6 @@ public class Controrelatore {
 
 
 
-	public String getGruppoRicerca() {
-		return this.gruppoRicerca;
-	}
-
-
-
-	public void setGruppoRicerca(String gruppoRicerca) {
-		this.gruppoRicerca = gruppoRicerca;
-	}
-
 
 
 	public String getAnzianita() {
@@ -53,20 +46,44 @@ public class Controrelatore {
     
     @Override
     public String toString(){
-    	return "disponibilità: "+this.getDisponibilita() + " gruppo ricerca: "+ this.getGruppoRicerca()+ " anzianità: "+ this.getAnzianita();
+    	return "[ Nome: "+ this.getNome()+" "+ "disponibilità: "+this.getDisponibilita() + " anzianità: "+ this.getAnzianita()+" gruppo:"+this.getGruppoRic()+"]" ;
     }
     
     @Override
     public boolean equals(Object o){
     	Controrelatore c=(Controrelatore) o;
-    	return this.getDisponibilita().equals(c.getDisponibilita()) && this.getGruppoRicerca().equals(c.getGruppoRicerca()) && this.getAnzianita().equals(c.getAnzianita());
+    	return this.getNome().equals(c.getNome()) && this.getDisponibilita().equals(c.getDisponibilita())  && this.getAnzianita().equals(c.getAnzianita());
     	
     }
     
     @Override
     public int hashCode(){
-    	return this.getDisponibilita().hashCode()+this.getGruppoRicerca().hashCode()+this.getAnzianita().hashCode();
+    	return this.getDisponibilita().hashCode()+this.getNome().hashCode()+this.getAnzianita().hashCode();
     }
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getGruppoRic() {
+		return gruppoRic;
+	}
+
+
+
+	public void setGruppoRic(String gruppoRic) {
+		this.gruppoRic = gruppoRic;
+	}
     
    
 }

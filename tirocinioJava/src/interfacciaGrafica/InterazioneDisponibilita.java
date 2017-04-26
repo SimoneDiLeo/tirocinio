@@ -17,12 +17,14 @@ public class InterazioneDisponibilita implements ActionListener {
 	private CommissioneGrafica cg;
 	private ListaDocenti d;
 	private DefaultComboBoxModel comm1;
+	private DefaultComboBoxModel comm2;
 
-	public InterazioneDisponibilita(JComboBox comp, CommissioneGrafica cgm,ListaDocenti docenti, DefaultComboBoxModel model){
+	public InterazioneDisponibilita(JComboBox comp, CommissioneGrafica cgm,ListaDocenti docenti, DefaultComboBoxModel model, DefaultComboBoxModel model2){
 		this.cg=cgm;
 		this.disp=comp;
 		this.d=docenti;
 		this.comm1=model;
+		this.comm2=model2;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -32,8 +34,10 @@ public class InterazioneDisponibilita implements ActionListener {
 		for(Docente d : this.cg.getCommissari1()){
 			this.comm1.addElement(d);
 		}
-//		this.comm1= new JComboBox(this.cg.getCommissari1().toArray()); 
-		
+		this.comm2.removeAllElements();
+		for(Docente d: this.cg.getCommissari2()){
+			this.comm2.addElement(d);
+		}
 			
 	}
 

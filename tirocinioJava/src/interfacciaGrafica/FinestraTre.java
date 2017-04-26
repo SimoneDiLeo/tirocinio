@@ -35,12 +35,13 @@ public class FinestraTre {
 		Box box = Box.createVerticalBox();
 		box.add(new JLabel("Commissioni Magistrali"));
 		for(int i=0;i<numeroMagistrali;i++){
-			CommissioneGrafica cgm=new CommissioneGrafica(presidentiPotenziali.get(1), docenti,"MAGISTRALE");
+			CommissioneGrafica cgm=new CommissioneGrafica(presidentiPotenziali.get(i), docenti,"MAGISTRALE");
 			box.add(new JLabel(cgm.getPresidente().getNome()));
 			JComboBox commissari1 = new JComboBox(cgm.getCommissari1().toArray());
 			DefaultComboBoxModel model = (DefaultComboBoxModel) commissari1.getModel();
 			box.add(commissari1);
 			JComboBox commissari2 = new JComboBox(cgm.getCommissari2().toArray());
+			DefaultComboBoxModel model2 = (DefaultComboBoxModel) commissari2.getModel();
 			box.add(commissari2);
 			box.add(new JLabel("Laureandi: "));
 //			Box laur = Box.createVerticalBox();
@@ -49,10 +50,11 @@ public class FinestraTre {
 				modLaureandi.addElement(s);
 			JList listaLaureandi= new JList(modLaureandi);
 			box.add(listaLaureandi);
-			commissari1.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm));
+			commissari1.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari2));
+			commissari2.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari1));
 			JComboBox comp = new JComboBox(cgm.getSlotDisponibilita().toArray());
 			box.add(comp);
-			comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,model));
+			comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,model,model2));
 
 		}
 
@@ -68,7 +70,8 @@ public class FinestraTre {
 			box.add(commissari2);
 			JComboBox disponibilita = new JComboBox(cgm.getSlotDisponibilita().toArray());
 			box.add(disponibilita);
-			disponibilita.addActionListener(new InterazioneDisponibilita(disponibilita,cgm,docenti,model));
+			DefaultComboBoxModel model2= (DefaultComboBoxModel) commissari2.getModel();
+			disponibilita.addActionListener(new InterazioneDisponibilita(disponibilita,cgm,docenti,model,model2));
 		}
 
 
