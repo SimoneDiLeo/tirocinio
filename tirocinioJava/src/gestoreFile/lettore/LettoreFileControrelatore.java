@@ -41,7 +41,7 @@ public class LettoreFileControrelatore extends LettoreFile{
 
 	//metodo che prende in input una riga del file letta dal metodo sotto,cerca il gruppo del nome relativo a quella riga
 
-	public String cercaGruppoRicerca(String[] riga){
+	public String cercaGruppoRicerca(String[] riga) throws IOException{
 		String cognome=riga[1];
 		Personale per=null;
 		List<Personale> listaPer=new ArrayList<>();

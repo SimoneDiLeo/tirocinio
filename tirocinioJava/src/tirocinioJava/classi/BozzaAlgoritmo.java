@@ -22,7 +22,7 @@ public class BozzaAlgoritmo {
 
 		if(ruolo.equals("ORD"))
 			if(presidentiPotenziali.size()!=numeroCommissioni){
-				presidentiPotenziali.addAll(trovaPresidenti(numeroCommissioni,docenti,"ASS"));
+				presidentiPotenziali.addAll(trovaPresidenti(numeroCommissioni,docenti,"PA"));
 			}
 
 		return presidentiPotenziali;

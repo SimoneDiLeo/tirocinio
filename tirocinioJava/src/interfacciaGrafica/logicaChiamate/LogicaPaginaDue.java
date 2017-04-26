@@ -45,7 +45,8 @@ public class LogicaPaginaDue implements ActionListener{
 //		
 //		JComboBox disponibili = new JComboBox<>(nomi);
 		BozzaAlgoritmo b=new BozzaAlgoritmo();
-		List<Docente>potCommissari=b.trovaPresidenti(numeroMagistrali+numeroTriennali, docenti, "ORD");
+		List<Docente>potCommissari=new ArrayList<>();
+		potCommissari=b.trovaPresidenti(numeroMagistrali+numeroTriennali, docenti, "PO");
 		this.sFrame.dispose();
 		new FinestraTre(docenti,potCommissari,numeroTriennali,numeroMagistrali);
 	}

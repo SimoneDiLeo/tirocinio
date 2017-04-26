@@ -1,22 +1,14 @@
 package interfacciaGrafica;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-
 import javax.swing.JTextField;
-
 import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
-import tirocinioJava.classi.Docente;
+
 
 
 public final class ProvaGui {
@@ -30,7 +22,7 @@ public final class ProvaGui {
 
 	private void buildAndDisplayGui() {
 
-		final JFrame frame = new JFrame("Prova");
+		final JFrame frame = new JFrame("Prima Schermata");
 
 		buildContent(frame);
 		frame.setMinimumSize(new Dimension(300, 180));
@@ -47,6 +39,10 @@ public final class ProvaGui {
 		nomeFileDocenti.setSize(100, 50);
 		JTextField nomeFileStudenti = new JTextField ();
 		nomeFileStudenti.setSize(100, 50);
+		JTextField nomeFilePersonale = new JTextField ();
+		nomeFileStudenti.setSize(100, 50);
+		JTextField nomeFileControrelatori = new JTextField ();
+		nomeFileStudenti.setSize(100, 50);
 		
 
 		final JButton okButton = new JButton("Start");
@@ -55,9 +51,13 @@ public final class ProvaGui {
 		box.add(nomeFileDocenti);
 		box.add(new JLabel("Inserici in nome del file degli studenti"));
 		box.add(nomeFileStudenti);
+		box.add(new JLabel("Inserici in nome del file del personale"));
+		box.add(nomeFilePersonale);
+		box.add(new JLabel("Inserici in nome del file dei controrelatori"));
+		box.add(nomeFileControrelatori);
 		box.add(okButton);
 		panel.add(box);
-		okButton.addActionListener(new LogicaPaginaUno(aFrame,nomeFileDocenti,nomeFileStudenti));
+		okButton.addActionListener(new LogicaPaginaUno(aFrame,nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori));
 		aFrame.getContentPane().add(panel);
 	}
 
