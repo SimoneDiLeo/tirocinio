@@ -1,4 +1,4 @@
-package tirocinioJava.classi;
+package classi;
 
 public class Controrelatore {
 	private String nome;

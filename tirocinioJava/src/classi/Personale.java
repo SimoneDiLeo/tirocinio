@@ -1,4 +1,4 @@
-package tirocinioJava.classi;
+package classi;
 
 import java.util.List;
 

@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import classi.Docente;
+import classi.ListaDocenti;
+import classi.Studente;
 import gestoreFile.LettoreFile;
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
-import tirocinioJava.classi.Studente;
 
 public class LettoreFileStudenti extends LettoreFile{
 	String tipoLaurea;

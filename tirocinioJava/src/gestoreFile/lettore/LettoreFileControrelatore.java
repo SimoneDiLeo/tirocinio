@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import classi.Controrelatore;
+import classi.Personale;
 import gestoreFile.LettoreFile;
-import tirocinioJava.classi.Controrelatore;
-
-import tirocinioJava.classi.Personale;
 
 public class LettoreFileControrelatore extends LettoreFile{
 	private boolean puoiCreare=false;

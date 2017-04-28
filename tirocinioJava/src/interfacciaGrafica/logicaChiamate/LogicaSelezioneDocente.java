@@ -1,4 +1,4 @@
-package interfacciaGrafica;
+package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +8,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.Studente;
+import classi.CommissioneGrafica;
+import classi.Docente;
+import classi.Studente;
 
 public class LogicaSelezioneDocente implements ActionListener {
 	private DefaultListModel modelloListaLaureandi;

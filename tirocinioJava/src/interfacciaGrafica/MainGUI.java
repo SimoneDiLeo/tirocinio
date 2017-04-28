@@ -11,11 +11,11 @@ import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
 
 
 
-public final class ProvaGui {
+public final class MainGUI {
 
 
 	public static void main(final String[] args) {
-		final ProvaGui app = new ProvaGui();
+		final MainGUI app = new MainGUI();
 
 		app.buildAndDisplayGui();
 	}
@@ -43,8 +43,6 @@ public final class ProvaGui {
 		nomeFileStudenti.setSize(100, 50);
 		JTextField nomeFileControrelatori = new JTextField ();
 		nomeFileStudenti.setSize(100, 50);
-		
-
 		final JButton okButton = new JButton("Start");
 		Box box = Box.createVerticalBox(); 
 		box.add(new JLabel("Inserici in nome del file dei docenti"));

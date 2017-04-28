@@ -1,4 +1,4 @@
-package tirocinioJava.classi;
+package classi;
 
 
 import java.util.Comparator;
@@ -26,10 +26,11 @@ public class Studente {
 	}
 
 	//costruttore per test
-	public Studente(String matricola, String nome,Docente relatore){
+	public Studente(String matricola, String nome,Docente relatore, String tipoLaurea){
 		this.matricola=matricola;
 		this.nome=nome;
 		this.relatore=relatore;
+		this.tipoLaurea=tipoLaurea;
 	}
 
 	public int getNumero() {

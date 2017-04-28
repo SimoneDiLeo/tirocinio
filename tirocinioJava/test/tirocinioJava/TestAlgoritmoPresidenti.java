@@ -3,12 +3,12 @@ package tirocinioJava;
 import java.util.List;
 import java.util.Scanner;
 
+import classi.BozzaAlgoritmo;
+import classi.Docente;
+import classi.ListaDocenti;
+import classi.Studente;
 import gestoreFile.lettore.LettoreFileDocente;
 import gestoreFile.lettore.LettoreFileStudenti;
-import tirocinioJava.classi.BozzaAlgoritmo;
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
-import tirocinioJava.classi.Studente;
 
 public class TestAlgoritmoPresidenti {
 	public static void main(String[] args){
@@ -28,7 +28,7 @@ public class TestAlgoritmoPresidenti {
 
 			List<Studente> studenti=lettoreStudente.inizializzaElementiDaFile(docenti);
 			BozzaAlgoritmo bz = new BozzaAlgoritmo();
-			for(Docente d:bz.trovaPresidenti(1, docenti, "ORD")){
+			for(Docente d:bz.trovaTuttiPossibiliPresidenti(docenti, "ORD")){
 				System.out.println(d);
 			}
 

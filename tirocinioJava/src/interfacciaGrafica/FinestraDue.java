@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import classi.Docente;
+import classi.ListaDocenti;
 import interfacciaGrafica.logicaChiamate.LogicaPaginaDue;
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
 
 public class FinestraDue {
 	private JFrame f = new JFrame("Second");

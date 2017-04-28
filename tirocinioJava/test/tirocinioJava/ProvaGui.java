@@ -20,8 +20,8 @@ import javax.swing.JRadioButton;
 
 import javax.swing.JTextField;
 
+import classi.Docente;
 import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
-import tirocinioJava.classi.Docente;
 
 
 public final class ProvaGui {

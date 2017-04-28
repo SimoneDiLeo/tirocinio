@@ -1,11 +1,7 @@
-package interfacciaGrafica;
+package classi;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
-import tirocinioJava.classi.Studente;
 
 
 public class CommissioneGrafica {

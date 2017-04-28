@@ -1,4 +1,4 @@
-package interfacciaGrafica;
+package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
+import classi.CommissioneGrafica;
+import classi.Docente;
+import classi.ListaDocenti;
 
 public class InterazioneDisponibilita implements ActionListener {
 	private JComboBox disp;

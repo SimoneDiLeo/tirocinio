@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import classi.Docente;
 import gestoreFile.LettoreFile;
-import tirocinioJava.classi.Docente;
 
 public class LettoreFileDocente extends LettoreFile{
 	private boolean puoiCreare=false;

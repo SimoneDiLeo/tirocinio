@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import classi.Personale;
 import gestoreFile.LettoreFile;
-import tirocinioJava.classi.Personale;
 
 public class LettoreFilePersonale extends LettoreFile{
 

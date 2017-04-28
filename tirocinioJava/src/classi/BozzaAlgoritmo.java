@@ -1,4 +1,4 @@
-package tirocinioJava.classi;
+package classi;
 
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class BozzaAlgoritmo {
 	}
 
 
-	public List<Docente> trovaPresidenti(int numeroCommissioni,ListaDocenti docenti,String ruolo){
+	public List<Docente> trovaTuttiPossibiliPresidenti(ListaDocenti docenti,String ruolo){
 		List<Docente> presidentiPotenziali=new ArrayList<>();
 		for(Docente d:docenti.getDocenti()){
 			if(d.getRuolo().toUpperCase().equals(ruolo)){
@@ -20,12 +20,14 @@ public class BozzaAlgoritmo {
 			}
 		}
 
-		if(ruolo.equals("ORD"))
-			if(presidentiPotenziali.size()!=numeroCommissioni){
-				presidentiPotenziali.addAll(trovaPresidenti(numeroCommissioni,docenti,"PA"));
-			}
-
+		if(ruolo.equals("PO"))
+			presidentiPotenziali.addAll(trovaTuttiPossibiliPresidenti(docenti,"PA"));
 		return presidentiPotenziali;
 
 	}
+	
+	public Docente trovaPossibilePresidente(List<Docente> presPot){
+		return presPot.get(0);
+	}
+	
 }

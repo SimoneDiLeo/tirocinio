@@ -13,10 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import classi.Docente;
+import classi.ListaDocenti;
 import interfacciaGrafica.FinestraDue;
 import interfacciaGrafica.FinestraErrore;
-import tirocinioJava.classi.Docente;
-import tirocinioJava.classi.ListaDocenti;
 
 public final class LogicaPaginaUno implements ActionListener {
 	private final JFrame fFrame;
@@ -39,7 +39,7 @@ public final class LogicaPaginaUno implements ActionListener {
 		String nomeFileStudenti=this.studenti.getText();
 		String nomeFilePersonale=this.personale.getText();
 		String nomeFileControrelatori=this.controrelatori.getText();
-		ProvaGuiChiamata call=new ProvaGuiChiamata();
+		CaricatoreTuttiFile call=new CaricatoreTuttiFile();
 		boolean tuttoBene=true;
 		try{
 			call.inizializza(nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori);
