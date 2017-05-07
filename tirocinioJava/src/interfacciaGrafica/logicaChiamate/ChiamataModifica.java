@@ -2,6 +2,7 @@ package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -15,16 +16,16 @@ import interfacciaGrafica.FinestraTre;
 public class ChiamataModifica implements ActionListener {
 
 	private JFrame f;
-	private List<Docente> presidentiPotenziali;
+	private Docente[] presidentiPotenziali;
 	private ListaDocenti docenti;
 	private int numTri;
 	private int numMag;
 
 
-	public ChiamataModifica(JFrame f, ListaDocenti docenti, List<Docente> presidentiPotenziali, int numTri,	int numMag) {
+	public ChiamataModifica(JFrame f, ListaDocenti docenti, Docente[] presidentiPotenziali2, int numTri,	int numMag) {
 		this.f=f;
 		this.docenti=docenti;
-		this.presidentiPotenziali=presidentiPotenziali;
+		presidentiPotenziali=presidentiPotenziali2;
 		this.numTri=numTri;
 		this.numMag=numMag;
 	}
@@ -32,10 +33,20 @@ public class ChiamataModifica implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(this.presidentiPotenziali.size()>=this.numMag+this.numTri)
-			new FinestraTre(this.docenti,this.presidentiPotenziali,numMag, numTri);
-		else
-			new FinestraErrore();
+		//		if(this.presidentiPotenziali.size()>=this.numMag+this.numTri){
+		List<Docente> presidentiConfermati = new ArrayList<>();
+		for(Docente d :this.presidentiPotenziali){
+			if(d!=null){
+				System.out.println(d.toString());
+				presidentiConfermati.add(d);
+			}
+		}
+
+		new FinestraTre(this.docenti,presidentiConfermati,numMag, numTri);
+		this.f.dispose();
+		//		}
+		//		else
+		//			new FinestraErrore();
 	}
 
 }

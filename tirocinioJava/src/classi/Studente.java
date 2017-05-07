@@ -10,7 +10,7 @@ public class Studente {
 	private String tipoLaurea;
 	private Docente relatore;
 	private Docente correlatore;
-	private Docente controrelatore;
+	private Controrelatore controrelatore;
 	private String note;
 	private String argomentoTirocinio;
 
@@ -69,10 +69,10 @@ public class Studente {
 	public void setCorrelatore(Docente correlatore) {
 		this.correlatore = correlatore;
 	}
-	public Docente getControrelatore() {
+	public Controrelatore getControrelatore() {
 		return controrelatore;
 	}
-	public void setControrelatore(Docente controrelatore) {
+	public void setControrelatore(Controrelatore controrelatore) {
 		this.controrelatore = controrelatore;
 	}
 	public String getNote() {
@@ -91,13 +91,13 @@ public class Studente {
 
 	@Override
 	public String toString() {
-		String nomeControrelatore="";
-		if(this.controrelatore!=null)
-			nomeControrelatore=this.controrelatore.getNome();
+		String nomeCorrelatore="";
+		if(this.correlatore!=null)
+			nomeCorrelatore=this.correlatore.getNome();
 		return "Studente [numero=" + numero + ", nome= " + nome + ", matricola=" + matricola + ", tipoLaurea="
 		+ tipoLaurea + ", relatore= " + relatore.getNome() + ", correlatore=" +
-		nomeControrelatore + ", controrelatore="
-		+ controrelatore + ", note=" + note + ", argomentoTirocinio=\n" + argomentoTirocinio + "]";
+		nomeCorrelatore + ", controrelatore="
+		+ this.controrelatore.getNome() + ", note=" + note + ", argomentoTirocinio=\n" + argomentoTirocinio + "]";
 	}
 
 	@Override

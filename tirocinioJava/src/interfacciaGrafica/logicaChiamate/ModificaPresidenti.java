@@ -39,7 +39,7 @@ public class ModificaPresidenti implements ActionListener {
 		}
 		
 		List<JComboBox> listaTriennali=new ArrayList<>();
-		for(int i = 0;i<this.numMag;i++){
+		for(int i = 0;i<this.numTri;i++){
 			listaTriennali.add(new JComboBox(this.presidenti.toArray()));
 		}
 		

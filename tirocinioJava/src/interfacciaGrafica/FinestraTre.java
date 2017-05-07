@@ -2,7 +2,10 @@ package interfacciaGrafica;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.Box;
@@ -18,6 +21,7 @@ import javax.swing.JScrollPane;
 
 import classi.CommissioneGrafica;
 import classi.Docente;
+import classi.ListaCommissioni;
 import classi.ListaDocenti;
 import classi.Studente;
 import interfacciaGrafica.logicaChiamate.InterazioneDisponibilita;
@@ -28,21 +32,15 @@ public class FinestraTre {
 	private JPanel p = new JPanel();
 
 	//costruttore
-	public FinestraTre(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroTriennali, int numeroMagistrali){
+	public FinestraTre(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroMagistrali , int numeroTriennali){
 
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
 		JScrollPane jScrollPane = new JScrollPane(this.p);
 		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		Properties prop = new Properties(); 
-		URL url = this.getClass().getClassLoader().getSystemResource("properties");
-		try {
-			prop.load(url.openStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+
 		//finire di modificare parametrizzandolo nel numero di commissari e laureandi(piu avanti)
 		this.f.getContentPane().add(jScrollPane);
 
@@ -51,21 +49,33 @@ public class FinestraTre {
 			new FinestraErrore();
 		else {
 			box.add(new JLabel("Commissioni Magistrali"));
-			for(int i=0;i<numeroMagistrali;i++){
-				CommissioneGrafica cgm=new CommissioneGrafica(presidentiPotenziali.get(i), docenti,"MAGISTRALE");
+			ListaCommissioni listaCommissioni = new ListaCommissioni(numeroMagistrali, numeroTriennali);
+			if(numeroMagistrali!=0)
+				listaCommissioni.inizializzaPresidentiMagistrali(presidentiPotenziali);
+			if(numeroTriennali!=0)
+				listaCommissioni.inizializzaPresidentiTriennali(presidentiPotenziali);
+			for(CommissioneGrafica cgm:listaCommissioni.getCommMag()){
 				box.add(new JLabel(cgm.getPresidente().getNome()));
-				JComboBox[] commissari= new JComboBox[Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI"))];
 				DefaultListModel modLaureandi= new DefaultListModel<>();
 				for(Studente s:cgm.getLaureandi())
 					modLaureandi.addElement(s);
 				JList listaLaureandi= new JList(modLaureandi);
-				JComboBox commissari1 = new JComboBox(cgm.getCommissari1().toArray());
-				DefaultComboBoxModel model = (DefaultComboBoxModel) commissari1.getModel();
-				box.add(commissari1);
-				JComboBox commissari2 = new JComboBox(cgm.getCommissari2().toArray());
-				DefaultComboBoxModel model2 = (DefaultComboBoxModel) commissari2.getModel();
-				box.add(commissari2);
-
+				Map<JComboBox, DefaultComboBoxModel> modelliBox=new HashMap<>();
+				cgm.aggiornaCommissione(cgm.getSlotCorrente(), docenti);
+				for(ArrayList<Docente> lista:cgm.getCommissari()){
+					JComboBox commissari = new JComboBox(lista.toArray());
+					commissari.setSelectedIndex(-1);
+					modelliBox.put(commissari,(DefaultComboBoxModel) commissari.getModel());
+					commissari.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm.getTipoCommissione()));
+					box.add(commissari);
+				}
+				box.add(new JLabel("Laureandi: "));
+				box.add(listaLaureandi);
+				JComboBox comp = new JComboBox(cgm.getSlotDisponibilita().toArray());
+				comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,modelliBox));
+				box.add(comp);
+				//to do== aggiungere il listener ai comboBox per aggiornare gli studenti e i professori
+				//to do == aggiornare la lista iniziale con i professori scelti in automatico
 				//for(int j=0;j<(Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")));j++){
 				//					commissari[i]= new JComboBox(cgm.getCommissari1().toArray());
 				//					DefaultComboBoxModel model = (DefaultComboBoxModel) commissari[i].getModel();
@@ -73,32 +83,52 @@ public class FinestraTre {
 				//				}
 				//				for(JComboBox jc : commissari)
 				//					box.add(jc);
-				box.add(new JLabel("Laureandi: "));
-				//			Box laur = Box.createVerticalBox();
+				//				
+				//			
 
-				box.add(listaLaureandi);
-				commissari1.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari2));
-				commissari2.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari1));
-				JComboBox comp = new JComboBox(cgm.getSlotDisponibilita().toArray());
-				box.add(comp);
-				comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,model,model2));
+				//				box.add(listaLaureandi);
+				//				commissari1.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari2));
+				//				commissari2.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm,commissari1));
 
+				//
+				//
 			}
 
 			box.add(new JLabel("Commissioni Triennali"));
 
-			for(int i=numeroMagistrali;i<numeroMagistrali+numeroTriennali;i++){
-				CommissioneGrafica cgm=new CommissioneGrafica(presidentiPotenziali.get(i), docenti,"TRIENNALE");
+			for(CommissioneGrafica cgm:listaCommissioni.getCommTri()){
 				box.add(new JLabel(cgm.getPresidente().getNome()));
-				JComboBox commissari1 = new JComboBox(cgm.getCommissari1().toArray());
-				DefaultComboBoxModel model = (DefaultComboBoxModel) commissari1.getModel();
-				box.add(commissari1);
-				JComboBox commissari2 = new JComboBox(cgm.getCommissari2().toArray());
-				box.add(commissari2);
-				JComboBox disponibilita = new JComboBox(cgm.getSlotDisponibilita().toArray());
-				box.add(disponibilita);
-				DefaultComboBoxModel model2= (DefaultComboBoxModel) commissari2.getModel();
-				disponibilita.addActionListener(new InterazioneDisponibilita(disponibilita,cgm,docenti,model,model2));
+				DefaultListModel modLaureandi= new DefaultListModel<>();
+				for(Studente s:cgm.getLaureandi())
+					modLaureandi.addElement(s);
+				JList listaLaureandi= new JList(modLaureandi);
+				Map<JComboBox, DefaultComboBoxModel> modelliBox=new HashMap<>();
+				cgm.aggiornaCommissione(cgm.getSlotCorrente(), docenti);
+				for(ArrayList<Docente> lista:cgm.getCommissari()){
+					JComboBox commissari = new JComboBox(lista.toArray());
+					commissari.setSelectedIndex(-1);
+					modelliBox.put(commissari,(DefaultComboBoxModel) commissari.getModel());
+					commissari.addActionListener(new LogicaSelezioneDocente(modLaureandi,cgm.getTipoCommissione()));
+					box.add(commissari);
+				}
+				box.add(new JLabel("Laureandi: "));
+				box.add(listaLaureandi);
+				JComboBox comp = new JComboBox(cgm.getSlotDisponibilita().toArray());
+				comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,modelliBox));
+				box.add(comp);
+
+				//			for(int i=numeroMagistrali;i<numeroMagistrali+numeroTriennali;i++){
+				//				CommissioneGrafica cgm=new CommissioneGrafica(presidentiPotenziali.get(i), docenti,"TRIENNALE");
+				//				box.add(new JLabel(cgm.getPresidente().getNome()));
+				//				JComboBox commissari1 = new JComboBox(cgm.getCommissari1().toArray());
+				//				DefaultComboBoxModel model = (DefaultComboBoxModel) commissari1.getModel();
+				//				box.add(commissari1);
+				//				JComboBox commissari2 = new JComboBox(cgm.getCommissari2().toArray());
+				//				box.add(commissari2);
+				//				JComboBox disponibilita = new JComboBox(cgm.getSlotDisponibilita().toArray());
+				//				box.add(disponibilita);
+				//				DefaultComboBoxModel model2= (DefaultComboBoxModel) commissari2.getModel();
+				//				disponibilita.addActionListener(new InterazioneDisponibilita(disponibilita,cgm,docenti,model,model2));
 			}
 		}
 

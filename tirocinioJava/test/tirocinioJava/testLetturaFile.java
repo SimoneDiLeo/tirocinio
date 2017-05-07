@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
+
+import classi.AssegnaControrelatore;
 import classi.Controrelatore;
 import classi.Docente;
 import classi.ListaDocenti;
@@ -17,13 +20,13 @@ import gestoreFile.lettore.LettoreFileStudenti;
 
 public class testLetturaFile {
 	public static void main(String[] args){
-		//		System.out.println("inserire nome file degli studenti");
-		//		Scanner input= new Scanner(System.in);
-		//		String fileStudenti=input.nextLine();
-//		System.out.println("inserire nome file dei docenti");
-//		Scanner inputDocenti= new Scanner(System.in);
-//		String fileDocenti=inputDocenti.nextLine();
-//		System.out.println("inserire nome file del personale");
+		System.out.println("inserire nome file degli studenti");
+		Scanner input= new Scanner(System.in);
+		String fileStudenti=input.nextLine();
+		System.out.println("inserire nome file dei docenti");
+		Scanner inputDocenti= new Scanner(System.in);
+		String fileDocenti=inputDocenti.nextLine();
+		System.out.println("inserire nome file del personale");
 		Scanner inputPers= new Scanner(System.in);
 		String filePers=inputPers.nextLine();
 		System.out.println("inserire nome file dei controrelatori");
@@ -34,28 +37,23 @@ public class testLetturaFile {
 			LettoreFilePersonale personale= new LettoreFilePersonale("./dati/" +  filePers +".csv",";");
 			LettoreFileControrelatore lettoreControrelatore = new LettoreFileControrelatore("./dati/" +  fileContro +".csv","./dati/" +  filePers +".csv" ,";");
 			List<Controrelatore> contro =lettoreControrelatore.inizializzaElementiDaFile();
-			System.out.println(contro.size());
-			for(Controrelatore c: contro){
-				System.out.println(c.toString());
-			}
-//						LettoreFileStudenti lettoreStudente= new LettoreFileStudenti("./dati/"+ fileStudenti +".csv",";");
-			
-//			List<Personale> listaPers= personale.inizializzaElementiDaFile();
-//			LettoreFileDocente lettoreDoc= new LettoreFileDocente("./dati/"+ fileDocenti +".csv",";");
-//			ListaDocenti docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
-//			docenti.inizializzaRuoloDocenti(listaPers);
-//			for(Docente d : docenti.getDocenti()){
-//				System.out.println(d.toString());
-//			}
-//			
-			//
-			//			List<Studente> studenti=lettoreStudente.inizializzaElementiDaFile(docenti);
-			//
+
+			LettoreFileStudenti lettoreStudente= new LettoreFileStudenti("./dati/"+ fileStudenti +".csv",";");
+
+			List<Personale> listaPers= personale.inizializzaElementiDaFile();
+			LettoreFileDocente lettoreDoc= new LettoreFileDocente("./dati/"+ fileDocenti +".csv",";");
+			ListaDocenti docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
+			docenti.inizializzaRuoloDocenti(listaPers);
+			List<Studente> studenti=lettoreStudente.inizializzaElementiDaFile(docenti);
+
 			//			for(Studente s:studenti){
 			//				System.out.println(s.getNome());
 			//			}
-			//			System.out.println(docenti.toString());
-
+			AssegnaControrelatore ac=new AssegnaControrelatore(studenti, lettoreControrelatore.inizializzaMappaContr(), listaPers);
+			ac.assegna();
+			for(Studente s:studenti){
+				System.out.println(s.getNome() + " " + s.getControrelatore().getNome());
+			}
 		}
 		catch(Exception e){
 

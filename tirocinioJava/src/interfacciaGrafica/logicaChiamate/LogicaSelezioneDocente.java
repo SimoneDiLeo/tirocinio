@@ -2,6 +2,7 @@ package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
@@ -14,34 +15,32 @@ import classi.Studente;
 
 public class LogicaSelezioneDocente implements ActionListener {
 	private DefaultListModel modelloListaLaureandi;
-	private CommissioneGrafica commissione;
-	private JComboBox doc;
+	private String tipoCommissione;
+	private List<Docente> commissariInseriti;
 
-	public LogicaSelezioneDocente(DefaultListModel modLaureandi, CommissioneGrafica cgm, JComboBox commissari2) {
+	public LogicaSelezioneDocente(DefaultListModel modLaureandi, String string) {
 		this.modelloListaLaureandi=modLaureandi;
-		this.commissione=cgm;
-		this.doc=commissari2;
+		this.tipoCommissione=string;
+		this.commissariInseriti=null;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox cb = (JComboBox)e.getSource();
 		Docente d = (Docente)cb.getSelectedItem();
-		Docente altroComm=(Docente) this.doc.getSelectedItem();
 		this.modelloListaLaureandi.removeAllElements();	
-		for(Studente s:this.commissione.getLaureandi()){
-			this.modelloListaLaureandi.addElement(s);
-		}
-		if(altroComm!=null)
-			for(Studente s1:altroComm.getLaureandi()){
-				if(s1.getTipoLaurea().toUpperCase().equals(this.commissione.getTipoCommissione().toUpperCase()))
-					this.modelloListaLaureandi.addElement(s1);
-			}
 		if(d!=null)
-			if(!d.equals(altroComm))
-				for(Studente s:d.getLaureandi())
-					if(s.getTipoLaurea().toUpperCase().equals(this.commissione.getTipoCommissione().toUpperCase()))
-						this.modelloListaLaureandi.addElement(s);
+			inserimentoStudenteDocenteSelezionato(d);
+	}
+
+	private void inserimentoStudenteDocenteSelezionato(Docente d) {
+		System.out.println(d.toString()+d.getNumeroLaureandiTriennali());	
+		if(this.tipoCommissione.contains("TRIENNALE"))
+			for(Studente s : d.getLaureandiTriennali()){
+				this.modelloListaLaureandi.addElement(s);}
+		else
+			for(Studente s : d.getLaureandiMagistrali())
+				this.modelloListaLaureandi.addElement(s);
 
 	}
 

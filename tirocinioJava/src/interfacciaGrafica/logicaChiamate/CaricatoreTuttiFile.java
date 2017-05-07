@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import classi.AssegnaControrelatore;
 import classi.Controrelatore;
 import classi.ListaDocenti;
 import classi.Personale;
@@ -38,8 +39,9 @@ public class CaricatoreTuttiFile {
 		LettoreFilePersonale lettorePer= new LettoreFilePersonale(s+personale+".csv",";");
 		this.personale = lettorePer.inizializzaElementiDaFile();
 		LettoreFileControrelatore lettoreContr= new LettoreFileControrelatore(s+controrelatori+".csv",s+personale+".csv",";");
-		this.controrel = lettoreContr.inizializzaElementiDaFile();
 		this.docenti.inizializzaRuoloDocenti(this.personale);
+		AssegnaControrelatore ac= new AssegnaControrelatore(this.studenti, lettoreContr.inizializzaMappaContr(), this.personale);	
+		ac.assegna();
 	}
 
 

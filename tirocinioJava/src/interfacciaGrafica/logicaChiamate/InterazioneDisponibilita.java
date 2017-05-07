@@ -2,6 +2,9 @@ package interfacciaGrafica.logicaChiamate;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -17,29 +20,30 @@ public class InterazioneDisponibilita implements ActionListener {
 	private JComboBox disp;
 	private CommissioneGrafica cg;
 	private ListaDocenti d;
-	private DefaultComboBoxModel comm1;
-	private DefaultComboBoxModel comm2;
+	private Map<JComboBox, DefaultComboBoxModel> modelliJBoxCommissari;
 
-	public InterazioneDisponibilita(JComboBox comp, CommissioneGrafica cgm,ListaDocenti docenti, DefaultComboBoxModel model, DefaultComboBoxModel model2){
+
+	public InterazioneDisponibilita(JComboBox comp, CommissioneGrafica cgm,ListaDocenti docenti, Map<JComboBox, DefaultComboBoxModel> modelliBox){
 		this.cg=cgm;
 		this.disp=comp;
 		this.d=docenti;
-		this.comm1=model;
-		this.comm2=model2;
+		this.modelliJBoxCommissari=modelliBox;
+
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int i = (int) this.disp.getSelectedItem();
 		this.cg.aggiornaCommissione(i, this.d);
-		this.comm1.removeAllElements();
-		for(Docente d : this.cg.getCommissari1()){
-			this.comm1.addElement(d);
+		for(JComboBox jc:this.modelliJBoxCommissari.keySet()){
+			for(ArrayList<Docente> d : this.cg.getCommissari()){
+				jc.removeAll();
+				for(Docente dd:d){
+					jc.addItem(dd);
+				}
+				jc.setSelectedIndex(-1);
+			}
+
 		}
-		this.comm2.removeAllElements();
-		for(Docente d: this.cg.getCommissari2()){
-			this.comm2.addElement(d);
-		}
-			
 	}
 
 }

@@ -32,23 +32,26 @@ public class FinestraModifica {
 		f.getContentPane().add(jScrollPane);
 		f.setVisible(true);
 		Box box = Box.createVerticalBox(); 
-		List<Docente> presidentiPotenziali = new ArrayList<>();
+		Docente[] presidentiPotenziali = new Docente[numMag+numTri];
 		//inserire mappa int docente che indica int = numero commissione e commissario relativo
 		//modificare anche i for di conseguenza
 		box.add(new JLabel("PRESIDENTI MAGISTRALI"));
-		
+		int indicePresidente=0;
 		for(JComboBox jm:listaMagistrali){
-			presidentiPotenziali.add((Docente) jm.getSelectedItem());
-			jm.addActionListener(new SelezionaDocente(presidentiPotenziali,(Docente)jm.getSelectedItem()));
+			jm.setSelectedIndex(-1);
+			presidentiPotenziali[indicePresidente]=((Docente) jm.getSelectedItem());
+			jm.addActionListener(new SelezionaDocente(presidentiPotenziali,indicePresidente));
 			box.add(jm);
+			indicePresidente++;
 		}
 
 		box.add(new JLabel("PRESIDENTI TRIENNALI"));
-		
 		for(JComboBox jt:listaTriennali){
-			presidentiPotenziali.add((Docente) jt.getSelectedItem());
-			jt.addActionListener(new SelezionaDocente(presidentiPotenziali,(Docente)jt.getSelectedItem()));
+			jt.setSelectedIndex(-1);
+			presidentiPotenziali[indicePresidente]=((Docente) jt.getSelectedItem());
+			jt.addActionListener(new SelezionaDocente(presidentiPotenziali, indicePresidente));
 			box.add(jt);
+			indicePresidente++;
 		}
 		JButton conferma = new JButton("CONFERMA");
 		box.add(conferma);

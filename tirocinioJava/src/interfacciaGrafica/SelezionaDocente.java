@@ -9,21 +9,21 @@ import javax.swing.JComboBox;
 import classi.Docente;
 
 public class SelezionaDocente implements ActionListener {
-	
-	private List<Docente> docenti;
-	private Docente docentePrecedente;
 
-	public SelezionaDocente(List<Docente> presidentiPotenziali, Docente docente) {
+	private Docente[] docenti;
+	private int indiceCommissione;
+
+	public SelezionaDocente(Docente[] presidentiPotenziali, int indicePresidente) {
 		this.docenti=presidentiPotenziali;
-		this.docentePrecedente=docente;
+		this.indiceCommissione=indicePresidente;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox jcb= (JComboBox)e.getSource();	
 		Docente docenteSelezionato= (Docente) jcb.getSelectedItem();
-		this.docenti.remove(this.docentePrecedente);
-		this.docenti.add(docenteSelezionato);
+		this.docenti[indiceCommissione]=docenteSelezionato;
 	}
-		
 }
+
+
