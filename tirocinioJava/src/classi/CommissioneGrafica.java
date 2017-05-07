@@ -1,7 +1,9 @@
 package classi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CommissioneGrafica {
@@ -12,11 +14,19 @@ public class CommissioneGrafica {
 	private String tipoCommissione;
 	private int slotCorrente;
 	private int numeroCommissari;
-
+	private Map<Integer,Docente> mappatura=new HashMap<>();
 	public CommissioneGrafica(){
 
 	}
-	//ListaDocenti docenti, vecchio costruttore
+	
+	public Map<Integer, Docente> getMappatura() {
+		return mappatura;
+	}
+
+	public void setMappatura(Map<Integer, Docente> mappatura) {
+		this.mappatura = mappatura;
+	}
+
 	public CommissioneGrafica(Docente pres, int numeroCommissari,String tipoCommissione){
 		this.presidente=pres;
 		this.slotDisponibilita=pres.getDisponibilita();
@@ -28,6 +38,10 @@ public class CommissioneGrafica {
 		inizializzaDaTipo(pres);
 	}
 
+	
+	public void reinizializzaLaureandi(){
+		this.laureandi=new ArrayList<>();
+	}
 	private void inizializzaDaTipo(Docente d){
 		if(this.tipoCommissione.equals("TRIENNALE")){
 			inizializzaStudT(d);

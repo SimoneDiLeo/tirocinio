@@ -15,6 +15,15 @@ public class ListaDocenti {
 	}	
 
 
+	public List<Docente> filtraListaRest(List<Docente> pres){
+		List<Docente> lista=new ArrayList<>();
+		for(Docente d:this.docenti){
+			if(!pres.contains(d))
+				lista.add(d);
+		}
+		return lista;
+	}
+
 	public Docente trovaDocenteDaNome(String nome){
 		for(Docente d:this.docenti){
 			if(nome.contains(d.getNome())){

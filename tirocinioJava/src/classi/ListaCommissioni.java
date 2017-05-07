@@ -2,6 +2,7 @@ package classi;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -56,6 +57,15 @@ public class ListaCommissioni {
 
 	public void setCommTri(CommissioneGrafica[] commTri) {
 		this.commTri = commTri;
+	}
+
+	
+	public String toStringMagistrale() {
+		return "ListaCommissioni [commMag=" + Arrays.toString(commMag) + "]";
+	}
+	
+	public String toStringTriennale() {
+		return "ListaCommissioni [commMag=" + Arrays.toString(commTri) + "]";
 	}
 
 }
