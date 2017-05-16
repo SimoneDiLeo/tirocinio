@@ -27,7 +27,7 @@ public class ListaCommissioni {
 		}
 		for(int i=0;i<this.commMag.length;i++){
 			if(presidentiPotenziali.get(i)!=null)
-			this.commMag[i]=new CommissioneGrafica(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
+				this.commMag[i]=new CommissioneGrafica(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class ListaCommissioni {
 			e.printStackTrace();
 		}
 		for(int i=0;i<this.commTri.length;i++){
-			if(presidentiCorrenti.size()>i+this.commMag.length)
+			if(presidentiCorrenti.values().size()>i+this.commMag.length)
 				this.commTri[i]=new CommissioneGrafica(presidentiCorrenti.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
 		}
 	}
@@ -61,11 +61,11 @@ public class ListaCommissioni {
 		this.commTri = commTri;
 	}
 
-	
+
 	public String toStringMagistrale() {
 		return "ListaCommissioni [commMag=" + Arrays.toString(commMag) + "]";
 	}
-	
+
 	public String toStringTriennale() {
 		return "ListaCommissioni [commMag=" + Arrays.toString(commTri) + "]";
 	}

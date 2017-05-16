@@ -1,14 +1,18 @@
 package tirocinioJava;
 //classe di test per lettura di file
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 
 import classi.AssegnaControrelatore;
+import classi.BozzaAlgoritmo;
 import classi.Controrelatore;
 import classi.Docente;
+import classi.DocenteComparatorePresidentiMagistrali;
+import classi.DocenteComparatoreRuolo;
 import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
@@ -51,8 +55,11 @@ public class testLetturaFile {
 			//			}
 			AssegnaControrelatore ac=new AssegnaControrelatore(studenti, lettoreControrelatore.inizializzaMappaContr(), listaPers);
 			ac.assegna();
-			for(Studente s:studenti){
-				System.out.println(s.getNome() + " " + s.getControrelatore().getNome());
+			BozzaAlgoritmo b= new BozzaAlgoritmo();
+			List<Docente> doc=b.trovaTuttiPossibiliPresidenti(docenti, "PO");
+			doc.sort(new DocenteComparatoreRuolo());
+			for(Docente s:doc){
+				System.out.println(s.getNome() + s.getRuolo() + " T=" + s.getNumeroLaureandiTriennali() +" M ="+s.getNumeroLaureandiMagistrali()); 
 			}
 		}
 		catch(Exception e){

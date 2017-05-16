@@ -51,9 +51,11 @@ public class FinestraSceltaCommissioni {
 		//		if(numeroTriennali!=0)
 		//			listaCommissioni.inizializzaPresidentiTriennali(presidentiPotenziali);
 			for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
-					box.add(new JLabel(cgm.getPresidente().getNome()));}
+				if(cgm!=null)	
+				box.add(new JLabel(cgm.getPresidente().getNome()));}
 			box.add(new JLabel("Commissioni Triennali"));
 			for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommTri()){
+				if(cgm!=null)
 				box.add(new JLabel(cgm.getPresidente().getNome()));}
 		//			DefaultListModel modLaureandi= new DefaultListModel<>();
 		//			for(Studente s:cgm.getLaureandi())
