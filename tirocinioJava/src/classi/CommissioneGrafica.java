@@ -12,7 +12,6 @@ public class CommissioneGrafica {
 	private List<Studente> laureandi;
 	private List<Integer> slotDisponibilita;
 	private String tipoCommissione;
-	private int slotCorrente;
 	private int numeroCommissari;
 	private Map<Integer,Docente> mappatura=new HashMap<>();
 	public CommissioneGrafica(){
@@ -30,7 +29,6 @@ public class CommissioneGrafica {
 	public CommissioneGrafica(Docente pres, int numeroCommissari,String tipoCommissione){
 		this.presidente=pres;
 		this.slotDisponibilita=pres.getDisponibilita();
-		this.slotCorrente=this.slotDisponibilita.get(0);
 		this.commissariPossibili=new ArrayList<ArrayList<Docente>>();
 		this.numeroCommissari=numeroCommissari;
 		this.tipoCommissione=tipoCommissione.toUpperCase();
@@ -127,12 +125,7 @@ public class CommissioneGrafica {
 	public void setCommissari(List<ArrayList<Docente>> commissari) {
 		this.commissariPossibili = commissari;
 	}
-	public int getSlotCorrente() {
-		return slotCorrente;
-	}
-	public void setSlotCorrente(int slotCorrente) {
-		this.slotCorrente = slotCorrente;
-	}
+	
 	public void aggiornaLaureandi(Docente d){
 		inizializzaDaTipo(d);
 	}

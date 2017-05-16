@@ -29,7 +29,7 @@ public class FinestraConfermaCommissioni {
 			}
 			JTextField nomeFileDocenti = new JTextField ();
 			JButton scrivi=new JButton("Scrivi in csv");
-			scrivi.addActionListener(new ScriviLeCommissioni(labelCommissioni,nomeFileDocenti));
+			scrivi.addActionListener(new FinestraScriviCommissioni(labelCommissioni,nomeFileDocenti));
 			box.add(nomeFileDocenti);
 			box.add(scrivi);
 			this.panel.add(box);

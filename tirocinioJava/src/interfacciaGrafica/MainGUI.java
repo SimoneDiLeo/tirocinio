@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
+
+import interfacciaGrafica.listenerBottoni.ListenerBottonePaginaUno;
 
 
 
@@ -55,7 +56,7 @@ public final class MainGUI {
 		box.add(nomeFileControrelatori);
 		box.add(okButton);
 		panel.add(box);
-		okButton.addActionListener(new LogicaPaginaUno(aFrame,nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori));
+		okButton.addActionListener(new ListenerBottonePaginaUno(aFrame,nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori));
 		aFrame.getContentPane().add(panel);
 	}
 

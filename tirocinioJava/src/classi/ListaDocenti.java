@@ -3,6 +3,8 @@ package classi;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 public class ListaDocenti {
 	private List<Docente> docenti;
 
@@ -51,6 +53,15 @@ public class ListaDocenti {
 			}
 		}
 	}
+
+	public List<JLabel> creaLabelDocenti(){
+		List<JLabel> lista=new ArrayList<>();
+		for(Docente d:this.docenti){ 	
+			JLabel nomeDocente = new JLabel(d.getNome()+ " Ruolo = "+ d.getRuolo() + " Numero laureandi Triennali : "+d.getNumeroLaureandiTriennali() +" Numero laureandi Magistrali : " + d.getNumeroLaureandiMagistrali() + " Disponibilità : " +d.getDisponibilita());
+			lista.add(nomeDocente);
+		}
+		return lista;
+	}	
 
 
 	public List<Docente> getDocenti() {

@@ -21,7 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import classi.Docente;
-import interfacciaGrafica.logicaChiamate.LogicaPaginaUno;
+import interfacciaGrafica.listenerBottoni.ListenerBottonePaginaUno;
 
 
 public final class ProvaGui {

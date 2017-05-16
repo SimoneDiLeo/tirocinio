@@ -10,11 +10,11 @@ import javax.swing.JTextField;
 
 import gestoreFile.scritturaFile;
 
-public class ScriviLeCommissioni implements ActionListener {
+public class FinestraScriviCommissioni implements ActionListener {
 private List<JLabel> lista;
 private JTextField nomeFile;
 
-	public ScriviLeCommissioni(List<JLabel> labelCommissioni, JTextField nomeFileDocenti) {
+	public FinestraScriviCommissioni(List<JLabel> labelCommissioni, JTextField nomeFileDocenti) {
 		this.lista=labelCommissioni;
 		this.nomeFile=nomeFileDocenti;
 	}

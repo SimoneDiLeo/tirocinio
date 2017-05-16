@@ -19,16 +19,17 @@ import classi.Docente;
 import classi.DocenteComparatorePresidentiMagistrali;
 import classi.DocenteComparatorePresidentiTriennali;
 import classi.ListaDocenti;
-import interfacciaGrafica.logicaChiamate.ConfermaSceltaPresidenti;
-import interfacciaGrafica.logicaChiamate.ModificaPresidenti;
-import interfacciaGrafica.logicaChiamate.tornaIndietro;
+import controller.Controller;
+import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaPresidenti;
+import interfacciaGrafica.listenerBottoni.ListenerModificaPresidenti;
+import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 
 public class FinestraPresidenti {
-	private JFrame f =new JFrame("terzo");
+	private JFrame f =new JFrame("Finestra Scelta Presidenti");
 	private JPanel p = new JPanel();
 
 	//costruttore
-	public FinestraPresidenti(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroTriennali, int numeroMagistrali, JFrame sFrame){
+	public FinestraPresidenti(Controller c, int numeroTriennali, int numeroMagistrali, JFrame sFrame){
 
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
@@ -37,44 +38,17 @@ public class FinestraPresidenti {
 		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.f.getContentPane().add(jScrollPane);
 		Box box = Box.createVerticalBox();
-		List<Docente> presidentiScelti=new ArrayList<>();
-		Docente presidenti = null;
-		Docente d=null;
-		BozzaAlgoritmo alg=new BozzaAlgoritmo();
-
 		box.add(new JLabel("Potenziali Presidenti Magistrali"));
-		presidentiPotenziali.sort(new DocenteComparatorePresidentiMagistrali());
-
-		for(int i=0;i<numeroMagistrali;i++){
-			presidenti = trovaPresidente(presidentiPotenziali, d, alg);
-			box.add(new JLabel(presidenti.toString()));
-			presidentiScelti.add(presidenti);
-			presidentiPotenziali.remove(presidenti);
-		}
-
-		presidentiPotenziali.sort(new DocenteComparatorePresidentiTriennali());
+		box.add(c.calcolaPresidenti(numeroMagistrali,true));
 		box.add(new JLabel("Potenziali Presidenti Triennali"));
-		d=null;
-
-		for(int i=0;i<numeroTriennali;i++){
-			presidenti = trovaPresidente(presidentiPotenziali, d, alg);
-			if(presidenti!=null)
-			box.add(new JLabel(presidenti.toString()));
-			else box.add(new JLabel("Presidente Non Trovato"));
-			presidentiScelti.add(presidenti);
-			presidentiPotenziali.remove(presidenti);
-		}
-
+		box.add(c.calcolaPresidenti(numeroTriennali,false));
 		JButton conferma = new JButton("Conferma");
-		conferma.addActionListener(new ConfermaSceltaPresidenti(docenti,presidentiScelti,this.f,numeroMagistrali,numeroTriennali));
+		conferma.addActionListener(new ListenerConfermaSceltaPresidenti(c,this.f,numeroMagistrali,numeroTriennali));
 		box.add(conferma);
-
 		JButton modifica = new JButton("Modifica");
-		List<Docente> listaPresidentiPotenzialiRiunita = presidentiPotenziali;
-		listaPresidentiPotenzialiRiunita.addAll(presidentiScelti);
-		modifica.addActionListener(new ModificaPresidenti(this.f,listaPresidentiPotenzialiRiunita,numeroMagistrali,numeroTriennali,docenti));
+		modifica.addActionListener(new ListenerModificaPresidenti(this.f,c,numeroMagistrali,numeroTriennali));
 		JButton tornaIndietro = new JButton("Torna Indietro");
-		tornaIndietro.addActionListener(new tornaIndietro(this.f,sFrame));
+		tornaIndietro.addActionListener(new ListenerTornaIndietro(this.f,sFrame));
 		box.add(modifica);
 		box.add(tornaIndietro);
 
@@ -82,13 +56,4 @@ public class FinestraPresidenti {
 		this.f.setVisible(true);
 	}
 
-
-	private Docente trovaPresidente(List<Docente> presidentiPotenziali, Docente d, BozzaAlgoritmo alg) {
-		Docente presidenti=null;
-		if(presidentiPotenziali.size()>0){
-			if(d!=null)
-				presidentiPotenziali.remove(d);
-		presidenti= alg.trovaPossibilePresidente(presidentiPotenziali);}
-		return presidenti;
-	}
 }

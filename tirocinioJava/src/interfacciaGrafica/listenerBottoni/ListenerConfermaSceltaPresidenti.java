@@ -1,4 +1,4 @@
-package interfacciaGrafica.logicaChiamate;
+package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,20 +8,19 @@ import javax.swing.JFrame;
 
 import classi.Docente;
 import classi.ListaDocenti;
+import controller.Controller;
 import interfacciaGrafica.FinestraSceltaCommissioni;
 
-public class ConfermaSceltaPresidenti implements ActionListener {
-	private ListaDocenti docenti;
+public class ListenerConfermaSceltaPresidenti implements ActionListener {
+	private Controller controller;
 	private List<Docente> presidentiScelti;
 	private JFrame f;
 	private int numeroMagistrali;
 	private int numeroTriennali;
 	
 	
-	public ConfermaSceltaPresidenti(ListaDocenti docenti, List<Docente> presidentiScelti, JFrame f, int numeroMagistrali, int numeroTriennali) {
-		// TODO Auto-generated constructor stub
-		this.docenti=docenti;
-		this.presidentiScelti=presidentiScelti;
+	public ListenerConfermaSceltaPresidenti(Controller c, JFrame f, int numeroMagistrali, int numeroTriennali) {
+		this.controller=c;
 		this.f=f;
 		this.numeroMagistrali=numeroMagistrali;
 		this.numeroTriennali=numeroTriennali;
@@ -30,7 +29,7 @@ public class ConfermaSceltaPresidenti implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.f.dispose();
-		new FinestraSceltaCommissioni(docenti, presidentiScelti, numeroTriennali, numeroMagistrali);
+		new FinestraSceltaCommissioni(controller, numeroTriennali, numeroMagistrali);
 
 	}
 

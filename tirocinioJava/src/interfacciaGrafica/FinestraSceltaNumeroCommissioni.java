@@ -11,14 +11,15 @@ import javax.swing.JTextField;
 
 import classi.Docente;
 import classi.ListaDocenti;
-import interfacciaGrafica.logicaChiamate.LogicaPaginaDue;
+import controller.Controller;
+import interfacciaGrafica.listenerBottoni.ListenerBottoneCalcolaPresidenti;
 
-public class FinestraDue {
-	private JFrame f = new JFrame("Second");
+public class FinestraSceltaNumeroCommissioni {
+	private JFrame f = new JFrame("Seconda Schermata");
 	private JPanel panel = new JPanel();
 	
 	//costruttore
-	public FinestraDue(List<JLabel> nomiDocenti, ListaDocenti docenti) {
+	public FinestraSceltaNumeroCommissioni(Controller c) {
 
 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,12 +33,8 @@ public class FinestraDue {
 		f.getContentPane().add(jScrollPane);
 		f.setVisible(true);
 		Box box = Box.createVerticalBox(); 
-		JButton provaPrimaCommissione=new JButton("Calcola le possibili commissioni");
-	
-		for(JLabel bot:nomiDocenti){
-			box.add(bot);
-		}
-		
+		JButton provaPrimaCommissione=new JButton("Calcola i possibili Presidenti di Commissione");
+		box.add(c.creaBoxLabel());;
 		box.add(new JLabel("Numero Commissioni Triennali"));
 		JTextField numTriennali = new JTextField();
 		box.add(numTriennali);
@@ -45,8 +42,7 @@ public class FinestraDue {
 		JTextField numMagistrali= new JTextField();
 		box.add(numMagistrali);
 		box.add(provaPrimaCommissione);
-		provaPrimaCommissione.addActionListener(new LogicaPaginaDue(numTriennali,numMagistrali,docenti,f));
-			
+		provaPrimaCommissione.addActionListener(new ListenerBottoneCalcolaPresidenti(numTriennali,numMagistrali,c,f));
 		panel.add(box);
 	}
 

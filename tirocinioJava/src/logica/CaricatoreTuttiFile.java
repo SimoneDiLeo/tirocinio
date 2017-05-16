@@ -1,4 +1,4 @@
-package interfacciaGrafica.logicaChiamate;
+package logica;
 
 import java.io.IOException;
 import java.nio.file.Path;

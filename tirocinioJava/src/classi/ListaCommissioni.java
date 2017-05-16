@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class ListaCommissioni {
@@ -16,7 +17,7 @@ public class ListaCommissioni {
 		this.commTri=new CommissioneGrafica[numTri];
 	}
 
-	public void inizializzaPresidentiMagistrali(List<Docente> presidentiPotenziali){
+	public void inizializzaPresidentiMagistrali(Map<Integer,Docente> presidentiPotenziali){
 		URL url = this.getClass().getClassLoader().getSystemResource("properties");
 		Properties prop = new Properties();
 		try {
@@ -25,11 +26,12 @@ public class ListaCommissioni {
 			e.printStackTrace();
 		}
 		for(int i=0;i<this.commMag.length;i++){
+			if(presidentiPotenziali.get(i)!=null)
 			this.commMag[i]=new CommissioneGrafica(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
 		}
 	}
 
-	public void inizializzaPresidentiTriennali(List<Docente> presidentiPotenziali){
+	public void inizializzaPresidentiTriennali(Map<Integer, Docente> presidentiCorrenti){
 		URL url = this.getClass().getClassLoader().getSystemResource("properties");
 		Properties prop = new Properties();
 		try {
@@ -38,8 +40,8 @@ public class ListaCommissioni {
 			e.printStackTrace();
 		}
 		for(int i=0;i<this.commTri.length;i++){
-			if(presidentiPotenziali.size()>i+this.commMag.length)
-				this.commTri[i]=new CommissioneGrafica(presidentiPotenziali.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
+			if(presidentiCorrenti.size()>i+this.commMag.length)
+				this.commTri[i]=new CommissioneGrafica(presidentiCorrenti.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
 		}
 	}
 
