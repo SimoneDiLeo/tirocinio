@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 import classi.Docente;
 import classi.ListaDocenti;
-import interfacciaGrafica.FinestraTre;
+import interfacciaGrafica.FinestraSceltaCommissioni;
 
 public class ConfermaSceltaPresidenti implements ActionListener {
 	private ListaDocenti docenti;
@@ -30,7 +30,7 @@ public class ConfermaSceltaPresidenti implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.f.dispose();
-		new FinestraTre(docenti, presidentiScelti, numeroTriennali, numeroMagistrali);
+		new FinestraSceltaCommissioni(docenti, presidentiScelti, numeroTriennali, numeroMagistrali);
 
 	}
 

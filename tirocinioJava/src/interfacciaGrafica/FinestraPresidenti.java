@@ -23,12 +23,12 @@ import interfacciaGrafica.logicaChiamate.ConfermaSceltaPresidenti;
 import interfacciaGrafica.logicaChiamate.ModificaPresidenti;
 import interfacciaGrafica.logicaChiamate.tornaIndietro;
 
-public class FinestraQuattro {
+public class FinestraPresidenti {
 	private JFrame f =new JFrame("terzo");
 	private JPanel p = new JPanel();
 
 	//costruttore
-	public FinestraQuattro(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroTriennali, int numeroMagistrali, JFrame sFrame){
+	public FinestraPresidenti(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroTriennali, int numeroMagistrali, JFrame sFrame){
 
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);

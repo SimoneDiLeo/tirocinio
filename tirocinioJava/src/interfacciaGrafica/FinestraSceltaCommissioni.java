@@ -29,12 +29,12 @@ import interfacciaGrafica.logicaChiamate.ConfermaSceltaCommissioni;
 import interfacciaGrafica.logicaChiamate.InterazioneDisponibilita;
 import interfacciaGrafica.logicaChiamate.LogicaSelezioneDocente;
 
-public class FinestraTre {
+public class FinestraSceltaCommissioni {
 	private JFrame f =new JFrame("terzo");
 	private JPanel p = new JPanel();
 
 	//costruttore
-	public FinestraTre(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroMagistrali , int numeroTriennali){
+	public FinestraSceltaCommissioni(ListaDocenti docenti, List<Docente> presidentiPotenziali, int numeroMagistrali , int numeroTriennali){
 
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
@@ -75,6 +75,7 @@ public class FinestraTre {
 				}
 				box.add(new JLabel("Laureandi: "));
 				box.add(listaLaureandi);
+				
 				JComboBox comp = new JComboBox(cgm.getSlotDisponibilita().toArray());
 				comp.addActionListener(new InterazioneDisponibilita(comp,cgm,docenti,modelliBox));
 				box.add(comp);

@@ -19,8 +19,8 @@ import classi.DocenteComparatorePresidentiMagistrali;
 import classi.ListaDocenti;
 import interfacciaGrafica.FinestraDue;
 import interfacciaGrafica.FinestraErrore;
-import interfacciaGrafica.FinestraQuattro;
-import interfacciaGrafica.FinestraTre;
+import interfacciaGrafica.FinestraPresidenti;
+import interfacciaGrafica.FinestraSceltaCommissioni;
 
 public class LogicaPaginaDue implements ActionListener{
 	private ListaDocenti docenti;
@@ -55,7 +55,7 @@ public class LogicaPaginaDue implements ActionListener{
 			new FinestraErrore();
 		else{
 			this.sFrame.dispose();
-			new FinestraQuattro(docenti,potCommissari,numeroTriennali,numeroMagistrali,this.sFrame);
+			new FinestraPresidenti(docenti,potCommissari,numeroTriennali,numeroMagistrali,this.sFrame);
 		}
 	}
 

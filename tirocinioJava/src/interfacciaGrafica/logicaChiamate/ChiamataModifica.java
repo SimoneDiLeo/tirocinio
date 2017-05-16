@@ -11,7 +11,7 @@ import classi.Docente;
 import classi.ListaDocenti;
 import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraModifica;
-import interfacciaGrafica.FinestraTre;
+import interfacciaGrafica.FinestraSceltaCommissioni;
 
 public class ChiamataModifica implements ActionListener {
 
@@ -42,7 +42,7 @@ public class ChiamataModifica implements ActionListener {
 			}
 		}
 
-		new FinestraTre(this.docenti,presidentiConfermati,numMag, numTri);
+		new FinestraSceltaCommissioni(this.docenti,presidentiConfermati,numMag, numTri);
 		this.f.dispose();
 		//		}
 		//		else

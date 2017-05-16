@@ -40,7 +40,6 @@ public class InterazioneDisponibilita implements ActionListener {
 				for(Docente dd:d){
 					jc.addItem(dd);
 				}
-				jc.setSelectedIndex(-1);
 			}
 
 		}

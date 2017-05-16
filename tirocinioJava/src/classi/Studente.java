@@ -94,10 +94,10 @@ public class Studente {
 		String nomeCorrelatore="";
 		if(this.correlatore!=null)
 			nomeCorrelatore=this.correlatore.getNome();
-		return "Studente [numero=" + numero + ", nome= " + nome + ", matricola=" + matricola + ", tipoLaurea="
-		+ tipoLaurea + ", relatore= " + relatore.getNome() + ", correlatore=" +
-		nomeCorrelatore + ", controrelatore="
-		+ this.controrelatore.getNome() + ", note=" + note + ", argomentoTirocinio=\n" + argomentoTirocinio + "]";
+		return "numero=" + numero + "\t nome= " + nome + "\t matricola=" + matricola + "\t tipoLaurea="
+		+ tipoLaurea + "\t relatore= " + relatore.getNome() + "\t correlatore=" +
+		nomeCorrelatore + "\t controrelatore="
+		+ this.controrelatore.getNome() + "; note=" + note + "\t argomentoTirocinio=" + argomentoTirocinio;
 	}
 
 	@Override

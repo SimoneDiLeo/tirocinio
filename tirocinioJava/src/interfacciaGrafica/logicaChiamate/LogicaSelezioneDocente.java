@@ -49,7 +49,8 @@ public class LogicaSelezioneDocente implements ActionListener {
 	private void inserimentoStudenteDocenteSelezionato(Docente d) {
 		if(this.commissione.getTipoCommissione().contains("TRIENNALE"))
 			for(Studente s : d.getLaureandiTriennali()){
-				this.modelloListaLaureandi.addElement(s);}
+				if(s!=null)
+					this.modelloListaLaureandi.addElement(s);}
 		else
 			for(Studente s : d.getLaureandiMagistrali())
 				this.modelloListaLaureandi.addElement(s);
