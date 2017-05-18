@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.AbstractButton;
@@ -28,6 +29,7 @@ import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
 import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
+import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
 import interfacciaGrafica.FinestraErrore;
 import logica.CaricatoreTuttiFile;
@@ -151,6 +153,8 @@ public class Controller {
 			for(Docente d:docs){
 				jm.addItem(d);
 			}
+			Docente docPrecente=(Docente) jm.getSelectedItem();
+			jm.addActionListener(new LogicaSelezioneDocente(this,docPrecente));
 			box.add(jm);
 		}
 		return box;
@@ -158,7 +162,7 @@ public class Controller {
 
 	public void confermaPresidenti() {
 		for(Docente d:this.presidentiCorrenti.values())
-			d.setSelezionato(true);
+			d.incrementaSelezionato();
 
 	}
 
@@ -173,6 +177,7 @@ public class Controller {
 
 	public List<JLabel> calcoloLabelCommissioniConfermate() {
 		List<JLabel> b = new ArrayList<>();
+		b.add(new JLabel("Commissioni Magistrali"));
 		for(CommissioneGrafica cgm : this.listaCommissioni.getCommMag()){
 			b.add(new JLabel("commissione numero :"));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
@@ -183,6 +188,18 @@ public class Controller {
 			for(Studente s:cgm.getLaureandi())
 				b.add(new JLabel(s.toString()));
 		}
+		b.add(new JLabel("Commissioni Triennali"));
+		for(CommissioneGrafica cgm : this.listaCommissioni.getCommTri()){
+			b.add(new JLabel("commissione numero :"));
+			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
+			b.add(new JLabel("Commissari :"));
+			for(Docente d : cgm.getMappatura().values())
+				b.add(new JLabel(d.getNome() + " " + d.getRuolo()));
+			b.add(new JLabel("Laureandi :"));
+			for(Studente s:cgm.getLaureandi())
+				b.add(new JLabel(s.toString()));
+		}
+
 
 		return b;
 	}
@@ -190,7 +207,7 @@ public class Controller {
 	public void addFrameCorrente(JFrame f){
 		this.framesPrecedente.add(f);
 	}
-	
+
 	public void tornaIndietro() {
 		JFrame frameDaVedere=this.framesPrecedente.get(this.framesPrecedente.size()-1);
 		frameDaVedere.setVisible(true);
@@ -203,5 +220,32 @@ public class Controller {
 
 	public void setProprieta(Properties proprieta) {
 		this.proprieta = proprieta;
+	}
+
+	public void reinizializzaPresidenti() {
+		for(Docente d:this.presidentiCorrenti.values()){
+			this.docenti.decrementaDisponibilitaDocente(d);
+		}
+
+	}
+
+	public void reinizializzaCommissioni(){
+		this.docenti.reinizializzaTrannePresidenti(this.presidentiCorrenti.values());
+	}
+
+	public void modificaSelezionatoInDocente(Docente d) {
+		this.docenti.incrementaDisponibilitaDocente(d);		
+	}
+
+	public void decrementaCommissioniInLista(Docente docPrecente) {
+		this.docenti.decrementaDisponibilitaDocente(docPrecente);				
+	}
+
+	public void setCommissariDaMappa(Map<Integer, JComboBox> mappa) {
+		for(Entry<Integer,JComboBox> entry:mappa.entrySet()){
+			Docente d=(Docente) entry.getValue().getSelectedItem();
+			d.incrementaSelezionato();
+			this.presidentiCorrenti.put(entry.getKey(),d);
+		}
 	}
 }

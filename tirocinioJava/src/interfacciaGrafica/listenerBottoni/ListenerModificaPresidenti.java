@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import classi.Docente;
 import classi.ListaDocenti;
 import controller.Controller;
-import interfacciaGrafica.FinestraModifica;
+import interfacciaGrafica.FinestraModificaPresidenti;
 
 public class ListenerModificaPresidenti implements ActionListener {
 	private JFrame f;
@@ -30,7 +30,7 @@ public class ListenerModificaPresidenti implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		this.controller.reinizializzaDocentiCorrenti();
 		this.f.dispose();
-		new FinestraModifica(controller,numMag, numTri);
+		new FinestraModificaPresidenti(controller,numMag, numTri);
 
 	}
 

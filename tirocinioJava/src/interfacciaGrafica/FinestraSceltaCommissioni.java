@@ -30,13 +30,22 @@ import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaCommissioni;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 import interfacciaGrafica.listenerBottoni.InterazioneDisponibilita;
 import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
-
+//Parte di lavoro per Pier
+//colorazione degli studenti se sopra il limite
+//gestire gli studenti con una JList per aggiungerli nelle commissioni
+//jList degli studenti di ogni commissione puo essere modificabile (rimozione studente)
+//se rimuovo studente il colore che devo assegnarli dipendera dalla commissione dove lo inseriro
+//parte di lavoro mia
+//TODO listener per la selezione del commissario
+//TODO modifica dei docenti colore rosso nelle varie commissioni e se lo rimuovo torna verde(solo se non è selezionato altrove)
+//TODO(da vedere con pier) conseguenza scelta commissario:aggiunta studenti nella commissione
 public class FinestraSceltaCommissioni {
-	private JFrame f =new JFrame("terzo");
+	private JFrame f =new JFrame("scelta commissione");
 	private JPanel p = new JPanel();
 
 	//costruttore
 	public FinestraSceltaCommissioni(Controller controller, int numeroMagistrali , int numeroTriennali){
+		this.f.setName("scelta commissione");
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
 		JScrollPane jScrollPane = new JScrollPane(this.p);
@@ -49,8 +58,7 @@ public class FinestraSceltaCommissioni {
 		controller.setListaCommissioni(numeroMagistrali, numeroTriennali);
 		controller.inizializzaCommissioniMagistrali();
 		controller.inizializzaCommissioniTriennali();
-		//		if(numeroTriennali!=0)
-		//			listaCommissioni.inizializzaPresidentiTriennali(presidentiPotenziali);
+		
 		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
 			if(cgm!=null)	
 				box.add(new JLabel(cgm.getPresidente().getNome()));
@@ -58,6 +66,7 @@ public class FinestraSceltaCommissioni {
 			box.add(controller.creaJComboCommissari(cgm));
 			box.add(controller.creaRadioBoxDisponibilita(cgm));
 		}
+		
 		box.add(new JLabel("Commissioni Triennali"));
 		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommTri()){
 			if(cgm!=null)

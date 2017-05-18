@@ -22,7 +22,7 @@ public class ListenerSelezionaPresidente implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JComboBox jcb= (JComboBox)e.getSource();	
 		Docente docenteSelezionato= (Docente) jcb.getSelectedItem();
-		docenteSelezionato.setSelezionato(true);
+		docenteSelezionato.incrementaSelezionato();
 		c.modificaPresidenteCommissione(this.numeroCommissione, docenteSelezionato);
 	}
 }

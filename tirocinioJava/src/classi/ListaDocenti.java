@@ -1,6 +1,7 @@
 package classi;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -76,5 +77,40 @@ public class ListaDocenti {
 	@Override
 	public String toString() {
 		return "ListaDocenti [docenti=" + docenti + "]";
+	}
+
+	public void incrementaDisponibilitaDocente(Docente d) {
+		for(int i=0;i<this.docenti.size();i++){
+			Docente doc=null;
+			if(this.docenti.get(i).equals(d)){
+				d=this.docenti.get(i);
+				d.incrementaSelezionato();
+				this.docenti.set(i, d);
+			}
+		}
+	}
+
+	public void decrementaDisponibilitaDocente(Docente d) {
+		System.out.println(d.toString());
+		for(int i=0;i<this.docenti.size();i++){
+			Docente doc=null;
+			if(this.docenti.get(i).equals(d)){
+				d=this.docenti.get(i);
+				d.azzeraSelezionato();
+				this.docenti.set(i, d);
+			}
+		}
+	}
+
+
+	public void reinizializzaTrannePresidenti(Collection<Docente> values) {
+		for(Docente d:this.docenti){
+			for(Docente nonPresidente:values){
+				if(!nonPresidente.equals(d)){
+					d.azzeraSelezionato();
+				}
+			}
+		}
+
 	}
 }

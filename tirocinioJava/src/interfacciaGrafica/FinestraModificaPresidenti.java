@@ -21,7 +21,7 @@ import interfacciaGrafica.listenerBottoni.ListenerConfermaModificaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerSelezionaPresidente;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 
-public class FinestraModifica {
+public class FinestraModificaPresidenti {
 	private JFrame f = new JFrame("Finestra Modifica Presidenti");
 	private JPanel panel = new JPanel();
 
@@ -67,7 +67,7 @@ public class FinestraModifica {
 	//
 	//	}
 
-	public FinestraModifica(Controller controller, int numMag, int numTri) {
+	public FinestraModificaPresidenti(Controller controller, int numMag, int numTri) {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(300,300);
 		JScrollPane jScrollPane = new JScrollPane(panel);
@@ -98,10 +98,11 @@ public class FinestraModifica {
 			jm.addActionListener(new ListenerSelezionaPresidente(controller,(i+numMag)));
 			box.add(jm);
 			mappaturaPresidenteCommissione.put(i+numMag, jm);
+			
 		}
 		JButton conferma = new JButton("CONFERMA");
 		box.add(conferma);
-		conferma.addActionListener(new ListenerConfermaModificaPresidenti(this.f,controller, numTri, numMag));
+		conferma.addActionListener(new ListenerConfermaModificaPresidenti(this.f,controller, numTri, numMag,mappaturaPresidenteCommissione));
 		
 		JButton ti=new JButton("Torna Indietro");
 		ti.addActionListener(new ListenerTornaIndietro(f, controller));;

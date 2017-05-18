@@ -10,7 +10,7 @@ public class Docente{
 	private String note;
 	private List<Integer> disponibilita;
 	private List<Studente> laureandi;
-	private boolean selezionato=false;
+	private int numeroCommissioniPartecipanti=0;
 
 	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
@@ -153,10 +153,18 @@ public class Docente{
 	}
 
 	public boolean isSelezionato() {
-		return selezionato;
+		return numeroCommissioniPartecipanti>0;
 	}
 
-	public void setSelezionato(boolean selezionato) {
-		this.selezionato = selezionato;
+	public void incrementaSelezionato() {
+		this.numeroCommissioniPartecipanti++;
+	}
+	
+	public void decrementaSelezionato() {
+		this.numeroCommissioniPartecipanti--;
+	}
+
+	public void azzeraSelezionato() {
+		this.numeroCommissioniPartecipanti=0;		
 	}
 }	
