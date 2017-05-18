@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import interfacciaGrafica.listenerBottoni.ListenerBottoneModificaProprieta;
 import interfacciaGrafica.listenerBottoni.ListenerBottonePaginaUno;
 
 
@@ -57,6 +58,12 @@ public final class MainGUI {
 		box.add(okButton);
 		panel.add(box);
 		okButton.addActionListener(new ListenerBottonePaginaUno(aFrame,nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori));
+		
+		box.add(new JLabel("Modifica o controlla le proprieta cliccando su questo bottone"));
+		JButton modifica = new JButton("Modifica Proprieta");
+		modifica.addActionListener(new ListenerBottoneModificaProprieta());
+		box.add(modifica);		
+		
 		aFrame.getContentPane().add(panel);
 	}
 

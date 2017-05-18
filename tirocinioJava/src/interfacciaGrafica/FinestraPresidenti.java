@@ -29,8 +29,7 @@ public class FinestraPresidenti {
 	private JPanel p = new JPanel();
 
 	//costruttore
-	public FinestraPresidenti(Controller c, int numeroTriennali, int numeroMagistrali, JFrame sFrame){
-
+	public FinestraPresidenti(Controller c, int numeroTriennali, int numeroMagistrali){
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
 		JScrollPane jScrollPane = new JScrollPane(this.p);
@@ -48,7 +47,7 @@ public class FinestraPresidenti {
 		JButton modifica = new JButton("Modifica");
 		modifica.addActionListener(new ListenerModificaPresidenti(this.f,c,numeroMagistrali,numeroTriennali));
 		JButton tornaIndietro = new JButton("Torna Indietro");
-		tornaIndietro.addActionListener(new ListenerTornaIndietro(this.f,sFrame));
+		tornaIndietro.addActionListener(new ListenerTornaIndietro(this.f,c));
 		box.add(modifica);
 		box.add(tornaIndietro);
 

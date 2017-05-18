@@ -17,11 +17,12 @@ import javax.swing.JViewport;
 import classi.Docente;
 import classi.ListaDocenti;
 import controller.Controller;
-import interfacciaGrafica.listenerBottoni.ChiamataModifica;
+import interfacciaGrafica.listenerBottoni.ListenerConfermaModificaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerSelezionaPresidente;
+import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 
 public class FinestraModifica {
-	private JFrame f = new JFrame("Second");
+	private JFrame f = new JFrame("Finestra Modifica Presidenti");
 	private JPanel panel = new JPanel();
 
 	//	public FinestraModifica(ListaDocenti docenti, List<JComboBox> listaMagistrali, List<JComboBox> listaTriennali, int numMag, int numTri) {
@@ -100,7 +101,12 @@ public class FinestraModifica {
 		}
 		JButton conferma = new JButton("CONFERMA");
 		box.add(conferma);
-		conferma.addActionListener(new ChiamataModifica(this.f,controller, numTri, numMag));
+		conferma.addActionListener(new ListenerConfermaModificaPresidenti(this.f,controller, numTri, numMag));
+		
+		JButton ti=new JButton("Torna Indietro");
+		ti.addActionListener(new ListenerTornaIndietro(f, controller));;
+		box.add(ti);
+		
 		panel.add(box);
 
 

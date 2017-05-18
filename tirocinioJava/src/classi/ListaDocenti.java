@@ -35,11 +35,12 @@ public class ListaDocenti {
 		return null;
 	}
 
-	public List<Docente> docentiConDisponibilita(Integer i){
+	public List<Docente> docentiConDisponibilita(List<Integer> slotDisponibilita){
 		List<Docente> docDisponibili=new ArrayList<>();		
 		for(Docente d:this.getDocenti()){
-			if(d.getDisponibilita().contains(i))
-				docDisponibili.add(d);
+			for(Integer i:slotDisponibilita)
+				if(!docDisponibili.contains(d)&&d.getDisponibilita().contains(i))
+					docDisponibili.add(d);
 		}
 		return docDisponibili;
 

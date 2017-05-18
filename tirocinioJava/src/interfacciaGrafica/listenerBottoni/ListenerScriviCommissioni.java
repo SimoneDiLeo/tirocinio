@@ -1,7 +1,8 @@
-package interfacciaGrafica;
+package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,11 @@ import javax.swing.JTextField;
 
 import gestoreFile.scritturaFile;
 
-public class FinestraScriviCommissioni implements ActionListener {
+public class ListenerScriviCommissioni implements ActionListener {
 private List<JLabel> lista;
 private JTextField nomeFile;
 
-	public FinestraScriviCommissioni(List<JLabel> labelCommissioni, JTextField nomeFileDocenti) {
+	public ListenerScriviCommissioni(List<JLabel> labelCommissioni, JTextField nomeFileDocenti) {
 		this.lista=labelCommissioni;
 		this.nomeFile=nomeFileDocenti;
 	}
@@ -26,7 +27,12 @@ private JTextField nomeFile;
 		for(JLabel jl : this.lista){
 			listaStringhe.add(jl.getText());
 		}
-		scrittore.scrivi(this.nomeFile.getText(), listaStringhe);
+		try {
+			scrittore.scrivi(this.nomeFile.getText(), listaStringhe);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 }

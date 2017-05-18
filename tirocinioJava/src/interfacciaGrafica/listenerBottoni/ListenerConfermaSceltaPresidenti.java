@@ -29,7 +29,9 @@ public class ListenerConfermaSceltaPresidenti implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.f.dispose();
-		new FinestraSceltaCommissioni(controller, numeroTriennali, numeroMagistrali);
+		this.controller.addFrameCorrente(f);
+		this.controller.confermaPresidenti();
+		new FinestraSceltaCommissioni(controller, numeroMagistrali, numeroTriennali);
 
 	}
 

@@ -42,6 +42,7 @@ public final class ListenerBottonePaginaUno implements ActionListener {
 		String nomeFileControrelatori=this.controrelatori.getText();
 		Controller c=new Controller();
 		c.caricaFile(nomeFileDocenti, nomeFileStudenti, nomeFilePersonale, nomeFileControrelatori);
+		c.addFrameCorrente(fFrame);
 		this.fFrame.dispose();
 		new FinestraSceltaNumeroCommissioni(c);
 	}

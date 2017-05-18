@@ -5,20 +5,22 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import controller.Controller;
+
 public class ListenerTornaIndietro implements ActionListener {
 	private JFrame frameChiamata;
-	private JFrame frameDaChiamare;
+	private Controller c;
 	
-	public ListenerTornaIndietro(JFrame f, JFrame sFrame) {
-		this.frameChiamata= f;
-		this.frameDaChiamare=sFrame;
+	public ListenerTornaIndietro(JFrame f, Controller c) {
+		this.frameChiamata=f;
+		this.c=c;
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.frameChiamata.dispose();
-		this.frameDaChiamare.setVisible(true);
-	}
+		c.tornaIndietro();
+		}
 
 }

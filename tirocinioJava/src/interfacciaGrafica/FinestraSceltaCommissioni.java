@@ -26,7 +26,8 @@ import classi.ListaCommissioni;
 import classi.ListaDocenti;
 import classi.Studente;
 import controller.Controller;
-import interfacciaGrafica.listenerBottoni.ConfermaSceltaCommissioni;
+import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaCommissioni;
+import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 import interfacciaGrafica.listenerBottoni.InterazioneDisponibilita;
 import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
 
@@ -36,13 +37,13 @@ public class FinestraSceltaCommissioni {
 
 	//costruttore
 	public FinestraSceltaCommissioni(Controller controller, int numeroMagistrali , int numeroTriennali){
-
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.f.setSize(300,300);
 		JScrollPane jScrollPane = new JScrollPane(this.p);
 		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.f.getContentPane().add(jScrollPane);
+		
 		Box box = Box.createVerticalBox();
 		box.add(new JLabel("Commissioni Magistrali"));
 		controller.setListaCommissioni(numeroMagistrali, numeroTriennali);
@@ -50,19 +51,26 @@ public class FinestraSceltaCommissioni {
 		controller.inizializzaCommissioniTriennali();
 		//		if(numeroTriennali!=0)
 		//			listaCommissioni.inizializzaPresidentiTriennali(presidentiPotenziali);
-			for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
-				if(cgm!=null)	
-				box.add(new JLabel(cgm.getPresidente().getNome()));}
-			box.add(new JLabel("Commissioni Triennali"));
-			for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommTri()){
-				if(cgm!=null)
-				box.add(new JLabel(cgm.getPresidente().getNome()));}
+		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
+			if(cgm!=null)	
+				box.add(new JLabel(cgm.getPresidente().getNome()));
+			controller.aggiornaCommissione(cgm);
+			box.add(controller.creaJComboCommissari(cgm));
+			box.add(controller.creaRadioBoxDisponibilita(cgm));
+		}
+		box.add(new JLabel("Commissioni Triennali"));
+		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommTri()){
+			if(cgm!=null)
+				box.add(new JLabel(cgm.getPresidente().getNome()));
+		}
+
+
 		//			DefaultListModel modLaureandi= new DefaultListModel<>();
 		//			for(Studente s:cgm.getLaureandi())
 		//				modLaureandi.addElement(s);
 		//			JList listaLaureandi= new JList(modLaureandi);
 		//			Map<JComboBox, DefaultComboBoxModel> modelliBox=new HashMap<>();
-		//			cgm.aggiornaCommissione(cgm.getSlotCorrente(), controller);
+		//			
 		//			int i=0;
 		//			for(ArrayList<Docente> lista:cgm.getCommissari()){
 		//				JComboBox commissari = new JComboBox(lista.toArray());
@@ -107,11 +115,13 @@ public class FinestraSceltaCommissioni {
 		//
 		//
 		//		}
-		//		JButton conferma=new JButton("conferma scelte");
-		//		conferma.addActionListener(new ConfermaSceltaCommissioni(listaCommissioni));;
-		//		box.add(conferma);
-		//	}
-
+		JButton conferma=new JButton("conferma scelte");
+		conferma.addActionListener(new ListenerConfermaSceltaCommissioni(this.f,controller));;
+		box.add(conferma);
+		
+		JButton ti=new JButton("Torna Indietro");
+		ti.addActionListener(new ListenerTornaIndietro(f, controller));;
+		box.add(ti);
 
 		this.p.add(box);
 

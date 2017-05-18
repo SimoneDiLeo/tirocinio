@@ -13,6 +13,7 @@ import classi.Docente;
 import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerBottoneCalcolaPresidenti;
+import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 
 public class FinestraSceltaNumeroCommissioni {
 	private JFrame f = new JFrame("Seconda Schermata");
@@ -20,7 +21,6 @@ public class FinestraSceltaNumeroCommissioni {
 	
 	//costruttore
 	public FinestraSceltaNumeroCommissioni(Controller c) {
-
 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(300,300);
@@ -41,7 +41,12 @@ public class FinestraSceltaNumeroCommissioni {
 		box.add(new JLabel("Numero Commissioni Magistrali"));
 		JTextField numMagistrali= new JTextField();
 		box.add(numMagistrali);
+		
 		box.add(provaPrimaCommissione);
+		
+		JButton tornaIndietro=new JButton("Torna Indietro");
+		tornaIndietro.addActionListener(new ListenerTornaIndietro(f, c));
+		box.add(tornaIndietro);		
 		provaPrimaCommissione.addActionListener(new ListenerBottoneCalcolaPresidenti(numTriennali,numMagistrali,c,f));
 		panel.add(box);
 	}

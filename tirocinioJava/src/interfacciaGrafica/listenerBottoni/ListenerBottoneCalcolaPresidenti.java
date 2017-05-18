@@ -44,7 +44,8 @@ public class ListenerBottoneCalcolaPresidenti implements ActionListener{
 		int numeroTriennali=Integer.valueOf(this.numeroTriennali.getText());
 		this.sFrame.dispose();
 		this.c.calcola();
-		new FinestraPresidenti(this.c,numeroTriennali,numeroMagistrali,this.sFrame);
+		c.addFrameCorrente(sFrame);
+		new FinestraPresidenti(this.c,numeroTriennali,numeroMagistrali);
 	}
 
 }

@@ -14,7 +14,7 @@ import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraModifica;
 import interfacciaGrafica.FinestraSceltaCommissioni;
 
-public class ChiamataModifica implements ActionListener {
+public class ListenerConfermaModificaPresidenti implements ActionListener {
 
 	private JFrame f;
 	private Controller c;
@@ -22,7 +22,7 @@ public class ChiamataModifica implements ActionListener {
 	private int numMag;
 
 
-	public ChiamataModifica(JFrame f, Controller c, int numTri,	int numMag) {
+	public ListenerConfermaModificaPresidenti(JFrame f, Controller c, int numTri,	int numMag) {
 		this.f=f;
 		this.c=c;
 		this.numTri=numTri;
@@ -32,6 +32,7 @@ public class ChiamataModifica implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		c.addFrameCorrente(f);
 		new FinestraSceltaCommissioni(c,numMag, numTri);
 		this.f.dispose();
 	}

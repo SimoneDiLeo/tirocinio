@@ -10,6 +10,7 @@ public class Docente{
 	private String note;
 	private List<Integer> disponibilita;
 	private List<Studente> laureandi;
+	private boolean selezionato=false;
 
 	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
@@ -146,7 +147,16 @@ public class Docente{
 
 	@Override
 	public String toString() {
-		return "Docente [nome=" + nome + ", ruolo=" + ruolo + ", note=" + note + ", disponibilita=" + disponibilita
-				+ ", numero laureandi Triennali=" + this.getNumeroLaureandiTriennali() + ", Numero laureandi Magistrali="+ getNumeroLaureandiMagistrali() +"]\n";
+		return "nome=" + nome + ", ruolo=" + ruolo + ", " + "disponibilita=" + disponibilita
+				+ ", numero laureandi Triennali=" + this.getNumeroLaureandiTriennali() + ", Numero laureandi Magistrali="+ getNumeroLaureandiMagistrali() 
+				+ "\n";
+	}
+
+	public boolean isSelezionato() {
+		return selezionato;
+	}
+
+	public void setSelezionato(boolean selezionato) {
+		this.selezionato = selezionato;
 	}
 }	

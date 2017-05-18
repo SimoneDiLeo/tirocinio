@@ -14,7 +14,7 @@ public class scritturaFile {
 
 	}
 
-	public void scrivi(String nomeFile,List<String> lista){
+	public void scrivi(String nomeFile,List<String> lista) throws IOException{
 		FileWriter file;
 		FileWriter fileCommissione;
 		int j=1;
@@ -61,7 +61,7 @@ public class scritturaFile {
 			fileCommissione.close();
 
 		} catch (IOException e) {
-			new FinestraErrore();
+			throw e;
 		} 
 
 	}

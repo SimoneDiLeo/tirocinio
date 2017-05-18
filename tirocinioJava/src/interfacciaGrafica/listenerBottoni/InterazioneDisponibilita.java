@@ -33,7 +33,7 @@ public class InterazioneDisponibilita implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int i = (int) this.disp.getSelectedItem();
-		this.cg.aggiornaCommissione(i, this.d);
+//		this.cg.aggiornaCommissione(i, this.d);
 		for(JComboBox jc:this.modelliJBoxCommissari.keySet()){
 			for(ArrayList<Docente> d : this.cg.getCommissari()){
 				jc.removeAll();

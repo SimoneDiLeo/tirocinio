@@ -1,9 +1,13 @@
 package classi;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 
 
 public class CommissioneGrafica {
@@ -17,7 +21,7 @@ public class CommissioneGrafica {
 	public CommissioneGrafica(){
 
 	}
-	
+
 	public Map<Integer, Docente> getMappatura() {
 		return mappatura;
 	}
@@ -36,7 +40,7 @@ public class CommissioneGrafica {
 		inizializzaDaTipo(pres);
 	}
 
-	
+
 	public void reinizializzaLaureandi(){
 		this.laureandi=new ArrayList<>();
 	}
@@ -68,22 +72,6 @@ public class CommissioneGrafica {
 		this.presidente = presidente;
 	}
 
-	//	public List<Docente> getCommissari1() {
-	//		return commissari1;
-	//	}
-	//
-	//	public void setCommissari1(List<Docente> commissari1) {
-	//		this.commissari1 = commissari1;
-	//	}
-	//
-	//	public List<Docente> getCommissari2() {
-	//		return commissari2;
-	//	}
-	//
-	//	public void setCommissari2(List<Docente> commissari2) {
-	//		this.commissari2 = commissari2;
-	//	}
-
 	public List<Studente> getLaureandi() {
 		return laureandi;
 	}
@@ -108,12 +96,14 @@ public class CommissioneGrafica {
 		this.tipoCommissione = tipoCommissione;
 	}
 
-	public void aggiornaCommissione(int nuovaDisp,ListaDocenti docenti){
+	public void inizializzaCommissariCommissione(ListaDocenti docenti){
 		for(int i=0;i<this.numeroCommissari;i++){
-			if(this.commissariPossibili.size()<i)
-				this.commissariPossibili.set(i, (ArrayList<Docente>) docenti.docentiConDisponibilita(nuovaDisp));
-			else 
-				this.commissariPossibili.add(i,(ArrayList<Docente>) docenti.docentiConDisponibilita(nuovaDisp));
+			if(this.commissariPossibili.size()<i){
+				this.commissariPossibili.set(i, (ArrayList<Docente>) docenti.docentiConDisponibilita(this.slotDisponibilita));
+			}
+			else {
+				this.commissariPossibili.add(i,(ArrayList<Docente>) docenti.docentiConDisponibilita(this.slotDisponibilita));
+			}
 		}
 
 	}
@@ -125,7 +115,7 @@ public class CommissioneGrafica {
 	public void setCommissari(List<ArrayList<Docente>> commissari) {
 		this.commissariPossibili = commissari;
 	}
-	
+
 	public void aggiornaLaureandi(Docente d){
 		inizializzaDaTipo(d);
 	}
@@ -135,6 +125,15 @@ public class CommissioneGrafica {
 			if(this.laureandi.contains(s))
 				this.laureandi.remove(s);
 		}
+	}
+
+	public ButtonGroup creaRadioBoxDisponibilita() {
+		ButtonGroup group = new ButtonGroup();
+		for(Integer i : this.slotDisponibilita){
+			JRadioButton disp = new JRadioButton(Integer.toString(i));
+			group.add(disp);
+		}
+		return group;
 	}
 
 }
