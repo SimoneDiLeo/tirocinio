@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -32,6 +33,7 @@ import interfacciaGrafica.FinestraErrore;
 import logica.CaricatoreTuttiFile;
 
 public class Controller {
+	private Properties proprieta;
 	private ListaDocenti docenti;
 	private List<Studente> studenti;
 	private List<Controrelatore> controrel;
@@ -110,7 +112,7 @@ public class Controller {
 	}
 
 	public void setListaCommissioni(int nm,int nt){
-		listaCommissioni = new ListaCommissioni(nm, nt);
+		listaCommissioni = new ListaCommissioni(nm, nt, this.proprieta);
 	}
 
 	public void inizializzaCommissioniMagistrali(){
@@ -193,5 +195,13 @@ public class Controller {
 		JFrame frameDaVedere=this.framesPrecedente.get(this.framesPrecedente.size()-1);
 		frameDaVedere.setVisible(true);
 		this.framesPrecedente.remove(frameDaVedere);
+	}
+
+	public Properties getProprieta() {
+		return proprieta;
+	}
+
+	public void setProprieta(Properties proprieta) {
+		this.proprieta = proprieta;
 	}
 }

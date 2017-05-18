@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.SortedMap;
 
 import javax.swing.JFrame;
@@ -25,13 +26,15 @@ public final class ListenerBottonePaginaUno implements ActionListener {
 	private JTextField studenti;
 	private JTextField personale;
 	private JTextField controrelatori;
+	private Properties props;
 
-	public ListenerBottonePaginaUno(final JFrame aFrame,JTextField testoInputDocenti,JTextField testoInputStudenti, JTextField nomeFilePersonale, JTextField nomeFileControrelatori){
+	public ListenerBottonePaginaUno(Properties props, final JFrame aFrame,JTextField testoInputDocenti,JTextField testoInputStudenti, JTextField nomeFilePersonale, JTextField nomeFileControrelatori){
 		fFrame = aFrame;
 		docenti=testoInputDocenti;
 		studenti=testoInputStudenti;
 		personale=nomeFilePersonale;
 		controrelatori=nomeFileControrelatori;
+		this.props=props;
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public final class ListenerBottonePaginaUno implements ActionListener {
 		String nomeFilePersonale=this.personale.getText();
 		String nomeFileControrelatori=this.controrelatori.getText();
 		Controller c=new Controller();
+		c.setProprieta(this.props);
 		c.caricaFile(nomeFileDocenti, nomeFileStudenti, nomeFilePersonale, nomeFileControrelatori);
 		c.addFrameCorrente(fFrame);
 		this.fFrame.dispose();
