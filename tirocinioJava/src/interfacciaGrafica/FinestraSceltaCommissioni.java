@@ -29,7 +29,7 @@ import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaCommissioni;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 import interfacciaGrafica.listenerBottoni.InterazioneDisponibilita;
-import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
+import interfacciaGrafica.listenerBottoni.SelezionaDocenteVecchio;
 //Parte di lavoro per Pier
 //colorazione degli studenti se sopra il limite
 //gestire gli studenti con una JList per aggiungerli nelle commissioni

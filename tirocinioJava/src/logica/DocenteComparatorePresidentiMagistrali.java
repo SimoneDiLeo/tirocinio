@@ -1,6 +1,8 @@
-package classi;
+package logica;
 
 import java.util.Comparator;
+
+import classi.Docente;
 
 public class DocenteComparatorePresidentiMagistrali implements Comparator<Docente> {
 

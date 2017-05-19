@@ -17,12 +17,12 @@ import classi.Docente;
 import classi.Studente;
 import controller.Controller;
 
-public class LogicaSelezioneDocente implements ActionListener {
+public class SelezionaDocenteVecchio implements ActionListener {
 	private Controller c;
 	private Docente docPrecente;
 
 
-	public LogicaSelezioneDocente(Controller controller, Docente docPrecente) {
+	public SelezionaDocenteVecchio(Controller controller, Docente docPrecente) {
 		this.c=controller;
 		this.docPrecente=docPrecente;
 	}

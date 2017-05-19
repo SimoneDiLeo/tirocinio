@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classi.Docente;
-import classi.DocenteComparatorePresidentiMagistrali;
-import classi.DocenteComparatorePresidentiTriennali;
 import classi.Studente;
+import logica.DocenteComparatorePresidentiMagistrali;
+import logica.DocenteComparatorePresidentiTriennali;
 
 public class TestOrdinatoreListaDocenti {
 	public static void main(String[] args){

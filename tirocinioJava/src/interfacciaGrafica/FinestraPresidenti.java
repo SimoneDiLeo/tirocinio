@@ -13,16 +13,16 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import classi.BozzaAlgoritmo;
 import classi.CommissioneGrafica;
 import classi.Docente;
-import classi.DocenteComparatorePresidentiMagistrali;
-import classi.DocenteComparatorePresidentiTriennali;
 import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerModificaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
+import logica.BozzaAlgoritmo;
+import logica.DocenteComparatorePresidentiMagistrali;
+import logica.DocenteComparatorePresidentiTriennali;
 
 public class FinestraPresidenti {
 	private JFrame f =new JFrame("Finestra Scelta Presidenti");

@@ -13,12 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import classi.BozzaAlgoritmo;
 import classi.Docente;
-import classi.DocenteComparatorePresidentiMagistrali;
 import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
+import logica.BozzaAlgoritmo;
+import logica.DocenteComparatorePresidentiMagistrali;
 import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraPresidenti;
 import interfacciaGrafica.FinestraSceltaCommissioni;

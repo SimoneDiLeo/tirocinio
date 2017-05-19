@@ -1,6 +1,6 @@
 package classi;
 
-
+//vecchia versione da tenere per ispirazione
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

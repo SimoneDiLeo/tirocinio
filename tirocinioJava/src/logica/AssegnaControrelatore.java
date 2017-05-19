@@ -1,9 +1,14 @@
-package classi;
+package logica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import classi.Controrelatore;
+import classi.Docente;
+import classi.Personale;
+import classi.Studente;
 
 public class AssegnaControrelatore {
 

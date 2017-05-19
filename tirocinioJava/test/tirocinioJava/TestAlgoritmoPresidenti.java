@@ -3,12 +3,12 @@ package tirocinioJava;
 import java.util.List;
 import java.util.Scanner;
 
-import classi.BozzaAlgoritmo;
 import classi.Docente;
 import classi.ListaDocenti;
 import classi.Studente;
 import gestoreFile.lettore.LettoreFileDocente;
 import gestoreFile.lettore.LettoreFileStudenti;
+import logica.BozzaAlgoritmo;
 
 public class TestAlgoritmoPresidenti {
 	public static void main(String[] args){

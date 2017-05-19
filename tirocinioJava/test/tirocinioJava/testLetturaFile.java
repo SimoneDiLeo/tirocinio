@@ -7,12 +7,8 @@ import java.util.Scanner;
 
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 
-import classi.AssegnaControrelatore;
-import classi.BozzaAlgoritmo;
 import classi.Controrelatore;
 import classi.Docente;
-import classi.DocenteComparatorePresidentiMagistrali;
-import classi.DocenteComparatoreRuolo;
 import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
@@ -21,6 +17,10 @@ import gestoreFile.lettore.LettoreFileControrelatore;
 import gestoreFile.lettore.LettoreFileDocente;
 import gestoreFile.lettore.LettoreFilePersonale;
 import gestoreFile.lettore.LettoreFileStudenti;
+import logica.AssegnaControrelatore;
+import logica.BozzaAlgoritmo;
+import logica.DocenteComparatorePresidentiMagistrali;
+import logica.DocenteComparatoreRuolo;
 
 public class testLetturaFile {
 	public static void main(String[] args){

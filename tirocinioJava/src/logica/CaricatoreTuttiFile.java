@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import classi.AssegnaControrelatore;
 import classi.Controrelatore;
 import classi.ListaDocenti;
 import classi.Personale;

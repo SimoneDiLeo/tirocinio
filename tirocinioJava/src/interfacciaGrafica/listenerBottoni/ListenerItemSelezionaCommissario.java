@@ -7,12 +7,12 @@ import classi.CommissioneGrafica;
 import classi.Docente;
 import controller.Controller;
 
-public class ProvaListenerItem implements ItemListener{
+public class ListenerItemSelezionaCommissario implements ItemListener{
 	private Controller c;
 	private CommissioneGrafica cgm;
 	private int indiceJComboBox;
 	
-	public ProvaListenerItem(Controller controller, CommissioneGrafica cgm, int i){
+	public ListenerItemSelezionaCommissario(Controller controller, CommissioneGrafica cgm, int i){
 		this.c=controller;
 		this.cgm=cgm;
 		this.indiceJComboBox=i;

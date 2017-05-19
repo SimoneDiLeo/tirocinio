@@ -14,20 +14,20 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import classi.BozzaAlgoritmo;
 import classi.CommissioneGrafica;
 import classi.Controrelatore;
 import classi.Docente;
-import classi.DocenteComparatorePresidentiMagistrali;
-import classi.DocenteComparatorePresidentiTriennali;
 import classi.ListaCommissioni;
 import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
-import interfacciaGrafica.listenerBottoni.ProvaListenerItem;
+import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
 import interfacciaGrafica.FinestraErrore;
+import logica.BozzaAlgoritmo;
 import logica.CaricatoreTuttiFile;
+import logica.DocenteComparatorePresidentiMagistrali;
+import logica.DocenteComparatorePresidentiTriennali;
 
 public class Controller {
 	private Properties proprieta;
@@ -154,7 +154,7 @@ public class Controller {
 				j++;
 				jm.addItem(d);
 			}
-			jm.addItemListener(new ProvaListenerItem(this,cgm,i));
+			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i));
 			i++;
 			box.add(jm);
 		}

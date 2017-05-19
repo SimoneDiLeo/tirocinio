@@ -18,6 +18,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import interfacciaGrafica.FinestraErrore;
+import interfacciaGrafica.listenerBottoni.ListenerDocumentProprieta;
 
 public class ControllerProprieta {
 	private Properties proprieta;

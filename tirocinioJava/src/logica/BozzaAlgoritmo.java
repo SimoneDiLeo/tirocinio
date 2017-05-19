@@ -1,8 +1,11 @@
-package classi;
+package logica;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import classi.Docente;
+import classi.ListaDocenti;
 //classe di prova per una bozza dell'algoritmo di riempimento di una commissione
 public class BozzaAlgoritmo {
 
