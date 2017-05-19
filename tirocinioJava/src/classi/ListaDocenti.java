@@ -90,13 +90,23 @@ public class ListaDocenti {
 		}
 	}
 
-	public void decrementaDisponibilitaDocente(Docente d) {
-		System.out.println(d.toString());
+	public void azzeraDisponibilitaDocente(Docente d) {
 		for(int i=0;i<this.docenti.size();i++){
 			Docente doc=null;
 			if(this.docenti.get(i).equals(d)){
 				d=this.docenti.get(i);
 				d.azzeraSelezionato();
+				this.docenti.set(i, d);
+			}
+		}
+	}
+	
+	public void decrementaDisponibilitaDocente(Docente d) {
+		for(int i=0;i<this.docenti.size();i++){
+			Docente doc=null;
+			if(this.docenti.get(i).equals(d)){
+				d=this.docenti.get(i);
+				d.decrementaSelezionato();
 				this.docenti.set(i, d);
 			}
 		}

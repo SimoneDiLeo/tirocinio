@@ -35,10 +35,9 @@ import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
 //gestire gli studenti con una JList per aggiungerli nelle commissioni
 //jList degli studenti di ogni commissione puo essere modificabile (rimozione studente)
 //se rimuovo studente il colore che devo assegnarli dipendera dalla commissione dove lo inseriro
-//parte di lavoro mia
-//TODO listener per la selezione del commissario
-//TODO modifica dei docenti colore rosso nelle varie commissioni e se lo rimuovo torna verde(solo se non è selezionato altrove)
+//parte di lavoro mia finita(per ora) 19/5/17
 //TODO(da vedere con pier) conseguenza scelta commissario:aggiunta studenti nella commissione
+
 public class FinestraSceltaCommissioni {
 	private JFrame f =new JFrame("scelta commissione");
 	private JPanel p = new JPanel();
@@ -55,9 +54,11 @@ public class FinestraSceltaCommissioni {
 		
 		Box box = Box.createVerticalBox();
 		box.add(new JLabel("Commissioni Magistrali"));
+		//inizializzazione delle commissioni(con solo i presidenti) 
 		controller.setListaCommissioni(numeroMagistrali, numeroTriennali);
 		controller.inizializzaCommissioniMagistrali();
 		controller.inizializzaCommissioniTriennali();
+//
 		
 		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
 			if(cgm!=null)	

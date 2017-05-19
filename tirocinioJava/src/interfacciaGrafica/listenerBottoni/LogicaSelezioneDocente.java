@@ -32,8 +32,8 @@ public class LogicaSelezioneDocente implements ActionListener {
 		JComboBox cb = (JComboBox)e.getSource();
 		Docente d = (Docente)cb.getSelectedItem();
 		System.out.println(docPrecente);
-		this.c.decrementaCommissioniInLista(this.docPrecente);
-		this.c.modificaSelezionatoInDocente(d);
+		this.c.azzeraCommissioniInLista(this.docPrecente);
+//		this.c.modificaSelezionatoInDocente(d);
 	}
 }
 //versione precedente

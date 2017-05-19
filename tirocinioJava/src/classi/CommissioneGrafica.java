@@ -17,17 +17,25 @@ public class CommissioneGrafica {
 	private List<Integer> slotDisponibilita;
 	private String tipoCommissione;
 	private int numeroCommissari;
-	private Map<Integer,Docente> mappatura=new HashMap<>();
+	private Map<Integer,Docente> commissariScelti=new HashMap<>();
 	public CommissioneGrafica(){
 
 	}
 
 	public Map<Integer, Docente> getMappatura() {
-		return mappatura;
+		return commissariScelti;
 	}
 
 	public void setMappatura(Map<Integer, Docente> mappatura) {
-		this.mappatura = mappatura;
+		this.commissariScelti = mappatura;
+	}
+	
+	public void addCommissario(int i , Docente d){
+		this.commissariScelti.put(i,d);
+	}
+	
+	public void eliminaCommissario(int i,Docente d){
+		this.commissariScelti.remove(i, d);
 	}
 
 	public CommissioneGrafica(Docente pres, int numeroCommissari,String tipoCommissione){

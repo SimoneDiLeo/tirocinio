@@ -1,7 +1,5 @@
 package controller;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -12,8 +10,6 @@ import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,8 +24,7 @@ import classi.ListaCommissioni;
 import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
-import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
-import interfacciaGrafica.listenerBottoni.LogicaSelezioneDocente;
+import interfacciaGrafica.listenerBottoni.ProvaListenerItem;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
 import interfacciaGrafica.FinestraErrore;
 import logica.CaricatoreTuttiFile;
@@ -101,8 +96,8 @@ public class Controller {
 		return box;
 	}
 
-	public JComboBox comboBoxPresidentiPotenziali(){
-		JComboBox jm = new JComboBox<>();
+	public JComboBox<Docente> comboBoxPresidentiPotenziali(){
+		JComboBox<Docente> jm = new JComboBox<>();
 		for(Docente d:this.listaPotenzialiPresidenti){
 			jm.addItem(d);
 		}
@@ -145,16 +140,22 @@ public class Controller {
 
 	public Box creaJComboCommissari(CommissioneGrafica cgm){
 		Box box=Box.createVerticalBox();
-
+		int i=0;
 		for(List<Docente> docs:cgm.getCommissari()){
 			JComboBox<Docente> jm = new JComboBox<>();
 			ComboBoxRendererCommissari renderer = new ComboBoxRendererCommissari(jm);
 			jm.setRenderer(renderer);
+			int j =0;//aggiunta per risolvere problema del valore di default
 			for(Docente d:docs){
+				//serve per risovere il fatto che il valore di default nel jcombo box non verrebbe aggiunto e problemi a cascata
+				if(j==0){
+					this.modificaSelezionatoInDocente(d, cgm, i);
+				}
+				j++;
 				jm.addItem(d);
 			}
-			Docente docPrecente=(Docente) jm.getSelectedItem();
-			jm.addActionListener(new LogicaSelezioneDocente(this,docPrecente));
+			jm.addItemListener(new ProvaListenerItem(this,cgm,i));
+			i++;
 			box.add(jm);
 		}
 		return box;
@@ -224,7 +225,7 @@ public class Controller {
 
 	public void reinizializzaPresidenti() {
 		for(Docente d:this.presidentiCorrenti.values()){
-			this.docenti.decrementaDisponibilitaDocente(d);
+			this.docenti.azzeraDisponibilitaDocente(d);
 		}
 
 	}
@@ -233,11 +234,17 @@ public class Controller {
 		this.docenti.reinizializzaTrannePresidenti(this.presidentiCorrenti.values());
 	}
 
-	public void modificaSelezionatoInDocente(Docente d) {
+	public void modificaSelezionatoInDocente(Docente d, CommissioneGrafica cgm, int indiceJComboBox) {
+		cgm.addCommissario(indiceJComboBox, d);
 		this.docenti.incrementaDisponibilitaDocente(d);		
 	}
 
-	public void decrementaCommissioniInLista(Docente docPrecente) {
+	public void azzeraCommissioniInLista(Docente docPrecente) {
+		this.docenti.azzeraDisponibilitaDocente(docPrecente);				
+	}
+
+	public void decrementaCommissioniInLista(Docente docPrecente,CommissioneGrafica cgm, int indiceJComboBox) {
+		cgm.eliminaCommissario(indiceJComboBox,docPrecente);
 		this.docenti.decrementaDisponibilitaDocente(docPrecente);				
 	}
 

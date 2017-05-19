@@ -19,9 +19,7 @@ public class ListenerTornaIndietro implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(this.frameChiamata.getName());
 		if(this.frameChiamata.getName().equals("scelta commissione")){
-			System.out.println("torno indietro e reinizializzo");
 			this.c.reinizializzaPresidenti();
 			this.c.reinizializzaCommissioni();
 		}

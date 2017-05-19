@@ -2,6 +2,7 @@ package interfacciaGrafica.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -46,22 +47,20 @@ public class ComboBoxRendererCommissari extends JPanel implements ListCellRender
 		return strings;
 	}
 
+
+
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
-		if (isSelected)
-		{
-			text.setForeground(text.getForeground());
-			setBackground(Color.WHITE);
-		}
 		text.setBackground(Color.BLACK);
 		text.setText(value.toString());
-		if (index>-1) {
+		if (index>-2) {
 			if(((Docente) value).isSelezionato())
 				text.setForeground(rosso);
 			else
 				text.setForeground(verde);
 		}
+		
 		return text;
 	}
 
