@@ -1,242 +1,192 @@
 package classi;
 
-//vecchia versione da tenere per ispirazione
+import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Commissione{
-	private Docente[] elementi;//elemento[0] -> presidente commissione
-	//private Map<Docente,List<Studente> > studenti; // array chiave index relatore valore array studenti
-	private List<Studente> studenti;
-	private String tipoLaurea;
-	private boolean complete;
-	private Docente[] supplenti;
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout.Group;
 
-	public Commissione (int numeroCommissari,int numeroStudenti,int numeroSupplenti,String tipoLaurea){
-		this.tipoLaurea=tipoLaurea;
-		this.elementi=new Docente[numeroCommissari];
-		this.studenti= new ArrayList<>();
-		this.complete=false;
-		this.supplenti=new Docente[numeroSupplenti];
-	}
-	//costruttore dummy per test semplici
-	//da eliminare piu avanti nell'implementazione
-	public Commissione (){
-		this.elementi=new Docente[1];
-		this.studenti= new ArrayList<>();
-		this.complete=false;
-		this.tipoLaurea="MAGISTRALI";
-		this.supplenti=new Docente[1];
-	}
+import interfacciaGrafica.listenerBottoni.ListenerRadioBoxDisponibilita;
+
+import javax.swing.JRadioButton;
 
 
+public class Commissione {
+	private Docente presidente;
+	private List<ArrayList<Docente>> commissariPossibili;
+	private List<Studente> laureandi;
+	private List<Integer> slotDisponibilita;
+	private String tipoCommissione;
+	private int numeroCommissari;
+	private Map<Integer,Docente> commissariScelti=new HashMap<>();
+	private int slotScelto;
+	private int numeroCommissione;
 
-	public Docente getPresidente(){
-		return this.elementi[0];
+
+	public Commissione(){
+
 	}
 
-	private int contaInseriti(){
-		int i=0;
-		for(Docente doc:this.elementi){
-			if(doc!=null){
-				i++;
+	public Map<Integer, Docente> getMappatura() {
+		return commissariScelti;
+	}
+
+	public void setMappatura(Map<Integer, Docente> mappatura) {
+		this.commissariScelti = mappatura;
+	}
+
+	public void addCommissario(int i , Docente d){
+		this.commissariScelti.put(i,d);
+	}
+
+	public void eliminaCommissario(int i,Docente d){
+		this.commissariScelti.remove(i, d);
+	}
+
+	public Commissione(Docente pres, int numeroCommissari,String tipoCommissione){
+		this.presidente=pres;
+		this.slotDisponibilita=pres.getDisponibilita();
+		this.commissariPossibili=new ArrayList<ArrayList<Docente>>();
+		this.numeroCommissari=numeroCommissari;
+		this.tipoCommissione=tipoCommissione.toUpperCase();
+		this.laureandi=new ArrayList<>();
+		inizializzaDaTipo(pres);
+	}
+
+
+	public void reinizializzaLaureandi(){
+		this.laureandi=new ArrayList<>();
+	}
+	private void inizializzaDaTipo(Docente d){
+		if(this.tipoCommissione.equals("TRIENNALE")){
+			inizializzaStudT(d);
+		}else{
+			inizializzaStudM(d);
+		}
+	}
+
+	private void inizializzaStudT(Docente d){
+		for(Studente s:d.getLaureandiTriennali()){
+			this.laureandi.add(s);
+		}
+	}
+
+	private void inizializzaStudM(Docente d){
+		for(Studente s:d.getLaureandiMagistrali()){
+			this.laureandi.add(s);
+		}
+	}
+
+	public Docente getPresidente() {
+		return presidente;
+	}
+
+	public void setPresidente(Docente presidente) {
+		this.presidente = presidente;
+	}
+
+	public List<Studente> getLaureandi() {
+		return laureandi;
+	}
+
+	public void setLaureandi(List<Studente> laureandi) {
+		this.laureandi = laureandi;
+	}
+
+	public List<Integer> getSlotDisponibilita() {
+		return slotDisponibilita;
+	}
+
+	public void setSlotDisponibilita(List<Integer> slotDisponibilita) {
+		this.slotDisponibilita = slotDisponibilita;
+	}
+
+	public String getTipoCommissione() {
+		return tipoCommissione;
+	}
+
+	public void setTipoCommissione(String tipoCommissione) {
+		this.tipoCommissione = tipoCommissione;
+	}
+
+	public void inizializzaCommissariCommissione(ListaDocenti docenti){
+		for(int i=0;i<this.numeroCommissari;i++){
+			if(this.commissariPossibili.size()<i){
+				this.commissariPossibili.set(i, (ArrayList<Docente>) docenti.docentiConDisponibilita(this.slotDisponibilita));
+			}
+			else {
+				this.commissariPossibili.add(i,(ArrayList<Docente>) docenti.docentiConDisponibilita(this.slotDisponibilita));
 			}
 		}
-		return i;
+
 	}
 
-	public boolean isComplete(){
-		if(this.tipoLaurea.equals("TRIENNALE") ){
-			if(this.contaInseriti()==3){
-				this.complete= true;
+
+	public List<ArrayList<Docente>> getCommissari() {
+		return commissariPossibili;
+	}
+	public void setCommissari(List<ArrayList<Docente>> commissari) {
+		this.commissariPossibili = commissari;
+	}
+
+	public void aggiornaLaureandi(Docente d){
+		inizializzaDaTipo(d);
+	}
+
+	public void eliminaLaureandi(Docente d){
+		for(Studente s:d.getLaureandi()){
+			if(this.laureandi.contains(s))
+				this.laureandi.remove(s);
+		}
+	}
+
+	public ButtonGroup creaRadioBoxDisponibilita() {
+		ButtonGroup group = new ButtonGroup();
+		for(Integer i : this.slotDisponibilita){
+			JRadioButton disp = new JRadioButton(Integer.toString(i));
+			disp.addActionListener(new ListenerRadioBoxDisponibilita(this));
+			group.add(disp);
+		}
+		return group;
+	}
+
+	public void aggiornaDisponibilita(List<Integer> disponibilita) {
+		List<Integer> nuoveDisponibilita=new ArrayList<>();
+		for(Integer i : this.slotDisponibilita){
+			if(disponibilita.contains(i)){
+				nuoveDisponibilita.add(i);
 			}
-			else{
-				this.complete= false;
-			}
-		}
-		else{
-			if(this.contaInseriti()==5){
-				this.complete= true;
-			}
-			else{
-				this.complete= false;
-			}
+			this.slotDisponibilita=nuoveDisponibilita;
 		}
 
-		return this.complete;
-
 	}
 
-	public int getStudentiLength(){
-		int cont=0;
-		for(Studente s:this.studenti){
-			if(s!=null)
-				cont++;
-		}
-		return cont;
-	}
-
-
-
-	public void inserisciPresidente(Docente var){
-		this.elementi[0]=var;
-	}
-
-	public void inserisciDocente(Docente var){
-		for(int i = 0; i<this.supplenti.length;i++){
-			if(this.elementi[i].equals(var))
-				this.elementi[i]=null;
-		}
-	}
-
-	public void inserisciDocenteInPosizione(int pos, Docente var){
-		this.elementi[pos]=var;
-	}
-
-	public void rimuoviDocente(Docente var){
-		for(int i = 0; i<this.supplenti.length;i++){
-			if(this.supplenti[i].equals(var))
-				this.supplenti[i]=null;
-		}
-	}
-
-
-
-
-	public void rimuoviUltimoDocente(){
-		for(int i = this.elementi.length-1; i==0;i--){
-			if(this.elementi[i]!=null)
-				this.elementi[i]=null;
-		}
-	}
-
-
-	public void inserisciGruppoStudenti(List<Studente> chiave){
-		this.studenti.addAll(chiave);
-	}
-
-	private List<Studente> listaUnita(List<Studente> list, List<Studente> var) {
-		list.addAll(var);
-		return list;
-	}
-
-
-
-
-	public void rimuoviGruppoStudenti(Docente chiave){
-		this.studenti.remove(chiave);
-	}
-
-	public void inserisciStudente(Studente s){
-		this.studenti.add(s);
-	}
-
-
-	public void rimuoviStudente(int idStudente){
-		this.studenti.remove(trovaStudenteDaChiave(this.studenti,idStudente));
-	}
-
-	private Studente trovaStudenteDaChiave(List<Studente> lista,int idStudente) {
-		for(Studente s:lista){
-			if(s.getMatricola().equals(Integer.toString(idStudente)))
-					return s;
-		}
-		return null;
-	}
-
-	public void inserisciSupplente(Docente sup){
-		for(int i = 0; i<this.supplenti.length;i++){
-			if(this.supplenti[i]==null)
-				this.supplenti[i]=sup;
-		}
-	}
-
-
-	public void eliminaSupplente(Docente sup){
-		for(int i = 0; i<this.supplenti.length;i++){
-			if(this.supplenti[i].equals(sup))
-				this.supplenti[i]=null;
-		}
-	}
-
-	public Docente[] getElementi() {
-		return this.elementi;
-	}
-
-
-
-
-	public void setElementi(Docente[] elementi) {
-		this.elementi = elementi;
-	}
-
-
-
-
-	public List<Studente> getStudenti() {
-		return studenti;
-	}
-
-
-
-
-	public void setStudenti(List<Studente> studenti) {
-		this.studenti = studenti;
-	}
-
-
-
-
-	public String getTipoLaurea() {
-		return tipoLaurea;
-	}
-
-
-
-
-	public void setTipoLaurea(String tipoLaurea) {
-		this.tipoLaurea = tipoLaurea;
-	}
-
-
-
-
-	public boolean getComplete() {
-		return complete;
-	}
-
-
-
-
-	public void setComplete(boolean complete) {
-		this.complete = complete;
-	}
-
-
-
-
-	public Docente[] getSupplenti() {
-		return supplenti;
-	}
-
-
-
-
-	public void setSupplenti(Docente[] supplenti) {
-		this.supplenti = supplenti;
-	}
-
-	@Override
-	public String toString() {
-		String commissari="";
-		for(Docente d:this.elementi){
+	public void reinizializzaDisponibilita() {
+		this.slotDisponibilita=this.presidente.getDisponibilita();
+		for(Docente d : this.commissariScelti.values()){
 			if(d!=null)
-				commissari+=d.getNome()+"\n";
+				this.aggiornaDisponibilita(d.getDisponibilita());
 		}
 
-		return "Commissione [elementi=" +commissari+ "\n studenti= " + studenti.toString() + ", tipoLaurea="
-		+ tipoLaurea + ", complete=" + complete + ", supplenti=" + Arrays.toString(supplenti) + "]";
+	}
+
+	public int getSlotScelto() {
+		return slotScelto;
+	}
+
+	public void setSlotScelto(int slotScelto) {
+		this.slotScelto = slotScelto;
+	}
+
+	public int getNumeroCommissione() {
+		return numeroCommissione;
+	}
+
+	public void setNumeroCommissione(int numeroCommissione) {
+		this.numeroCommissione = numeroCommissione;
 	}
 
 }

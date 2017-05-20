@@ -20,7 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import classi.CommissioneGrafica;
+import classi.Commissione;
 import classi.Docente;
 import classi.ListaCommissioni;
 import classi.ListaDocenti;
@@ -58,18 +58,19 @@ public class FinestraSceltaCommissioni {
 		controller.setListaCommissioni(numeroMagistrali, numeroTriennali);
 		controller.inizializzaCommissioniMagistrali();
 		controller.inizializzaCommissioniTriennali();
-//
+
 		
-		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommMag()){
+		for(Commissione cgm:controller.getListaCommissioni().getCommMag()){
 			if(cgm!=null)	
 				box.add(new JLabel(cgm.getPresidente().getNome()));
 			controller.aggiornaCommissione(cgm);
-			box.add(controller.creaJComboCommissari(cgm));
-			box.add(controller.creaRadioBoxDisponibilita(cgm));
+			Box radioBoxDisponibilita = controller.creaRadioBoxDisponibilita(cgm);
+			box.add(controller.creaJComboCommissari(cgm,radioBoxDisponibilita));
+			box.add(radioBoxDisponibilita);
 		}
 		
 		box.add(new JLabel("Commissioni Triennali"));
-		for(CommissioneGrafica cgm:controller.getListaCommissioni().getCommTri()){
+		for(Commissione cgm:controller.getListaCommissioni().getCommTri()){
 			if(cgm!=null)
 				box.add(new JLabel(cgm.getPresidente().getNome()));
 		}

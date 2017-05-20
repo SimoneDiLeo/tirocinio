@@ -12,18 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import classi.CommissioneGrafica;
+import classi.Commissione;
 import classi.Docente;
 import classi.ListaDocenti;
 
 public class InterazioneDisponibilita implements ActionListener {
 	private JComboBox disp;
-	private CommissioneGrafica cg;
+	private Commissione cg;
 	private ListaDocenti d;
 	private Map<JComboBox, DefaultComboBoxModel> modelliJBoxCommissari;
 
 
-	public InterazioneDisponibilita(JComboBox comp, CommissioneGrafica cgm,ListaDocenti docenti, Map<JComboBox, DefaultComboBoxModel> modelliBox){
+	public InterazioneDisponibilita(JComboBox comp, Commissione cgm,ListaDocenti docenti, Map<JComboBox, DefaultComboBoxModel> modelliBox){
 		this.cg=cgm;
 		this.disp=comp;
 		this.d=docenti;

@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import classi.CommissioneGrafica;
+import classi.Commissione;
 import classi.Controrelatore;
 import classi.Docente;
 import classi.ListaCommissioni;
@@ -133,12 +134,12 @@ public class Controller {
 		this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti);	
 	}
 
-	public void aggiornaCommissione(CommissioneGrafica cgm) {
+	public void aggiornaCommissione(Commissione cgm) {
 		cgm.inizializzaCommissariCommissione(this.docenti);
 
 	}
 
-	public Box creaJComboCommissari(CommissioneGrafica cgm){
+	public Box creaJComboCommissari(Commissione cgm, Box radioBoxDisponibilita){
 		Box box=Box.createVerticalBox();
 		int i=0;
 		for(List<Docente> docs:cgm.getCommissari()){
@@ -147,14 +148,10 @@ public class Controller {
 			jm.setRenderer(renderer);
 			int j =0;//aggiunta per risolvere problema del valore di default
 			for(Docente d:docs){
-				//serve per risovere il fatto che il valore di default nel jcombo box non verrebbe aggiunto e problemi a cascata
-				if(j==0){
-					this.modificaSelezionatoInDocente(d, cgm, i);
-				}
-				j++;
 				jm.addItem(d);
 			}
-			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i));
+			jm.setSelectedIndex(-1);
+			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i,radioBoxDisponibilita));
 			i++;
 			box.add(jm);
 		}
@@ -167,7 +164,7 @@ public class Controller {
 
 	}
 
-	public Box creaRadioBoxDisponibilita(CommissioneGrafica cgm) {
+	public Box creaRadioBoxDisponibilita(Commissione cgm) {
 		Box box=Box.createHorizontalBox();
 		for (Enumeration<AbstractButton> en = cgm.creaRadioBoxDisponibilita().getElements(); en.hasMoreElements();) {
 			AbstractButton b = en.nextElement();
@@ -179,8 +176,9 @@ public class Controller {
 	public List<JLabel> calcoloLabelCommissioniConfermate() {
 		List<JLabel> b = new ArrayList<>();
 		b.add(new JLabel("Commissioni Magistrali"));
-		for(CommissioneGrafica cgm : this.listaCommissioni.getCommMag()){
-			b.add(new JLabel("commissione numero :"));
+		for(Commissione cgm : this.listaCommissioni.getCommMag()){
+			b.add(new JLabel("commissione numero : " + cgm.getNumeroCommissione()));
+			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
 			b.add(new JLabel("Commissari :"));
 			for(Docente d : cgm.getMappatura().values())
@@ -190,8 +188,9 @@ public class Controller {
 				b.add(new JLabel(s.toString()));
 		}
 		b.add(new JLabel("Commissioni Triennali"));
-		for(CommissioneGrafica cgm : this.listaCommissioni.getCommTri()){
-			b.add(new JLabel("commissione numero :"));
+		for(Commissione cgm : this.listaCommissioni.getCommTri()){
+			b.add(new JLabel("commissione numero :" + cgm.getNumeroCommissione()));
+			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
 			b.add(new JLabel("Commissari :"));
 			for(Docente d : cgm.getMappatura().values())
@@ -234,7 +233,7 @@ public class Controller {
 		this.docenti.reinizializzaTrannePresidenti(this.presidentiCorrenti.values());
 	}
 
-	public void modificaSelezionatoInDocente(Docente d, CommissioneGrafica cgm, int indiceJComboBox) {
+	public void modificaSelezionatoInDocente(Docente d, Commissione cgm, int indiceJComboBox) {
 		cgm.addCommissario(indiceJComboBox, d);
 		this.docenti.incrementaDisponibilitaDocente(d);		
 	}
@@ -243,7 +242,7 @@ public class Controller {
 		this.docenti.azzeraDisponibilitaDocente(docPrecente);				
 	}
 
-	public void decrementaCommissioniInLista(Docente docPrecente,CommissioneGrafica cgm, int indiceJComboBox) {
+	public void decrementaCommissioniInLista(Docente docPrecente,Commissione cgm, int indiceJComboBox) {
 		cgm.eliminaCommissario(indiceJComboBox,docPrecente);
 		this.docenti.decrementaDisponibilitaDocente(docPrecente);				
 	}
@@ -254,5 +253,26 @@ public class Controller {
 			d.incrementaSelezionato();
 			this.presidentiCorrenti.put(entry.getKey(),d);
 		}
+	}
+
+	public void modificaPotenzialiCommissari(Docente item, Commissione cgm, int indiceJComboBox) {
+		cgm.aggiornaDisponibilita(item.getDisponibilita());
+//		cgm.aggiornaCommissariPossibili(item.getDisponibilita());
+		
+	}
+
+	public void modificaBoxDisponibilita(Box radioBoxDisponibilita, Commissione cgm) {
+		radioBoxDisponibilita.removeAll();
+		for (Enumeration<AbstractButton> en = cgm.creaRadioBoxDisponibilita().getElements(); en.hasMoreElements();) {
+			AbstractButton b = en.nextElement();
+			radioBoxDisponibilita.add(b);
+			}
+		radioBoxDisponibilita.revalidate();
+		
+	}
+
+	public void rimuoviCommissario(Docente item, Commissione cgm, int indiceJComboBox) {
+		cgm.eliminaCommissario(indiceJComboBox, item);
+		cgm.reinizializzaDisponibilita();
 	}
 }

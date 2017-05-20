@@ -13,7 +13,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import classi.CommissioneGrafica;
+import classi.Commissione;
 import classi.Docente;
 import classi.ListaDocenti;
 import controller.Controller;

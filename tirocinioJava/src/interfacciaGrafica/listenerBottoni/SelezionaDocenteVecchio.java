@@ -12,7 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import classi.CommissioneGrafica;
+import classi.Commissione;
 import classi.Docente;
 import classi.Studente;
 import controller.Controller;

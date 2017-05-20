@@ -52,6 +52,7 @@ public class ComboBoxRendererCommissari extends JPanel implements ListCellRender
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
+		if(value!=null){
 		text.setBackground(Color.BLACK);
 		text.setText(value.toString());
 		if (index>-2) {
@@ -59,6 +60,9 @@ public class ComboBoxRendererCommissari extends JPanel implements ListCellRender
 				text.setForeground(rosso);
 			else
 				text.setForeground(verde);
+		}}
+		else{
+			text.setText("");
 		}
 		
 		return text;

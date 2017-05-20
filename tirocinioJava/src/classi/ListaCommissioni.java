@@ -8,43 +8,45 @@ import java.util.Map;
 import java.util.Properties;
 
 public class ListaCommissioni {
-	private CommissioneGrafica[] commMag;
-	private CommissioneGrafica[] commTri;
+	private Commissione[] commMag;
+	private Commissione[] commTri;
 	private Properties prop;
 	
 	public ListaCommissioni(int numMag,int numTri,Properties prop){
-		this.commMag=new CommissioneGrafica[numMag];
-		this.commTri=new CommissioneGrafica[numTri];
+		this.commMag=new Commissione[numMag];
+		this.commTri=new Commissione[numTri];
 		this.prop=prop;
 	}
 
 	public void inizializzaPresidentiMagistrali(Map<Integer,Docente> presidentiPotenziali){
 		for(int i=0;i<this.commMag.length;i++){
 			if(presidentiPotenziali.get(i)!=null)
-				this.commMag[i]=new CommissioneGrafica(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
+				this.commMag[i]=new Commissione(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
+				this.commMag[i].setNumeroCommissione(i+1);
 		}
 	}
 
 	public void inizializzaPresidentiTriennali(Map<Integer, Docente> presidentiCorrenti){
 		for(int i=0;i<this.commTri.length;i++){
 			if(presidentiCorrenti.values().size()>i+this.commMag.length)
-				this.commTri[i]=new CommissioneGrafica(presidentiCorrenti.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
+				this.commTri[i]=new Commissione(presidentiCorrenti.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
+				this.commTri[i].setNumeroCommissione(i+1+this.commMag.length);
 		}
 	}
 
-	public CommissioneGrafica[] getCommMag() {
+	public Commissione[] getCommMag() {
 		return commMag;
 	}
 
-	public void setCommMag(CommissioneGrafica[] commMag) {
+	public void setCommMag(Commissione[] commMag) {
 		this.commMag = commMag;
 	}
 
-	public CommissioneGrafica[] getCommTri() {
+	public Commissione[] getCommTri() {
 		return commTri;
 	}
 
-	public void setCommTri(CommissioneGrafica[] commTri) {
+	public void setCommTri(Commissione[] commTri) {
 		this.commTri = commTri;
 	}
 
