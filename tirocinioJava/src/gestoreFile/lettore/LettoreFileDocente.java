@@ -1,6 +1,7 @@
 package gestoreFile.lettore;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,8 +15,8 @@ public class LettoreFileDocente extends LettoreFile{
 	private boolean puoiCreare=false;
 	private int indiceNote=0;
 	//costruttore che richiama il costruttore della classe che viene estesa qui
-	public LettoreFileDocente(String percorso,String separatore){
-		super(percorso,separatore);
+	public LettoreFileDocente(File docenti,String separatore){
+		super(docenti,separatore);
 	}
 	//metodo che prende in input una lista di docenti(necessaria? molto probabilmente no ma per ora la terrei) e restituisce in output una lista di docenti inizializzati da file
 	public List<Docente> inizializzaElementiDaFile() {

@@ -1,6 +1,7 @@
 package gestoreFile;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,12 +11,12 @@ import java.io.IOException;
 //classe per leggere i file
 public class LettoreFile {
 
-	protected String csvFile;
+	protected File csvFile;
 	protected BufferedReader br;
 	protected String line;
 	protected String cvsSplitBy;
 
-	public LettoreFile(String percorso,String divisore){
+	public LettoreFile(File percorso,String divisore){
 		this.csvFile=percorso;
 		this.br=null;
 		this.line="";

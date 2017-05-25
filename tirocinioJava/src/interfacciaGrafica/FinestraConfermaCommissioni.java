@@ -16,7 +16,7 @@ import interfacciaGrafica.listenerBottoni.ListenerScriviCommissioni;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
 
 public class FinestraConfermaCommissioni {
-	private JFrame f = new JFrame("Commissioni Confermati");
+	private JFrame f = new JFrame("Commissioni Confermate");
 	private JPanel panel = new JPanel();
 	public FinestraConfermaCommissioni(Controller c) {
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

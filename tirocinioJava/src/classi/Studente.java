@@ -13,6 +13,7 @@ public class Studente {
 	private Controrelatore controrelatore;
 	private String note;
 	private String argomentoTirocinio;
+	private boolean eccesso;  // valore che indica se uno studente è di troppo.... (serve poi per colorarlo di rosso)
 
 	public Studente ( int numero, String nome, String matricola, Docente relatore,Docente correlatore,String tipoLaurea, String argomentoTesi,String note){
 		this.numero=numero;
@@ -31,6 +32,7 @@ public class Studente {
 		this.nome=nome;
 		this.relatore=relatore;
 		this.tipoLaurea=tipoLaurea;
+		this.eccesso=false;
 	}
 
 	public int getNumero() {
@@ -168,6 +170,14 @@ public class Studente {
 		} else if (!tipoLaurea.equals(other.tipoLaurea))
 			return false;
 		return true;
+	}
+
+	public boolean isEccesso() {
+		return eccesso;
+	}
+
+	public void setEccesso(boolean eccesso) {
+		this.eccesso = eccesso;
 	}
 
 

@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -11,9 +12,11 @@ import java.util.Properties;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 
 import classi.Commissione;
 import classi.Controrelatore;
@@ -24,6 +27,7 @@ import classi.Personale;
 import classi.Studente;
 import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
+import interfacciaGrafica.renderer.RendererLaureandi;
 import interfacciaGrafica.FinestraErrore;
 import logica.BozzaAlgoritmo;
 import logica.CaricatoreTuttiFile;
@@ -42,7 +46,7 @@ public class Controller {
 	private ListaCommissioni listaCommissioni;
 	private List<JFrame> framesPrecedente=new ArrayList<>();
 
-	public void caricaFile(String nomeFileDocenti,String nomeFileStudenti,String nomeFilePersonale,String nomeFileControrelatori){
+	public void caricaFile(File nomeFileDocenti,File nomeFileStudenti,File nomeFilePersonale,File nomeFileControrelatori){
 		CaricatoreTuttiFile call=new CaricatoreTuttiFile();
 		try{
 			call.inizializza(nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori);
@@ -113,8 +117,8 @@ public class Controller {
 		listaCommissioni = new ListaCommissioni(nm, nt, this.proprieta);
 	}
 
-	public void inizializzaCommissioniMagistrali(){
-		this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti);
+	public void inizializzaCommissioniMagistrali(int numeroCommissioniMag){
+		this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti,this.getNumeroStudMagistrali()/numeroCommissioniMag);
 	}
 
 	public ListaCommissioni getListaCommissioni() {
@@ -130,8 +134,8 @@ public class Controller {
 
 	}
 
-	public void inizializzaCommissioniTriennali() {
-		this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti);	
+	public void inizializzaCommissioniTriennali(int numeroCommissioniTri) {
+		this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti,this.getNumeroStudTriennali()/numeroCommissioniTri);	
 	}
 
 	public void aggiornaCommissione(Commissione cgm) {
@@ -139,21 +143,29 @@ public class Controller {
 
 	}
 
-	public Box creaJComboCommissari(Commissione cgm, Box radioBoxDisponibilita){
+	public Box creaJComboCommissari(Commissione cgm, Box radioBoxDisponibilita,DefaultListModel modLaureandi,JComboBox<Integer> jc){
 		Box box=Box.createVerticalBox();
 		int i=0;
 		for(List<Docente> docs:cgm.getCommissari()){
 			JComboBox<Docente> jm = new JComboBox<>();
+
 			ComboBoxRendererCommissari renderer = new ComboBoxRendererCommissari(jm);
+
 			jm.setRenderer(renderer);
-			int j =0;//aggiunta per risolvere problema del valore di default
+
+
+
+
+			int j =0;
+			//aggiunta per risolvere problema del valore di default
 			for(Docente d:docs){
 				jm.addItem(d);
 			}
 			jm.setSelectedIndex(-1);
-			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i,radioBoxDisponibilita));
+			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i,radioBoxDisponibilita,modLaureandi,jc));
 			i++;
 			box.add(jm);
+
 		}
 		return box;
 	}
@@ -181,6 +193,7 @@ public class Controller {
 			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
 			b.add(new JLabel("Commissari :"));
+			b.add(new JLabel("numero massimo studenti : "+cgm.getMaxStudComm()));
 			for(Docente d : cgm.getMappatura().values())
 				b.add(new JLabel(d.getNome() + " " + d.getRuolo()));
 			b.add(new JLabel("Laureandi :"));
@@ -193,6 +206,7 @@ public class Controller {
 			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
 			b.add(new JLabel("Commissari :"));
+			b.add(new JLabel("numero massimo studenti : "+cgm.getMaxStudComm()));
 			for(Docente d : cgm.getMappatura().values())
 				b.add(new JLabel(d.getNome() + " " + d.getRuolo()));
 			b.add(new JLabel("Laureandi :"));
@@ -257,8 +271,8 @@ public class Controller {
 
 	public void modificaPotenzialiCommissari(Docente item, Commissione cgm, int indiceJComboBox) {
 		cgm.aggiornaDisponibilita(item.getDisponibilita());
-//		cgm.aggiornaCommissariPossibili(item.getDisponibilita());
-		
+		//		cgm.aggiornaCommissariPossibili(item.getDisponibilita());
+
 	}
 
 	public void modificaBoxDisponibilita(Box radioBoxDisponibilita, Commissione cgm) {
@@ -266,13 +280,188 @@ public class Controller {
 		for (Enumeration<AbstractButton> en = cgm.creaRadioBoxDisponibilita().getElements(); en.hasMoreElements();) {
 			AbstractButton b = en.nextElement();
 			radioBoxDisponibilita.add(b);
-			}
+		}
 		radioBoxDisponibilita.revalidate();
-		
+
 	}
 
 	public void rimuoviCommissario(Docente item, Commissione cgm, int indiceJComboBox) {
 		cgm.eliminaCommissario(indiceJComboBox, item);
 		cgm.reinizializzaDisponibilita();
 	}
+	public void getStudenti(){
+		for(Studente s:this.studenti)
+			System.out.println(s.toString());
+
+	}
+
+	public int getNumeroStudMagistrali(){
+		int cont=0;
+		for(Studente s:this.studenti){
+			if(s.getTipoLaurea().equals("MAGISTRALE"))
+				cont++;
+		}
+
+		return cont;
+	}
+
+	public int getNumeroStudTriennali(){
+		int cont=0;
+		for(Studente s:this.studenti){
+			if(s.getTipoLaurea().equals("TRIENNALE"))
+				cont++;
+		}
+
+		return cont;
+	}
+
+	public void aggiungiLureandiInCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,JComboBox<Integer> jc) {
+		//		modLaureandi.size()>cgm.getMaxStudComm();
+		//		modLaureandi.lastElement().
+		String tipoCommissione=cgm.getTipoCommissione();
+		if(tipoCommissione.equals("MAGISTRALE")){
+			for(Studente s:item.getLaureandiMagistrali()){ // metodo in docente che mi seleziona il tipo di laureando
+				if(modLaureandi.size()>=cgm.getMaxStudComm())
+					s.setEccesso(true);
+				if(!(cgm.getLaureandi().contains(s))){
+					modLaureandi.addElement(s);
+					cgm.getLaureandi().add(s);
+					jc.addItem(s.getNumero());
+					jc.revalidate();
+				}
+			}
+			//jc.revalidate();
+		}
+		else{
+			for(Studente s:item.getLaureandiTriennali()){  // metodo in docente che mi seleziona il tipo di laureando
+				if(modLaureandi.size()>=cgm.getMaxStudComm())
+					s.setEccesso(true);
+				if((cgm.getLaureandi().contains(s) && modLaureandi.contains(s))==false){
+					modLaureandi.addElement(s);
+					cgm.getLaureandi().add(s);
+					jc.addItem(s.getNumero());
+					jc.revalidate();
+				}
+			}
+			//jc.revalidate();
+		}
+
+
+
+
+
+
+	}
+	public void togliLureandiInCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,JComboBox<Integer> jc) {
+		String tipoCommissione=cgm.getTipoCommissione();
+		if(tipoCommissione.equals("MAGISTRALE")){
+			for(Studente s:item.getLaureandiMagistrali()){  // metodo in docente che mi seleziona il tipo di laureando
+				modLaureandi.removeElement(s);
+				cgm.getLaureandi().remove(s);
+				jc.removeItem(s.getNumero());
+			}
+		}
+		else{
+			for(Studente s:item.getLaureandiTriennali()){  // metodo in docente che mi seleziona il tipo di laureando
+				modLaureandi.removeElement(s);
+				cgm.getLaureandi().remove(s);
+				jc.removeItem(s.getNumero());
+			}
+		}
+
+
+
+
+
+	}
+
+	public void eliminaLaureandoDaCommissione(int numeroStudente,Commissione cgm, DefaultListModel modLaureandi, JComboBox<Integer> jc) {
+		Studente st=null;
+		modLaureandi.removeAllElements();
+		//setto eccesso studente tutti a false
+		for(Studente s: cgm.getLaureandi())
+			s.setEccesso(false);
+
+		for(Studente s:cgm.getLaureandi()){
+			if(s.getNumero()==numeroStudente)
+				st=s;
+		}
+		cgm.getLaureandi().remove(st);
+		
+
+
+		// coloro quelli in eccesso -------------
+
+		if(cgm.getLaureandi().size()>cgm.getMaxStudComm()){
+			int cont=1;
+			for(Studente s:cgm.getLaureandi()){
+
+				if(cont>cgm.getMaxStudComm())
+					s.setEccesso(true);
+				modLaureandi.addElement(s);
+
+				cont++;
+
+			}
+		}
+		else{
+			for(Studente s:cgm.getLaureandi()){
+
+
+				modLaureandi.addElement(s);
+
+
+
+			}
+		}
+
+
+
+		//-----------------------------------------
+
+
+
+		//        int cont=0;
+
+		//        int i;
+		//        for(i=0;i<diff;i++)
+		//        	modLaureandi.addElement(cgm.getLaureandi().get(i));
+
+		//        for(Studente s:cgm.getLaureandi()){
+		//        	if(cont==cgm.getLaureandi().size()-1)
+		//        	   s.setEccesso(false);
+		//        	modLaureandi.addElement(s);
+		//        	
+		//        	cont++;
+		//        	
+		//        }
+
+
+
+
+		//		cgm.getLaureandi().remove(st);
+		//		modLaureandi.removeElement(st);
+		//		jc.remove(st.getNumero());
+		//		jc.validate();
+		//		((Studente) modLaureandi.get(cgm.getLaureandi().size()-cgm.getMaxStudComm())).setEccesso(false);
+
+
+
+
+
+
+
+	}
+
+
+
+	public void settaEccessoStudenti() {
+		for(Studente s:this.studenti)
+			s.setEccesso(false);
+
+	}
+
+
+
+
 }

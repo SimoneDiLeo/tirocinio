@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import classi.ContenitoreFile;
 import classi.Docente;
 import classi.ListaDocenti;
 import controller.Controller;
@@ -22,30 +23,20 @@ import interfacciaGrafica.FinestraErrore;
 
 public final class ListenerBottonePaginaUno implements ActionListener {
 	private final JFrame fFrame;
-	private JTextField docenti;
-	private JTextField studenti;
-	private JTextField personale;
-	private JTextField controrelatori;
+	private ContenitoreFile contenitore;
 	private Properties props;
 
-	public ListenerBottonePaginaUno(Properties props, final JFrame aFrame,JTextField testoInputDocenti,JTextField testoInputStudenti, JTextField nomeFilePersonale, JTextField nomeFileControrelatori){
+	public ListenerBottonePaginaUno(Properties props, final JFrame aFrame,ContenitoreFile cf){
 		fFrame = aFrame;
-		docenti=testoInputDocenti;
-		studenti=testoInputStudenti;
-		personale=nomeFilePersonale;
-		controrelatori=nomeFileControrelatori;
+		contenitore=cf;
 		this.props=props;
 	}
 
 	@Override
 	public void actionPerformed(final ActionEvent aEvent) {
-		String nomeFileDocenti=this.docenti.getText();
-		String nomeFileStudenti=this.studenti.getText();
-		String nomeFilePersonale=this.personale.getText();
-		String nomeFileControrelatori=this.controrelatori.getText();
 		Controller c=new Controller();
 		c.setProprieta(this.props);
-		c.caricaFile(nomeFileDocenti, nomeFileStudenti, nomeFilePersonale, nomeFileControrelatori);
+		c.caricaFile(this.contenitore.getFileDocente(), this.contenitore.getFileStudente(),this.contenitore.getFilePersonale(), this.contenitore.getFileControrelatori());
 		c.addFrameCorrente(fFrame);
 		this.fFrame.dispose();
 		new FinestraSceltaNumeroCommissioni(c);

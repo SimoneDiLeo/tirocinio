@@ -1,6 +1,7 @@
 package gestoreFile.lettore;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,8 +16,8 @@ public class LettoreFilePersonale extends LettoreFile{
 	private boolean puoiCreare;
 
 
-	public LettoreFilePersonale(String percorso, String divisore) {
-		super(percorso, divisore);
+	public LettoreFilePersonale(File personale, String divisore) {
+		super(personale, divisore);
 		// TODO Auto-generated constructor stub
 	}
 

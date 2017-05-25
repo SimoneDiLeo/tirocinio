@@ -18,19 +18,21 @@ public class ListaCommissioni {
 		this.prop=prop;
 	}
 
-	public void inizializzaPresidentiMagistrali(Map<Integer,Docente> presidentiPotenziali){
+	public void inizializzaPresidentiMagistrali(Map<Integer,Docente> presidentiPotenziali,int numeroMaxStud){
 		for(int i=0;i<this.commMag.length;i++){
 			if(presidentiPotenziali.get(i)!=null)
 				this.commMag[i]=new Commissione(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
 				this.commMag[i].setNumeroCommissione(i+1);
+				this.commMag[i].setMaxStudComm(numeroMaxStud);
 		}
 	}
 
-	public void inizializzaPresidentiTriennali(Map<Integer, Docente> presidentiCorrenti){
+	public void inizializzaPresidentiTriennali(Map<Integer, Docente> presidentiCorrenti,int numeroMaxStud){
 		for(int i=0;i<this.commTri.length;i++){
 			if(presidentiCorrenti.values().size()>i+this.commMag.length)
 				this.commTri[i]=new Commissione(presidentiCorrenti.get(i+this.commMag.length), Integer.parseInt(prop.getProperty("COMMISSARI_TRIENNALI")),"TRIENNALE");
 				this.commTri[i].setNumeroCommissione(i+1+this.commMag.length);
+				this.commTri[i].setMaxStudComm(numeroMaxStud);
 		}
 	}
 

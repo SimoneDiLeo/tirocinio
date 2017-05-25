@@ -22,6 +22,7 @@ public class ListenerTornaIndietro implements ActionListener {
 		if(this.frameChiamata.getName().equals("scelta commissione")){
 			this.c.reinizializzaPresidenti();
 			this.c.reinizializzaCommissioni();
+			
 		}
 		this.frameChiamata.dispose();
 		c.tornaIndietro();

@@ -40,12 +40,14 @@ public class ListenerBottoneCalcolaPresidenti implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.c.settaEccessoStudenti();
 		int numeroMagistrali= Integer.valueOf(this.numeroMagistrali.getText());
 		int numeroTriennali=Integer.valueOf(this.numeroTriennali.getText());
 		this.sFrame.dispose();
 		this.c.calcola();
 		c.addFrameCorrente(sFrame);
 		new FinestraPresidenti(this.c,numeroTriennali,numeroMagistrali);
+		
 	}
 
 }

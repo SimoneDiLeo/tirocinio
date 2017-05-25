@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,19 +26,17 @@ public class CaricatoreTuttiFile {
 
 
 
-	public void inizializza(String docenti,String studenti,String personale,String controrelatori) throws IOException{
-		Path currentRelativePath = Paths.get("");
+	public void inizializza(File docenti,File studenti,File personale,File controrelatori) throws IOException{
 		// da usare prima di esportare il jar altrimenti non funzione
 		//esportarlo in una cartella che contiene una cartella file_da_caricare che contiene i csv da leggere
 		//		String s = (currentRelativePath.toAbsolutePath().toString()+"/file_da_caricare/");
-		String s= "./dati/";
-		LettoreFileDocente lettoreDoc= new LettoreFileDocente(s+docenti+".csv",";");
+		LettoreFileDocente lettoreDoc= new LettoreFileDocente(docenti,";");
 		this.docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
-		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti(s+ studenti +".csv",";");
+		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti(studenti,";");
 		this.studenti=lettoreStudente.inizializzaElementiDaFile(this.docenti);
-		LettoreFilePersonale lettorePer= new LettoreFilePersonale(s+personale+".csv",";");
+		LettoreFilePersonale lettorePer= new LettoreFilePersonale(personale,";");
 		this.personale = lettorePer.inizializzaElementiDaFile();
-		LettoreFileControrelatore lettoreContr= new LettoreFileControrelatore(s+controrelatori+".csv",s+personale+".csv",";");
+		LettoreFileControrelatore lettoreContr= new LettoreFileControrelatore(controrelatori,personale,";");
 		this.docenti.inizializzaRuoloDocenti(this.personale);
 		AssegnaControrelatore ac= new AssegnaControrelatore(this.studenti, lettoreContr.inizializzaMappaContr(), this.personale);	
 		ac.assegna();

@@ -1,6 +1,7 @@
 package gestoreFile.lettore;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,20 +15,20 @@ import gestoreFile.LettoreFile;
 
 public class LettoreFileControrelatore extends LettoreFile{
 	private boolean puoiCreare=false;
-	private String percorso2;
+	private File percorso2;
 
 	private LettoreFilePersonale lettoreFile;
 
 
 	//costruttore che richiama il costruttore della classe che viene estesa qui
-	public LettoreFileControrelatore(String percorso,String separatore){
+	public LettoreFileControrelatore(File percorso,String separatore){
 		super(percorso,separatore);
 	}
 
 	//il costruttore deve avere come parametri 2 percorsi perchè devo leggere in un file le disponibilità ed in un altro i gruppi di ricerce 
-	public LettoreFileControrelatore(String percorso1,String percorso2,String separatore){
-		super(percorso1,separatore);
-		this.percorso2=percorso2;
+	public LettoreFileControrelatore(File controrelatori,File personale,String separatore){
+		super(controrelatori,separatore);
+		this.percorso2=personale;
 		this.lettoreFile=new LettoreFilePersonale(this.percorso2,separatore);
 	}
 

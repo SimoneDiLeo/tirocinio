@@ -1,6 +1,7 @@
 package gestoreFile.lettore;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,8 +23,8 @@ public class LettoreFileStudenti extends LettoreFile{
 	int indiceNote;
 	int indiceArgomento;
 	//costruttore per la classe con il richiamo alla classe che estende piu inizializzazione della stringa tipoLaurea
-	public LettoreFileStudenti(String percorso,String separatore){
-		super(percorso,separatore);
+	public LettoreFileStudenti(File studenti,String separatore){
+		super(studenti,separatore);
 		this.tipoLaurea="";
 	}
 

@@ -24,6 +24,8 @@ public class Commissione {
 	private Map<Integer,Docente> commissariScelti=new HashMap<>();
 	private int slotScelto;
 	private int numeroCommissione;
+	private int maxStudComm; // massimo studenti in commissione
+	
 
 
 	public Commissione(){
@@ -188,5 +190,19 @@ public class Commissione {
 	public void setNumeroCommissione(int numeroCommissione) {
 		this.numeroCommissione = numeroCommissione;
 	}
+
+	public int getMaxStudComm() {
+		return maxStudComm;
+	}
+
+	public void setMaxStudComm(int maxStudComm) {
+		this.maxStudComm = maxStudComm;
+	}
+	
+	public int numeroLaurendiInCommissione(){
+		return this.laureandi.size();
+	}
+
+	
 
 }
