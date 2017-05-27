@@ -28,9 +28,19 @@ public class BozzaAlgoritmo {
 		return presidentiPotenziali;
 
 	}
-	
+
 	public Docente trovaPossibilePresidente(List<Docente> presPot){
 		return presPot.get(0);
 	}
-	
+
+
+	public List<Docente> filtraPo(List<Docente> listaPresidentiScartati) {
+		List<Docente> po=new ArrayList<>();
+		for(Docente d:listaPresidentiScartati){
+			if(d.getRuolo().toUpperCase().equals("PO"))
+				po.add(d);
+		}
+		return po;
+	}
+
 }

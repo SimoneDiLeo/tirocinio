@@ -14,14 +14,15 @@ public class DocenteComparatorePresidentiMagistrali implements Comparator<Docent
 			else 
 				return 1;
 		}
-
-		if(o1.getRuolo().equals("PA")&& o2.getRuolo().equals("PA")){
-			if(o1.getNumeroLaureandiMagistrali()>o2.getNumeroLaureandiMagistrali())
-				return -1;
-			else 
-				return 1;
-		}
-		else
-			return 1;
+//
+//		if(o1.getRuolo().equals("PA")&& o2.getRuolo().equals("PA")){
+//			if(o1.getNumeroLaureandiMagistrali()>o2.getNumeroLaureandiMagistrali())
+//				return -1;
+//			else 
+//				return 1;
+//		}
+//		else
+//			return 1;
+		return 0;
 	}
 }

@@ -79,21 +79,22 @@ public class Controller {
 
 	public Box calcolaPresidenti(int numeroCommissioni, boolean c){
 		int j=0;
-		if(c)
-			listaPresidentiScartati.sort(new DocenteComparatorePresidentiMagistrali());
-		if(!c){
-			listaPresidentiScartati.sort(new DocenteComparatorePresidentiTriennali());
-			j=this.presidentiCorrenti.values().size();
-		}
 		BozzaAlgoritmo b=new BozzaAlgoritmo();
+		List<Docente> po=b.filtraPo(this.listaPresidentiScartati);
+		if(c)
+			po.sort(new DocenteComparatorePresidentiMagistrali());
+		if(!c){
+			po.sort(new DocenteComparatorePresidentiTriennali());
+			j=po.size();
+		}
 		Box box =Box.createVerticalBox();
 		for(int i=0;i<numeroCommissioni;i++){
 			try{
-				Docente presidente = b.trovaPossibilePresidente(listaPresidentiScartati);
+				Docente presidente = b.trovaPossibilePresidente(po);
 				if(presidente!=null){
 					box.add(new JLabel(presidente.toString()));
 					this.presidentiCorrenti.put((i+j), presidente);
-					listaPresidentiScartati.remove(presidente);
+					po.remove(presidente);
 				}
 			}
 			catch(Exception e){
