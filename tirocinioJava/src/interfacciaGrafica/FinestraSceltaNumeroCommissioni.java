@@ -23,7 +23,8 @@ public class FinestraSceltaNumeroCommissioni {
 	public FinestraSceltaNumeroCommissioni(Controller c) {
 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(300,300);
+		f.setSize(700,700);
+		f.setLocation(500, 300);
 		JScrollPane jScrollPane = new JScrollPane(panel);
 
 		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

@@ -45,6 +45,7 @@ public class Controller {
 	private Map<Integer,Docente> presidentiCorrenti=new HashMap<>();
 	private ListaCommissioni listaCommissioni;
 	private List<JFrame> framesPrecedente=new ArrayList<>();
+	private String[] giorni;
 
 	public void caricaFile(File nomeFileDocenti,File nomeFileStudenti,File nomeFilePersonale,File nomeFileControrelatori){
 		CaricatoreTuttiFile call=new CaricatoreTuttiFile();
@@ -53,6 +54,7 @@ public class Controller {
 			this.docenti=call.getDocenti();
 			this.studenti=call.getStudenti();
 			this.controrel=call.getControrel();
+			this.setGiorni(call.getGiorni());
 		}
 		catch(Exception e){
 			new FinestraErrore(this);
@@ -387,7 +389,7 @@ public class Controller {
 				st=s;
 		}
 		cgm.getLaureandi().remove(st);
-		
+
 
 
 		// coloro quelli in eccesso -------------
@@ -461,7 +463,18 @@ public class Controller {
 
 	}
 
+	public List<JLabel> getLabelGiorni() {
+		List<JLabel> giorni = new ArrayList<>();
+		for(int i=0;i<this.giorni.length;i++){
+			if(!this.giorni[i].toUpperCase().contains("GIORNI"))
+				giorni.add(new JLabel("lo slot numero " + i + " corrisponde al giorno :  " + this.giorni[i]));
+		}
+		giorni.add(new JLabel("lo slot numero " + this.giorni.length + " corrisponde al giorno :  " + this.giorni[this.giorni.length-1]  + " pomeriggio"));
+		return giorni;
+	}
 
-
+	public void setGiorni(String[] giorni) {
+		this.giorni = giorni;
+	}
 
 }

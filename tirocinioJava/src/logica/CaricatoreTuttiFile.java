@@ -20,6 +20,7 @@ public class CaricatoreTuttiFile {
 	private List<Studente> studenti;
 	private List<Controrelatore> controrel;
 	private List<Personale> personale;
+	private String[] giorni;
 
 
 
@@ -27,11 +28,9 @@ public class CaricatoreTuttiFile {
 
 
 	public void inizializza(File docenti,File studenti,File personale,File controrelatori) throws IOException{
-		// da usare prima di esportare il jar altrimenti non funzione
-		//esportarlo in una cartella che contiene una cartella file_da_caricare che contiene i csv da leggere
-		//		String s = (currentRelativePath.toAbsolutePath().toString()+"/file_da_caricare/");
 		LettoreFileDocente lettoreDoc= new LettoreFileDocente(docenti,";");
 		this.docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
+		this.setGiorni(lettoreDoc.getGiorni());
 		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti(studenti,";");
 		this.studenti=lettoreStudente.inizializzaElementiDaFile(this.docenti);
 		LettoreFilePersonale lettorePer= new LettoreFilePersonale(personale,";");
@@ -59,5 +58,15 @@ public class CaricatoreTuttiFile {
 
 	public List<Personale> getPersonale() {
 		return personale;
+	}
+
+
+	public String[] getGiorni() {
+		return giorni;
+	}
+
+
+	public void setGiorni(String[] giorni) {
+		this.giorni = giorni;
 	}
 }

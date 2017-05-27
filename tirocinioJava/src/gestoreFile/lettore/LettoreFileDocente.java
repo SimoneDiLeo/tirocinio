@@ -14,6 +14,7 @@ import gestoreFile.LettoreFile;
 public class LettoreFileDocente extends LettoreFile{
 	private boolean puoiCreare=false;
 	private int indiceNote=0;
+	private String[] giorni;
 	//costruttore che richiama il costruttore della classe che viene estesa qui
 	public LettoreFileDocente(File docenti,String separatore){
 		super(docenti,separatore);
@@ -28,11 +29,15 @@ public class LettoreFileDocente extends LettoreFile{
 				String[] lineaLetta = super.line.split(cvsSplitBy);
 				if(lineaLetta.length>0)
 					if(!this.puoiCreare){
-						for(int i=0;i<lineaLetta.length-1;i++)
-							if(lineaLetta[i].contains("note")){
+						for(int i=0;i<lineaLetta.length-1;i++){
+							if(lineaLetta[i].toUpperCase().contains("GIORNI")){
+									setGiorni(lineaLetta);
+							}
+							if(lineaLetta[i].toUpperCase().contains("NOTE")){
 								this.puoiCreare=true;
 								this.indiceNote=(i);
 							}
+						}
 					}
 					else{
 						if(!super.verificaStringaNumero(lineaLetta[0])){
@@ -64,15 +69,15 @@ public class LettoreFileDocente extends LettoreFile{
 		return doc;
 
 	}
-//risolto problema in caso di disponibilita non inserite nel file
+	//risolto problema in caso di disponibilita non inserite nel file
 	public List<Integer> inserimentoDisponibilita(String[] docente){
 		List<Integer> disponibilita=new ArrayList<>();
 		try{	
 			for(int i=1;i<this.indiceNote;i++){
-			if(docente[i].equals("SI"))
-				disponibilita.add(i);
-		}
-		return disponibilita;}
+				if(docente[i].equals("SI"))
+					disponibilita.add(i);
+			}
+			return disponibilita;}
 		catch(Exception e){
 			return disponibilita;
 		}
@@ -89,6 +94,12 @@ public class LettoreFileDocente extends LettoreFile{
 			stringa="";
 		}
 		return stringa;
+	}
+	public String[] getGiorni() {
+		return giorni;
+	}
+	public void setGiorni(String[] giorni) {
+		this.giorni=giorni;
 	}
 
 

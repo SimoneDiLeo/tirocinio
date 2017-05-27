@@ -20,9 +20,7 @@ import interfacciaGrafica.listenerBottoni.ListenerSelettoreFile;
 
 
 public final class MainGUI {
-	//modificare bottone carica file
 	//modificare radiobox in checkBox
-	//modificare slot con i giorni effettivi dei commissari
 	//modificare vista studente senza l'output del nome
 	//aggiungere "algoritmo" dei commissari con backtracking
 	//possibile modifica delle commissioni
