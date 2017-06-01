@@ -2,8 +2,6 @@ package logica;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import classi.Controrelatore;
@@ -28,14 +26,14 @@ public class CaricatoreTuttiFile {
 
 
 	public void inizializza(File docenti,File studenti,File personale,File controrelatori) throws IOException{
-		LettoreFileDocente lettoreDoc= new LettoreFileDocente(docenti,";");
+		LettoreFileDocente lettoreDoc= new LettoreFileDocente(docenti,"\t");
 		this.docenti= new ListaDocenti(lettoreDoc.inizializzaElementiDaFile());
 		this.setGiorni(lettoreDoc.getGiorni());
-		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti(studenti,";");
+		LettoreFileStudenti lettoreStudente= new LettoreFileStudenti(studenti,"\t");
 		this.studenti=lettoreStudente.inizializzaElementiDaFile(this.docenti);
-		LettoreFilePersonale lettorePer= new LettoreFilePersonale(personale,";");
+		LettoreFilePersonale lettorePer= new LettoreFilePersonale(personale,"\t");
 		this.personale = lettorePer.inizializzaElementiDaFile();
-		LettoreFileControrelatore lettoreContr= new LettoreFileControrelatore(controrelatori,personale,";");
+		LettoreFileControrelatore lettoreContr= new LettoreFileControrelatore(controrelatori,personale,"\t");
 		this.docenti.inizializzaRuoloDocenti(this.personale);
 		AssegnaControrelatore ac= new AssegnaControrelatore(this.studenti, lettoreContr.inizializzaMappaContr(), this.personale);	
 		ac.assegna();

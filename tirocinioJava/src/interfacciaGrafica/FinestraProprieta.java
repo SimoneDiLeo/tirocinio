@@ -1,17 +1,12 @@
 package interfacciaGrafica;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import controller.ControllerProprieta;
-import interfacciaGrafica.listenerBottoni.ListenerBottonePaginaUno;
 import interfacciaGrafica.listenerBottoni.ListenerScriviModifiche;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietroConfermaProprieta;
 

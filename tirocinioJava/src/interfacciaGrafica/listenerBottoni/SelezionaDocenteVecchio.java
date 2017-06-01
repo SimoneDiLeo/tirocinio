@@ -2,19 +2,8 @@ package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
-import classi.Commissione;
 import classi.Docente;
-import classi.Studente;
 import controller.Controller;
 
 public class SelezionaDocenteVecchio implements ActionListener {

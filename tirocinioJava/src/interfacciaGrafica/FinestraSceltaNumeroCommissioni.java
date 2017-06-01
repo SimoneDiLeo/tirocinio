@@ -1,6 +1,5 @@
 package interfacciaGrafica;
 
-import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,8 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import classi.Docente;
-import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerBottoneCalcolaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
@@ -35,6 +32,7 @@ public class FinestraSceltaNumeroCommissioni {
 		f.setVisible(true);
 		Box box = Box.createVerticalBox(); 
 		JButton provaPrimaCommissione=new JButton("Calcola i possibili Presidenti di Commissione");
+		box.add(new JLabel("COMMISSARI"));
 		box.add(c.creaBoxLabel());;
 		box.add(new JLabel("Numero Commissioni Triennali"));
 		JTextField numTriennali = new JTextField();
@@ -42,7 +40,8 @@ public class FinestraSceltaNumeroCommissioni {
 		box.add(new JLabel("Numero Commissioni Magistrali"));
 		JTextField numMagistrali= new JTextField();
 		box.add(numMagistrali);
-		
+		box.add(new JLabel("numero studenti magistrali : " +c.calcolaStudentiTipo("magistrale")));
+		box.add(new JLabel("numero studenti triennali : " +c.calcolaStudentiTipo("triennale")));
 		box.add(provaPrimaCommissione);
 		
 		JButton tornaIndietro=new JButton("Torna Indietro");

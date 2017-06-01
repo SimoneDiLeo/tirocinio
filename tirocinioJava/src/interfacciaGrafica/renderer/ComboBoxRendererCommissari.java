@@ -2,8 +2,6 @@ package interfacciaGrafica.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;

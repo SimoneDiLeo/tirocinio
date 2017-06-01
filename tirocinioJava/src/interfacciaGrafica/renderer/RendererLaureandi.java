@@ -2,11 +2,8 @@ package interfacciaGrafica.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.MenuContainer;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -62,7 +59,7 @@ public class RendererLaureandi extends JPanel implements ListCellRenderer{
 			if(corr!=null){
 				corrNome=" Correlatore: " +corr.getNome();
 			}
-			text.setText(" numero : "+ s. getNumero() + " matricola : " + s.getMatricola() + " nome: " + s.getNome() + " Relatore: " + s.getRelatore().getNome() +  " Controrelatore : "+ s.getControrelatore().getNome() +corrNome );
+			text.setText(" numero : "+ s. getNumero() + " matricola : " + s.getMatricola() + " Relatore: " + s.getRelatore().getNome()  +corrNome );
 			if(((Studente) value).isEccesso())
 			          text.setForeground(Color.RED);
 			else text.setForeground(Color.BLACK);

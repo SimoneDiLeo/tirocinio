@@ -1,16 +1,6 @@
 package interfacciaGrafica;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import javax.swing.Box;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultFocusManager;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,17 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import classi.Commissione;
-import classi.Docente;
-import classi.ListaCommissioni;
-import classi.ListaDocenti;
 import classi.Studente;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaCommissioni;
-import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
 import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaNumeroStudente;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
-import interfacciaGrafica.listenerBottoni.InterazioneDisponibilita;
-import interfacciaGrafica.listenerBottoni.SelezionaDocenteVecchio;
 import interfacciaGrafica.renderer.RendererLaureandi;
 
 

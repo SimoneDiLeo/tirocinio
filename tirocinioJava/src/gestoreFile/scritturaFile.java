@@ -4,8 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import interfacciaGrafica.FinestraErrore;
-
 public class scritturaFile {
 	private String COMMA_DELIMITER=";";
 	private String NEW_LINE_SEPARATOR="\n";

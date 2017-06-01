@@ -9,21 +9,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import classi.ContenitoreFile;
 import controller.ControllerProprieta;
 import interfacciaGrafica.listenerBottoni.ListenerBottoneModificaProprieta;
 import interfacciaGrafica.listenerBottoni.ListenerBottonePaginaUno;
 import interfacciaGrafica.listenerBottoni.ListenerSelettoreFile;
+import logica.ContenitoreFile;
 
 
 
 public final class MainGUI {
 	//modificare radiobox in checkBox
 	//modificare vista studente senza l'output del nome
-	//aggiungere "algoritmo" dei commissari con backtracking
-	//possibile modifica delle commissioni
 	//scelta controrelatori alla fine
 
 	public static void main(final String[] args) {
@@ -49,20 +46,21 @@ public final class MainGUI {
 		Properties props = caricaProprieta();
 		JButton apriFileDocenti = new JButton("Apri File Docente");
 		apriFileDocenti.setName("doc");
-		apriFileDocenti.addActionListener(new ListenerSelettoreFile(cf,aFrame));
+		ListenerSelettoreFile listenerSelettoreFile = new ListenerSelettoreFile(cf, aFrame);
+		apriFileDocenti.addActionListener(listenerSelettoreFile);
 		apriFileDocenti.setSize(100, 50);
 		JButton apriFileStud = new JButton("Apri File Studenti");
 		apriFileStud.setName("stud");
 		apriFileStud.setSize(100, 50);
-		apriFileStud.addActionListener(new ListenerSelettoreFile(cf, aFrame));
+		apriFileStud.addActionListener(listenerSelettoreFile);
 		JButton apriFilePers = new JButton("Apri File Personale");
 		apriFilePers.setName("pers");
-		apriFilePers.addActionListener(new ListenerSelettoreFile(cf, aFrame));
+		apriFilePers.addActionListener(listenerSelettoreFile);
 		apriFilePers.setSize(100, 50);
 		JButton apriFileContro = new JButton("Apri File Controrelatore");
 		apriFileContro.setSize(100, 50);
 		apriFileContro.setName("contro");
-		apriFileContro.addActionListener(new ListenerSelettoreFile(cf, aFrame));
+		apriFileContro.addActionListener(listenerSelettoreFile);
 		final JButton okButton = new JButton("Start");
 		Box box = Box.createVerticalBox(); 
 		box.add(new JLabel("Inserici in nome del file dei docenti"));

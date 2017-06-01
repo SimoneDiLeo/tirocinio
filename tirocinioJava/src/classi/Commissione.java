@@ -1,14 +1,11 @@
 package classi;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout.Group;
-
 import interfacciaGrafica.listenerBottoni.ListenerRadioBoxDisponibilita;
 
 import javax.swing.JRadioButton;
@@ -17,6 +14,8 @@ import javax.swing.JRadioButton;
 public class Commissione {
 	private Docente presidente;
 	private List<ArrayList<Docente>> commissariPossibili;
+	
+	
 	private List<Studente> laureandi;
 	private List<Integer> slotDisponibilita;
 	private String tipoCommissione;
@@ -26,11 +25,16 @@ public class Commissione {
 	private int numeroCommissione;
 	private int maxStudComm; // massimo studenti in commissione
 	
+	private List<Docente> listacommissari;
+	
+	
 
 
 	public Commissione(){
-
+		this.listacommissari=new ArrayList<>();
 	}
+	
+
 
 	public Map<Integer, Docente> getMappatura() {
 		return commissariScelti;
@@ -127,6 +131,14 @@ public class Commissione {
 	}
 
 
+	public List<ArrayList<Docente>> getCommissariPossibili() {
+		return commissariPossibili;
+	}
+
+	public void setCommissariPossibili(List<ArrayList<Docente>> commissariPossibili) {
+		this.commissariPossibili = commissariPossibili;
+	}
+
 	public List<ArrayList<Docente>> getCommissari() {
 		return commissariPossibili;
 	}
@@ -174,6 +186,10 @@ public class Commissione {
 		}
 
 	}
+	
+	public void addLaurenado(Studente s){
+		this.laureandi.add(s);
+	}
 
 	public int getSlotScelto() {
 		return slotScelto;
@@ -201,6 +217,10 @@ public class Commissione {
 	
 	public int numeroLaurendiInCommissione(){
 		return this.laureandi.size();
+	}
+	
+	public void aggiungiLaurendi(List<Studente> list){
+		this.laureandi.addAll(list);
 	}
 
 	

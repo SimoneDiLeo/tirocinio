@@ -4,13 +4,14 @@ package classi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Docente{
+public class Docente {
 	private String nome;
 	private String ruolo;
 	private String note;
 	private List<Integer> disponibilita;
 	private List<Studente> laureandi;
 	private int numeroCommissioniPartecipanti=0;
+	private boolean isInUnaCommissione;
 
 	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
@@ -18,6 +19,15 @@ public class Docente{
 		this.note=note;
 		this.disponibilita=disponibilita2;
 		this.laureandi=new ArrayList<>();
+		this.isInUnaCommissione=false;
+	}
+
+	public boolean isInUnaCommissione() {
+		return isInUnaCommissione;
+	}
+
+	public void setInUnaCommissione(boolean isInUnaCommissione) {
+		this.isInUnaCommissione = isInUnaCommissione;
 	}
 
 	public int getNumeroLaureandiTriennali(){
@@ -167,4 +177,17 @@ public class Docente{
 	public void azzeraSelezionato() {
 		this.numeroCommissioniPartecipanti=0;		
 	}
+
+	public int compareMagTo(Docente arg1) {
+		// TODO Auto-generated method stub
+		return this.getNumeroLaureandiMagistrali() - arg1.getNumeroLaureandiMagistrali();
+	}
+	
+	public int compareTriTo(Docente arg1){
+		return this.getNumeroLaureandiTriennali() - arg1.getNumeroLaureandiTriennali();
+	}
+	
+	
+
+	
 }	

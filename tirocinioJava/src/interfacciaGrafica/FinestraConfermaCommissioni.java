@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerScriviCommissioni;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;

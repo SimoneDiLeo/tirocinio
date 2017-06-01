@@ -1,8 +1,9 @@
 package controller;
 
-import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-
 import classi.Commissione;
 import classi.Controrelatore;
 import classi.Docente;
@@ -27,10 +26,11 @@ import classi.Personale;
 import classi.Studente;
 import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
-import interfacciaGrafica.renderer.RendererLaureandi;
 import interfacciaGrafica.FinestraErrore;
 import logica.BozzaAlgoritmo;
 import logica.CaricatoreTuttiFile;
+import logica.DocenteComparatorMag;
+import logica.DocenteComparatorTri;
 import logica.DocenteComparatorePresidentiMagistrali;
 import logica.DocenteComparatorePresidentiTriennali;
 
@@ -43,9 +43,39 @@ public class Controller {
 	private List<Docente> listaPotenzialiPresidenti;
 	private List<Docente> listaPresidentiScartati; 
 	private Map<Integer,Docente> presidentiCorrenti=new HashMap<>();
-	private ListaCommissioni listaCommissioni;
+	private ListaCommissioni listaCommissioni;    
 	private List<JFrame> framesPrecedente=new ArrayList<>();
 	private String[] giorni;
+	private List<Studente> studentiScartatiTriennale;
+	private List<Studente> studentiScartatiMagistrale;
+
+	public Controller(){
+		this.studentiScartatiTriennale=new ArrayList<>();
+		this.studentiScartatiMagistrale=new ArrayList<>();
+	}
+
+	public List<Studente> getStudentiScartatiTriennale() {
+		return studentiScartatiTriennale;
+	}
+
+	public void setStudentiScartatiTriennale(List<Studente> studentiScartatiTriennale) {
+		this.studentiScartatiTriennale = studentiScartatiTriennale;
+	}
+
+	public List<Studente> getStudentiScartatiMagistrale() {
+		return studentiScartatiMagistrale;
+	}
+
+	public void setStudentiScartatiMagistrale(List<Studente> studentiScartatiMagistrale) {
+		this.studentiScartatiMagistrale = studentiScartatiMagistrale;
+	}
+
+	public void aggiungiStudentiScartatiTriennale(List<Studente> list){
+		this.studentiScartatiTriennale.addAll(list);
+	}
+	public void aggiungiStudentiScartatiMagistrale(List<Studente> list){
+		this.studentiScartatiMagistrale.addAll(list);
+	}
 
 	public void caricaFile(File nomeFileDocenti,File nomeFileStudenti,File nomeFilePersonale,File nomeFileControrelatori){
 		CaricatoreTuttiFile call=new CaricatoreTuttiFile();
@@ -60,6 +90,21 @@ public class Controller {
 			new FinestraErrore(this);
 		}		
 	}
+
+	public int calcolaStudentiTipo(String tipo){
+		int i=0;
+		tipo=tipo.toUpperCase();
+		for(Studente s:this.studenti){
+			if(s.getTipoLaurea().contains(tipo)){
+				i++;
+			}
+		}
+		return i;
+	}
+
+
+
+
 
 	public Box creaBoxLabel() {
 		Box box = Box.createVerticalBox(); 
@@ -82,10 +127,11 @@ public class Controller {
 		BozzaAlgoritmo b=new BozzaAlgoritmo();
 		List<Docente> po=b.filtraPo(this.listaPresidentiScartati);
 		if(c)
-			po.sort(new DocenteComparatorePresidentiMagistrali());
+			Collections.sort(po, new DocenteComparatorePresidentiMagistrali());
+//			po.sort(new DocenteComparatorePresidentiMagistrali());
 		if(!c){
-			po.sort(new DocenteComparatorePresidentiTriennali());
-			j=po.size();
+			Collections.sort(po,new DocenteComparatorePresidentiTriennali());
+			j=this.presidentiCorrenti.values().size();
 		}
 		Box box =Box.createVerticalBox();
 		for(int i=0;i<numeroCommissioni;i++){
@@ -95,6 +141,7 @@ public class Controller {
 					box.add(new JLabel(presidente.toString()));
 					this.presidentiCorrenti.put((i+j), presidente);
 					po.remove(presidente);
+					this.listaPresidentiScartati.remove(presidente);
 				}
 			}
 			catch(Exception e){
@@ -298,6 +345,10 @@ public class Controller {
 
 	}
 
+	public void setStudenti(List<Studente> studenti) {
+		this.studenti = studenti;
+	}
+
 	public int getNumeroStudMagistrali(){
 		int cont=0;
 		for(Studente s:this.studenti){
@@ -477,5 +528,121 @@ public class Controller {
 	public void setGiorni(String[] giorni) {
 		this.giorni = giorni;
 	}
+	// metodo per inserire docenti all interno di una commissione
+	// metodo che restituisce una lista ordinata di docenti magistrali da quello che ha piu laurendi a quello che ne ha meno
+
+
+	public List<Docente> getDocentiMagistraliOrdinati(){
+		List<Docente> listDoc=new ArrayList<>();
+
+
+
+		//--------------
+
+		for (Docente d:this.docenti.getDocenti()){
+
+			if(d.getLaureandiMagistrali().size()!=0&&!d.isSelezionato()){
+				listDoc.add(d);
+			}
+
+
+		}
+
+		//--------
+
+		Collections.sort(listDoc, new DocenteComparatorMag());
+		Collections.reverse(listDoc);
+
+		return listDoc;
+	}
+
+
+	// lista di tutti i docenti che hanno laureandi triennali in ordine decrescente
+	public List<Docente> getDocentiTriennaliOrdinati(){
+		List<Docente> listDoc=new ArrayList<>();
+
+
+
+		//--------------
+
+		for (Docente d:this.docenti.getDocenti()){
+
+			if(d.getLaureandiTriennali().size()!=0&&!d.isSelezionato()){
+				listDoc.add(d);
+			}
+
+
+		}
+
+		//--------
+
+		Collections.sort(listDoc, new DocenteComparatorTri());
+		Collections.reverse(listDoc);
+
+		return listDoc;
+	}
+
+
+
+
+
+	// lista dei docenti che non hanno nessuon laureando (se ci sono)
+	//---- implementa
+
+	public List<Docente> getDocentiSenzaLaureandi(String presidente){
+		List<Docente> list=new ArrayList<>();
+		for(Docente d:this.docenti.getDocenti()){
+			if(!(d.getNome().equals(presidente))){
+				if(d.getLaureandi().size()==0)
+					list.add(d);
+
+			}
+
+		}
+
+		return list;
+	}
+
+
+
+	public List<Integer> intersection(List<Integer> l1,List<Integer> l2){
+		List<Integer> list=new ArrayList<>();
+		for(Integer i:l1){
+			for(Integer j: l2){
+				if(i==j)
+					list.add(i);
+			}
+		}
+
+		return list;
+	}
+
+
+	public Map<Docente,Integer> eliminaDoppi_aux(List<Docente> list){
+		Map<Docente,Integer> mp=new HashMap<>();
+		for(Docente d:list){
+			mp.put(d, 0);
+		}
+
+
+
+
+		return mp;
+
+	}
+
+
+	public List<Docente> listaSenzaDoppi(List<Docente> list){
+		Map<Docente,Integer> map=eliminaDoppi_aux(list);
+		List<Docente> result=new ArrayList<>();
+		for (Map.Entry<Docente,Integer> entry : map.entrySet()){
+			result.add(entry.getKey());
+		}
+
+
+		return result;
+	}
+
+
 
 }

@@ -1,8 +1,6 @@
 package interfacciaGrafica;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.Box;
@@ -12,10 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-
-import classi.Docente;
-import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.listenerBottoni.ListenerConfermaModificaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerSelezionaPresidente;

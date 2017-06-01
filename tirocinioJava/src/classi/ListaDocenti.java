@@ -59,8 +59,9 @@ public class ListaDocenti {
 	public List<JLabel> creaLabelDocenti(){
 		List<JLabel> lista=new ArrayList<>();
 		for(Docente d:this.docenti){ 	
-			JLabel nomeDocente = new JLabel(d.getNome()+ " Ruolo = "+ d.getRuolo() + " Numero laureandi Triennali : "+d.getNumeroLaureandiTriennali() +" Numero laureandi Magistrali : " + d.getNumeroLaureandiMagistrali() + " Disponibilità : " +d.getDisponibilita());
-			lista.add(nomeDocente);
+			if(d.getDisponibilita().size()>0){
+				JLabel nomeDocente = new JLabel(d.getNome()+ " T : "+d.getNumeroLaureandiTriennali() +" M: " + d.getNumeroLaureandiMagistrali() + " Dis : " +d.getDisponibilita());
+				lista.add(nomeDocente);}
 		}
 		return lista;
 	}	
@@ -81,7 +82,6 @@ public class ListaDocenti {
 
 	public void incrementaDisponibilitaDocente(Docente d) {
 		for(int i=0;i<this.docenti.size();i++){
-			Docente doc=null;
 			if(this.docenti.get(i).equals(d)){
 				d=this.docenti.get(i);
 				d.incrementaSelezionato();
@@ -92,7 +92,6 @@ public class ListaDocenti {
 
 	public void azzeraDisponibilitaDocente(Docente d) {
 		for(int i=0;i<this.docenti.size();i++){
-			Docente doc=null;
 			if(this.docenti.get(i).equals(d)){
 				d=this.docenti.get(i);
 				d.azzeraSelezionato();
@@ -100,10 +99,9 @@ public class ListaDocenti {
 			}
 		}
 	}
-	
+
 	public void decrementaDisponibilitaDocente(Docente d) {
 		for(int i=0;i<this.docenti.size();i++){
-			Docente doc=null;
 			if(this.docenti.get(i).equals(d)){
 				d=this.docenti.get(i);
 				d.decrementaSelezionato();

@@ -6,8 +6,6 @@ import java.awt.event.ItemListener;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JList;
-
 import classi.Commissione;
 import classi.Docente;
 import controller.Controller;

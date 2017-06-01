@@ -8,24 +8,26 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import classi.ContenitoreFile;
 import interfacciaGrafica.FinestraErrore;
+import logica.ContenitoreFile;
 
 public class ListenerSelettoreFile implements ActionListener {
 
 	private ContenitoreFile cf;
 	private JFrame f;
+	JFileChooser fileChooser;
 
 	public ListenerSelettoreFile(ContenitoreFile cf, JFrame aFrame) {
 		this.cf=cf;
 		this.f=aFrame;
+		fileChooser= new JFileChooser();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
 			JButton b=(JButton) e.getSource();
-			JFileChooser fileChooser = new JFileChooser();
+			
 			int n = fileChooser.showOpenDialog(f);
 			if (n == JFileChooser.APPROVE_OPTION) {
 				File f = fileChooser.getSelectedFile();

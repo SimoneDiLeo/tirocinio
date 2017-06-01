@@ -2,24 +2,12 @@ package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.SortedMap;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
-import classi.ContenitoreFile;
-import classi.Docente;
-import classi.ListaDocenti;
 import controller.Controller;
 import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
-import interfacciaGrafica.FinestraErrore;
+import logica.ContenitoreFile;
 
 public final class ListenerBottonePaginaUno implements ActionListener {
 	private final JFrame fFrame;

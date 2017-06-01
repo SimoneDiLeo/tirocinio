@@ -1,28 +1,16 @@
 package interfacciaGrafica;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.Box;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import classi.Commissione;
-import classi.Docente;
-import classi.ListaDocenti;
 import controller.Controller;
-import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaPresidenti;
+import interfacciaGrafica.listenerBottoni.ListenerConfermaSceltaPresidenti1;
 import interfacciaGrafica.listenerBottoni.ListenerModificaPresidenti;
 import interfacciaGrafica.listenerBottoni.ListenerTornaIndietro;
-import logica.BozzaAlgoritmo;
-import logica.DocenteComparatorePresidentiMagistrali;
-import logica.DocenteComparatorePresidentiTriennali;
 
 public class FinestraPresidenti {
 	private JFrame f =new JFrame("Finestra Scelta Presidenti");
@@ -47,7 +35,8 @@ public class FinestraPresidenti {
 		boxDestra.add(new JLabel("Potenziali Presidenti Triennali"));
 		boxDestra.add(c.calcolaPresidenti(numeroTriennali,false));
 		JButton conferma = new JButton("Conferma");
-		conferma.addActionListener(new ListenerConfermaSceltaPresidenti(c,this.f,numeroMagistrali,numeroTriennali));
+		//conferma.addActionListener(new ListenerConfermaSceltaPresidenti(c,this.f,numeroMagistrali,numeroTriennali));
+		conferma.addActionListener(new ListenerConfermaSceltaPresidenti1(c,this.f,numeroMagistrali,numeroTriennali));
 		boxDestra.add(conferma);
 		JButton modifica = new JButton("Modifica");
 		modifica.addActionListener(new ListenerModificaPresidenti(this.f,c,numeroMagistrali,numeroTriennali));

@@ -1,4 +1,4 @@
-package classi;
+package logica;
 
 import java.io.File;
 

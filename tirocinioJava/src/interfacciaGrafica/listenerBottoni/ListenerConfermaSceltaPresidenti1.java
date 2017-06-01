@@ -8,9 +8,10 @@ import javax.swing.JFrame;
 
 import classi.Docente;
 import controller.Controller;
-import interfacciaGrafica.FinestraSceltaCommissioni;
 
-public class ListenerConfermaSceltaPresidenti implements ActionListener {
+import interfacciaGrafica.FinestraSceltaCommissioni1;
+
+public class ListenerConfermaSceltaPresidenti1 implements ActionListener {
 	private Controller controller;
 	private List<Docente> presidentiScelti;
 	private JFrame f;
@@ -18,7 +19,7 @@ public class ListenerConfermaSceltaPresidenti implements ActionListener {
 	private int numeroTriennali;
 	
 	
-	public ListenerConfermaSceltaPresidenti(Controller c, JFrame f, int numeroMagistrali, int numeroTriennali) {
+	public ListenerConfermaSceltaPresidenti1(Controller c, JFrame f, int numeroMagistrali, int numeroTriennali) {
 		this.controller=c;
 		this.f=f;
 		this.numeroMagistrali=numeroMagistrali;
@@ -30,8 +31,9 @@ public class ListenerConfermaSceltaPresidenti implements ActionListener {
 		this.f.dispose();
 		this.controller.addFrameCorrente(f);
 		this.controller.confermaPresidenti();
-		new FinestraSceltaCommissioni(controller, numeroMagistrali, numeroTriennali);
+		new FinestraSceltaCommissioni1(controller, numeroMagistrali, numeroTriennali);
 
 	}
 
 }
+

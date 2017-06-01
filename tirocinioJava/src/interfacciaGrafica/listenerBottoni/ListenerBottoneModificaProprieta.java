@@ -3,8 +3,6 @@ package interfacciaGrafica.listenerBottoni;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-
 import controller.ControllerProprieta;
 import interfacciaGrafica.FinestraProprieta;
 

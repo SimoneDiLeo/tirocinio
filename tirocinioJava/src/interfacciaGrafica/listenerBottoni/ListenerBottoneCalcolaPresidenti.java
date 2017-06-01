@@ -2,26 +2,11 @@ package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import classi.Docente;
-import classi.ListaDocenti;
 import controller.Controller;
-import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
-import logica.BozzaAlgoritmo;
-import logica.DocenteComparatorePresidentiMagistrali;
-import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraPresidenti;
-import interfacciaGrafica.FinestraSceltaCommissioni;
 
 public class ListenerBottoneCalcolaPresidenti implements ActionListener{
 	private Controller c;

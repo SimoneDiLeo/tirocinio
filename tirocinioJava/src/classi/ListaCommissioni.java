@@ -1,9 +1,6 @@
 package classi;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -24,6 +21,7 @@ public class ListaCommissioni {
 				this.commMag[i]=new Commissione(presidentiPotenziali.get(i), Integer.parseInt(prop.getProperty("COMMISSARI_MAGISTRALI")),"MAGISTRALE");
 				this.commMag[i].setNumeroCommissione(i+1);
 				this.commMag[i].setMaxStudComm(numeroMaxStud);
+				
 		}
 	}
 
@@ -35,6 +33,13 @@ public class ListaCommissioni {
 				this.commTri[i].setMaxStudComm(numeroMaxStud);
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	public Commissione[] getCommMag() {
 		return commMag;
@@ -60,5 +65,7 @@ public class ListaCommissioni {
 	public String toStringTriennale() {
 		return "ListaCommissioni [commMag=" + Arrays.toString(commTri) + "]";
 	}
+	
+	
 
 }

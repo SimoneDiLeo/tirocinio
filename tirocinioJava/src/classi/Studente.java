@@ -1,8 +1,5 @@
 package classi;
 
-
-import java.util.Comparator;
-
 public class Studente {
 	private int numero;
 	private String nome;
