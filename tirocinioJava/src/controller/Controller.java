@@ -1,8 +1,8 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
@@ -25,8 +24,8 @@ import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
 import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
+import interfacciaGrafica.listenerBottoni.ListenerSelezionaPresidente;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
-import interfacciaGrafica.FinestraErrore;
 import logica.BozzaAlgoritmo;
 import logica.CaricatoreTuttiFile;
 import logica.DocenteComparatorMag;
@@ -77,18 +76,14 @@ public class Controller {
 		this.studentiScartatiMagistrale.addAll(list);
 	}
 
-	public void caricaFile(File nomeFileDocenti,File nomeFileStudenti,File nomeFilePersonale,File nomeFileControrelatori){
+	public void caricaFile(File nomeFileDocenti,File nomeFileStudenti,File nomeFilePersonale,File nomeFileControrelatori) throws IOException{
 		CaricatoreTuttiFile call=new CaricatoreTuttiFile();
-		try{
-			call.inizializza(nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori);
-			this.docenti=call.getDocenti();
-			this.studenti=call.getStudenti();
-			this.controrel=call.getControrel();
-			this.setGiorni(call.getGiorni());
-		}
-		catch(Exception e){
-			new FinestraErrore(this);
-		}		
+		call.inizializza(nomeFileDocenti,nomeFileStudenti,nomeFilePersonale,nomeFileControrelatori);
+		this.docenti=call.getDocenti();
+		this.studenti=call.getStudenti();
+		this.controrel=call.getControrel();
+		this.setGiorni(call.getGiorni());
+
 	}
 
 	public int calcolaStudentiTipo(String tipo){
@@ -122,13 +117,16 @@ public class Controller {
 		this.listaPresidentiScartati=b.trovaTuttiPossibiliPresidenti(docenti, "PO");
 	}
 
+	public List<Docente> getDocentiOrdinari(){
+		return this.docenti.prendiDocentiPo();
+	}
+	
 	public Box calcolaPresidenti(int numeroCommissioni, boolean c){
 		int j=0;
 		BozzaAlgoritmo b=new BozzaAlgoritmo();
 		List<Docente> po=b.filtraPo(this.listaPresidentiScartati);
 		if(c)
 			Collections.sort(po, new DocenteComparatorePresidentiMagistrali());
-//			po.sort(new DocenteComparatorePresidentiMagistrali());
 		if(!c){
 			Collections.sort(po,new DocenteComparatorePresidentiTriennali());
 			j=this.presidentiCorrenti.values().size();
@@ -138,19 +136,30 @@ public class Controller {
 			try{
 				Docente presidente = b.trovaPossibilePresidente(po);
 				if(presidente!=null){
-					box.add(new JLabel(presidente.toString()));
+					JComboBox<Docente> selettoreDocente = this.comboBoxPresidentiPotenziali();
+					selettoreDocente.addItemListener(new ListenerSelezionaPresidente(this, i+j));
+					selettoreDocente.setSelectedItem(presidente);
+					box.add(selettoreDocente);
 					this.presidentiCorrenti.put((i+j), presidente);
 					po.remove(presidente);
 					this.listaPresidentiScartati.remove(presidente);
 				}
 			}
 			catch(Exception e){
-				box.add(new JLabel("nessun presidente trovato"));
+				JComboBox<Docente> selettoreDocente = this.comboBoxPresidentiPotenziali();
+				selettoreDocente.setSelectedIndex(-1);
+				selettoreDocente.addItemListener(new ListenerSelezionaPresidente(this, i+j));
+				this.presidentiCorrenti.put((i+j), null);
+				box.add(selettoreDocente);
 			}
 		}
 		return box;
 	}
 
+	public void resettaColoreLabelDocenti(){
+		this.docenti.resettaColoreLabel();
+	}
+	
 	public JComboBox<Docente> comboBoxPresidentiPotenziali(){
 		JComboBox<Docente> jm = new JComboBox<>();
 		for(Docente d:this.listaPotenzialiPresidenti){
@@ -167,10 +176,6 @@ public class Controller {
 		listaCommissioni = new ListaCommissioni(nm, nt, this.proprieta);
 	}
 
-	public void inizializzaCommissioniMagistrali(int numeroCommissioniMag){
-		this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti,this.getNumeroStudMagistrali()/numeroCommissioniMag);
-	}
-
 	public ListaCommissioni getListaCommissioni() {
 		return listaCommissioni;
 	}
@@ -184,7 +189,13 @@ public class Controller {
 
 	}
 
+	public void inizializzaCommissioniMagistrali(int numeroCommissioniMag){
+		if(numeroCommissioniMag!=0)
+		this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti,this.getNumeroStudMagistrali()/numeroCommissioniMag);
+	}
+	
 	public void inizializzaCommissioniTriennali(int numeroCommissioniTri) {
+		if(numeroCommissioniTri!=0)
 		this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti,this.getNumeroStudTriennali()/numeroCommissioniTri);	
 	}
 
@@ -514,14 +525,15 @@ public class Controller {
 			s.setEccesso(false);
 
 	}
-
+	//rivedere perche non da 8 slot
 	public List<JLabel> getLabelGiorni() {
 		List<JLabel> giorni = new ArrayList<>();
-		for(int i=0;i<this.giorni.length;i++){
-			if(!this.giorni[i].toUpperCase().contains("GIORNI"))
-				giorni.add(new JLabel("lo slot numero " + i + " corrisponde al giorno :  " + this.giorni[i]));
+		int i =1;
+		for(String s : this.giorni){
+			if(!s.toUpperCase().contains("GIORNI")){
+				giorni.add(new JLabel("lo slot numero " + i + " corrisponde al giorno :  " + s));
+				i++;}
 		}
-		giorni.add(new JLabel("lo slot numero " + this.giorni.length + " corrisponde al giorno :  " + this.giorni[this.giorni.length-1]  + " pomeriggio"));
 		return giorni;
 	}
 

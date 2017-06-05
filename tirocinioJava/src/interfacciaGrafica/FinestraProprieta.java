@@ -28,11 +28,13 @@ public class FinestraProprieta {
 		box.add(c.boxProprieta());
 		JButton confermaModifiche= new JButton("Conferma Modifiche");
 		confermaModifiche.addActionListener(new ListenerScriviModifiche(c));
-		box.add(confermaModifiche);
-		panel.add(box);
+		Box box2 = Box.createHorizontalBox();
+		box2.add(confermaModifiche);
 		JButton tornaIndietro=new JButton("Torna Indietro");
 		tornaIndietro.addActionListener(new ListenerTornaIndietroConfermaProprieta(c,aFrame));
-		panel.add(tornaIndietro);
+		box2.add(tornaIndietro);
+		box.add(box2);
+		panel.add(box);
 		aFrame.getContentPane().add(panel);
 	}
 

@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.swing.JFrame;
 
 import controller.Controller;
+import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraSceltaNumeroCommissioni;
 import logica.ContenitoreFile;
 
@@ -24,10 +25,16 @@ public final class ListenerBottonePaginaUno implements ActionListener {
 	public void actionPerformed(final ActionEvent aEvent) {
 		Controller c=new Controller();
 		c.setProprieta(this.props);
-		c.caricaFile(this.contenitore.getFileDocente(), this.contenitore.getFileStudente(),this.contenitore.getFilePersonale(), this.contenitore.getFileControrelatori());
-		c.addFrameCorrente(fFrame);
-		this.fFrame.dispose();
-		new FinestraSceltaNumeroCommissioni(c);
+		try{
+			c.caricaFile(this.contenitore.getFileDocente(), this.contenitore.getFileStudente(),this.contenitore.getFilePersonale(), this.contenitore.getFileControrelatori());
+			c.addFrameCorrente(fFrame);
+			this.fFrame.dispose();
+			new FinestraSceltaNumeroCommissioni(c);}
+		catch(Exception e ){
+			c.addFrameCorrente(this.fFrame);
+			this.fFrame.dispose();
+			new FinestraErrore(c);
+		}
 	}
 
 }

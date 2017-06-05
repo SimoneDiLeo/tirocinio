@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import controller.Controller;
+import interfacciaGrafica.FinestraErrore;
 import interfacciaGrafica.FinestraPresidenti;
 
 public class ListenerBottoneCalcolaPresidenti implements ActionListener{
@@ -26,13 +27,19 @@ public class ListenerBottoneCalcolaPresidenti implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.c.settaEccessoStudenti();
-		int numeroMagistrali= Integer.valueOf(this.numeroMagistrali.getText());
-		int numeroTriennali=Integer.valueOf(this.numeroTriennali.getText());
-		this.sFrame.dispose();
-		this.c.calcola();
-		c.addFrameCorrente(sFrame);
-		new FinestraPresidenti(this.c,numeroTriennali,numeroMagistrali);
-		
+		this.c.resettaColoreLabelDocenti();
+		try{
+			int numeroMagistrali= Integer.valueOf(this.numeroMagistrali.getText());
+			int numeroTriennali=Integer.valueOf(this.numeroTriennali.getText());
+			this.c.calcola();
+			c.addFrameCorrente(this.sFrame);
+			this.sFrame.dispose();
+			new FinestraPresidenti(this.c,numeroTriennali,numeroMagistrali);}
+		catch(Exception err){
+			this.c.addFrameCorrente(this.sFrame);
+			this.sFrame.dispose();
+			new FinestraErrore(this.c);
+		}
 	}
 
 }

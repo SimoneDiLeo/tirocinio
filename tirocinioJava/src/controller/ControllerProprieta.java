@@ -58,10 +58,8 @@ public class ControllerProprieta {
 		try{
 			BufferedWriter out = new BufferedWriter(new FileWriter("./resources/properties"));
 			for (Entry<String,JTextField> entry : this.mappatura.entrySet())
-			{
-				System.out.print("\n"+entry.getKey() + " : " + entry.getValue().getText());
+			{				
 				this.proprieta.setProperty((String)entry.getKey(), (String)entry.getValue().getText());
-				System.out.print("\n"+this.proprieta.getProperty(entry.getKey()));
 			}
 			this.proprieta.store(out, null);
 			out.close();

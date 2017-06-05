@@ -1,5 +1,8 @@
 package interfacciaGrafica;
 
+import java.awt.Color;
+
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,14 +24,18 @@ public class FinestraErrore {
 	
 	
 	public FinestraErrore(Controller c){
-		c.addFrameCorrente(this.f);
+		
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.f.setSize(300,300);
-		this.panel.add(new JLabel("ERRORE"));
+		this.f.setSize(400,400);
+		Box box=Box.createVerticalBox();
+		JLabel labelErrore = new JLabel("ERRORE");
+		labelErrore.setForeground(Color.RED);
+		box.add(labelErrore);
 		this.f.setVisible(true);
 		JButton ti=new JButton("Torna Indietro");
 		ti.addActionListener(new ListenerTornaIndietro(f, c));
-		this.panel.add(ti);
+		box.add(ti);
+		this.panel.add(box);
 		f.getContentPane().add(panel);
 	}
 

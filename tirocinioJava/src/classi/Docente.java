@@ -1,8 +1,11 @@
 package classi;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JLabel;
 
 public class Docente {
 	private String nome;
@@ -12,6 +15,7 @@ public class Docente {
 	private List<Studente> laureandi;
 	private int numeroCommissioniPartecipanti=0;
 	private boolean isInUnaCommissione;
+	private JLabel jlabel;
 
 	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
@@ -20,6 +24,7 @@ public class Docente {
 		this.disponibilita=disponibilita2;
 		this.laureandi=new ArrayList<>();
 		this.isInUnaCommissione=false;
+		this.jlabel=new JLabel(this.toString());
 	}
 
 	public boolean isInUnaCommissione() {
@@ -29,16 +34,6 @@ public class Docente {
 	public void setInUnaCommissione(boolean isInUnaCommissione) {
 		this.isInUnaCommissione = isInUnaCommissione;
 	}
-
-	public int getNumeroLaureandiTriennali(){
-		return this.getLaureandiTriennali().size();
-	}
-
-	public int getNumeroLaureandiMagistrali(){
-		return this.getLaureandiMagistrali().size();
-	}
-
-
 	public List<Studente> getLaureandiTriennali(){
 		List<Studente> studentiTriennali=new ArrayList<>();
 		for(Studente s:this.laureandi){
@@ -57,6 +52,14 @@ public class Docente {
 			}
 		}
 		return studentiMagistrali;
+	}
+	
+	public int getNumeroLaureandiTriennali(){
+		return this.getLaureandiTriennali().size();
+	}
+
+	public int getNumeroLaureandiMagistrali(){
+		return this.getLaureandiMagistrali().size();
 	}
 
 	public int getNumeroLaureandi(){
@@ -93,7 +96,78 @@ public class Docente {
 		this.ruolo = ruolo;
 	}
 
+	public List<Studente> getLaureandi() {
+		return laureandi;
+	}
 
+	public void setLaureandi(List<Studente> laureandi) {
+		this.laureandi = laureandi;
+	}
+
+	public void addLaureando(Studente laureando){
+		this.laureandi.add(laureando);
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	
+	
+
+
+	
+	public JLabel getLabel() {
+		return this.jlabel;
+	}
+
+	public boolean isSelezionato() {
+		return numeroCommissioniPartecipanti>0;
+	}
+
+	public void incrementaSelezionato() {
+		this.numeroCommissioniPartecipanti++;
+	}
+	
+	public void decrementaSelezionato() {
+		this.numeroCommissioniPartecipanti--;
+	}
+
+	public void azzeraSelezionato() {
+		this.numeroCommissioniPartecipanti=0;		
+	}
+
+	public int compareMagTo(Docente arg1) {
+		return this.getNumeroLaureandiMagistrali() - arg1.getNumeroLaureandiMagistrali();
+	}
+	
+	public int compareTriTo(Docente arg1){
+		return this.getNumeroLaureandiTriennali() - arg1.getNumeroLaureandiTriennali();
+	}
+	
+	public void cambiaColoreLabel(){
+		if(this.isInUnaCommissione){
+			this.jlabel.setForeground(Color.RED);
+		}
+		else {
+			this.jlabel.setForeground(Color.BLACK);
+		}
+	}
+	
+	
+	//metodi ovverride o in piu da qui in poi
+	
+	@Override
+	public String toString() {
+		return this.getNome()+ " T:"+this.getNumeroLaureandiTriennali() +
+				" M:" + this.getNumeroLaureandiMagistrali() + " Dis:" +this.getDisponibilita();
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -131,63 +205,16 @@ public class Docente {
 			return false;
 		return true;
 	}
-
-
-
-
-	public List<Studente> getLaureandi() {
-		return laureandi;
-	}
-
-	public void setLaureandi(List<Studente> laureandi) {
-		this.laureandi = laureandi;
-	}
-
-	public void addLaureando(Studente laureando){
-		this.laureandi.add(laureando);
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	@Override
-	public String toString() {
+	
+	public String toRappresentazioneCompleta(){
 		return "nome=" + nome + ", ruolo=" + ruolo + ", " + "disponibilita=" + disponibilita
-				+ ", numero laureandi Triennali=" + this.getNumeroLaureandiTriennali() + ", Numero laureandi Magistrali="+ getNumeroLaureandiMagistrali() 
-				+ "\n";
+		+ ", numero laureandi Triennali=" + this.getNumeroLaureandiTriennali() + ", Numero laureandi Magistrali="+ getNumeroLaureandiMagistrali() 
+		+ "\n";
+		
 	}
 
-	public boolean isSelezionato() {
-		return numeroCommissioniPartecipanti>0;
+	public void setColoreDefaultLabel() {
+		this.jlabel.setForeground(Color.BLACK);		
 	}
 
-	public void incrementaSelezionato() {
-		this.numeroCommissioniPartecipanti++;
-	}
-	
-	public void decrementaSelezionato() {
-		this.numeroCommissioniPartecipanti--;
-	}
-
-	public void azzeraSelezionato() {
-		this.numeroCommissioniPartecipanti=0;		
-	}
-
-	public int compareMagTo(Docente arg1) {
-		// TODO Auto-generated method stub
-		return this.getNumeroLaureandiMagistrali() - arg1.getNumeroLaureandiMagistrali();
-	}
-	
-	public int compareTriTo(Docente arg1){
-		return this.getNumeroLaureandiTriennali() - arg1.getNumeroLaureandiTriennali();
-	}
-	
-	
-
-	
 }	

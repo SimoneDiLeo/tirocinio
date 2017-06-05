@@ -17,6 +17,16 @@ public class ListaDocenti {
 		this.docenti.remove(d);
 	}	
 
+	
+	public List<Docente> prendiDocentiPo(){
+		List<Docente> docPoDisponibili=new ArrayList<>();
+		for(Docente d:this.docenti){
+			if(d.getRuolo().equals("PO")&&d.getDisponibilita().size()>0){
+				docPoDisponibili.add(d);
+			}
+		}
+		return docPoDisponibili;
+	}
 
 	public List<Docente> filtraListaRest(List<Docente> pres){
 		List<Docente> lista=new ArrayList<>();
@@ -60,7 +70,7 @@ public class ListaDocenti {
 		List<JLabel> lista=new ArrayList<>();
 		for(Docente d:this.docenti){ 	
 			if(d.getDisponibilita().size()>0){
-				JLabel nomeDocente = new JLabel(d.getNome()+ " T : "+d.getNumeroLaureandiTriennali() +" M: " + d.getNumeroLaureandiMagistrali() + " Dis : " +d.getDisponibilita());
+				JLabel nomeDocente = d.getLabel();
 				lista.add(nomeDocente);}
 		}
 		return lista;
@@ -119,6 +129,12 @@ public class ListaDocenti {
 				}
 			}
 		}
+	}
 
+	public void resettaColoreLabel() {
+		for(Docente d:this.docenti){
+			d.setColoreDefaultLabel();
+		}
+		
 	}
 }
