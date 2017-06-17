@@ -24,22 +24,28 @@ public class LettoreFilePersonale extends LettoreFile{
 
 	public List<Personale> inizializzaElementiDaFile() throws IOException {
 		List<Personale> listaPersonale=new ArrayList<>();
+		int posPer=0; // posizione della stringa personale
 		try {
 
 			super.br = new BufferedReader(new FileReader(this.csvFile));
 			while ((super.line = super.br.readLine()) != null) {
 				String[] riga = super.line.split(cvsSplitBy);
+				if(this.contieneStringa(riga,"Personale")){
+					posPer=this.posizioneStringa(riga,"Personale");
+				}
 				if(riga.length>0)
 					if(!this.puoiCreare){
-						for(int i=0;i<riga.length-1;i++)
+						for(int i=0;i<riga.length-1;i++){
+							
 							if(riga[i].contains("gruppo")){
 
 								this.puoiCreare=true;
 
 							}
+						}
 					}
 					else{
-						listaPersonale.add(inizializzaPersonale(riga));
+						listaPersonale.add(inizializzaPersonale(riga,posPer));
 
 					}
 			}
@@ -55,14 +61,21 @@ public class LettoreFilePersonale extends LettoreFile{
 			}
 		}
 		return listaPersonale;
+		
 
 	}
 
 
 
-	private Personale inizializzaPersonale(String[] riga) {
-		Personale pers=new Personale(verificaNulla(riga, 2),verificaNulla(riga, 1),verificaNulla(riga, 3),verificaNulla(riga, 5),verificaNulla(riga, 6));
-
+	private Personale inizializzaPersonale(String[] riga,int posPer) {
+		// soluzione spartana
+		Personale pers;
+		if(posPer==1){
+			pers=new Personale(verificaNulla(riga, 2),verificaNulla(riga, 1),verificaNulla(riga, 3),verificaNulla(riga, 5),verificaNulla(riga, 6));
+		}
+		else{
+			pers=new Personale(verificaNulla(riga, 3),verificaNulla(riga, 2),verificaNulla(riga, 4),verificaNulla(riga, 6),verificaNulla(riga, 7));
+		}
 		return pers;
 	}  
 
@@ -88,6 +101,35 @@ public class LettoreFilePersonale extends LettoreFile{
 				listaDott.add(p);
 
 		return listaDott;
+	} 
+	
+	// trova la posizione di una stringa
+	public int posizioneStringa(String[] riga,String st){
+		int pos=0;
+		int i;
+		for(i=0;i<riga.length;i++){
+			if(riga[i].equals(st))
+				pos=i;
+		}
+		
+		
+		
+		
+		return pos;
+	}
+	
+	public boolean contieneStringa(String[] riga,String st){
+		
+		int i;
+		for(i=0;i<riga.length;i++){
+			if(riga[i].equals(st))
+				return true;
+		}
+		
+		
+		
+		
+		return false;
 	}
 
 

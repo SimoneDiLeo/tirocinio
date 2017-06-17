@@ -1,18 +1,18 @@
 package controller;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +24,7 @@ import classi.ListaDocenti;
 import classi.Personale;
 import classi.Studente;
 import interfacciaGrafica.listenerBottoni.ListenerItemSelezionaCommissario;
+import interfacciaGrafica.listenerBottoni.ListenerItemCheckBoxDisponibilita;
 import interfacciaGrafica.listenerBottoni.ListenerSelezionaPresidente;
 import interfacciaGrafica.renderer.ComboBoxRendererCommissari;
 import logica.BozzaAlgoritmo;
@@ -120,7 +121,7 @@ public class Controller {
 	public List<Docente> getDocentiOrdinari(){
 		return this.docenti.prendiDocentiPo();
 	}
-	
+
 	public Box calcolaPresidenti(int numeroCommissioni, boolean c){
 		int j=0;
 		BozzaAlgoritmo b=new BozzaAlgoritmo();
@@ -159,7 +160,7 @@ public class Controller {
 	public void resettaColoreLabelDocenti(){
 		this.docenti.resettaColoreLabel();
 	}
-	
+
 	public JComboBox<Docente> comboBoxPresidentiPotenziali(){
 		JComboBox<Docente> jm = new JComboBox<>();
 		for(Docente d:this.listaPotenzialiPresidenti){
@@ -191,12 +192,12 @@ public class Controller {
 
 	public void inizializzaCommissioniMagistrali(int numeroCommissioniMag){
 		if(numeroCommissioniMag!=0)
-		this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti,this.getNumeroStudMagistrali()/numeroCommissioniMag);
+			this.listaCommissioni.inizializzaPresidentiMagistrali(this.presidentiCorrenti,this.getNumeroStudMagistrali()/numeroCommissioniMag);
 	}
-	
+
 	public void inizializzaCommissioniTriennali(int numeroCommissioniTri) {
 		if(numeroCommissioniTri!=0)
-		this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti,this.getNumeroStudTriennali()/numeroCommissioniTri);	
+			this.listaCommissioni.inizializzaPresidentiTriennali(this.presidentiCorrenti,this.getNumeroStudTriennali()/numeroCommissioniTri);	
 	}
 
 	public void aggiornaCommissione(Commissione cgm) {
@@ -204,30 +205,24 @@ public class Controller {
 
 	}
 
-	public Box creaJComboCommissari(Commissione cgm, Box radioBoxDisponibilita,DefaultListModel modLaureandi,JComboBox<Integer> jc){
+	public Box creaJComboCommissari(Commissione cgm, Box radioBoxDisponibilita,DefaultListModel modLaureandi,JComboBox<Integer> jc,DefaultListModel commissariModel,JComboBox<Docente> jcomboEliminaCommissario,int numeroComm){
 		Box box=Box.createVerticalBox();
-		int i=0;
-		for(List<Docente> docs:cgm.getCommissari()){
+		for(int i=0; i<cgm.getNumeroCommissari();i++){
+			List<Docente> docs=cgm.getCommissariPossibili().get(i);
 			JComboBox<Docente> jm = new JComboBox<>();
-
 			ComboBoxRendererCommissari renderer = new ComboBoxRendererCommissari(jm);
-
 			jm.setRenderer(renderer);
-
-
-
-
-			int j =0;
-			//aggiunta per risolvere problema del valore di default
 			for(Docente d:docs){
 				jm.addItem(d);
 			}
-			jm.setSelectedIndex(-1);
-			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i,radioBoxDisponibilita,modLaureandi,jc));
-			i++;
+			if(i<cgm.getListacommissari().size())
+				cgm.getListacommissari().get(i).incrementaSelezionato();
+			jm.setSelectedItem(cgm.getListacommissari().get(i));
+			jm.addItemListener(new ListenerItemSelezionaCommissario(this,cgm,i,radioBoxDisponibilita,modLaureandi,jc,commissariModel,jcomboEliminaCommissario,numeroComm));
 			box.add(jm);
 
 		}
+		box.setPreferredSize(new Dimension(25, 50));
 		return box;
 	}
 
@@ -237,12 +232,15 @@ public class Controller {
 
 	}
 
-	public Box creaRadioBoxDisponibilita(Commissione cgm) {
+	public Box creaCheckBoxDisponibilita(Commissione cgm) {
 		Box box=Box.createHorizontalBox();
-		for (Enumeration<AbstractButton> en = cgm.creaRadioBoxDisponibilita().getElements(); en.hasMoreElements();) {
-			AbstractButton b = en.nextElement();
-			box.add(b);
+		cgm.setSlotScelto(cgm.selezionaSlotIniziali());
+		for(Integer i : cgm.getSlotScelto()){
+			JCheckBox jc= new JCheckBox(i.toString(),true);
+			jc.addItemListener(new ListenerItemCheckBoxDisponibilita(cgm));
+			box.add(jc);
 		}
+		
 		return box;
 	}
 
@@ -253,13 +251,20 @@ public class Controller {
 			b.add(new JLabel("commissione numero : " + cgm.getNumeroCommissione()));
 			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
-			b.add(new JLabel("Commissari :"));
 			b.add(new JLabel("numero massimo studenti : "+cgm.getMaxStudComm()));
-			for(Docente d : cgm.getMappatura().values())
-				b.add(new JLabel(d.getNome() + " " + d.getRuolo()));
+			b.add(new JLabel("Commissari :"));
+			for(int i =0;i<cgm.getNumeroCommissari();i++)
+				b.add(new JLabel(cgm.getListacommissari().get(i).toString()));
 			b.add(new JLabel("Laureandi :"));
+			Map<Docente,Integer> rapprCompatta=new HashMap<>();
 			for(Studente s:cgm.getLaureandi())
-				b.add(new JLabel(s.toString()));
+				if(rapprCompatta.containsKey(s.getRelatore()))
+					rapprCompatta.put(s.getRelatore(), rapprCompatta.get(s.getRelatore())+1);
+				else
+					rapprCompatta.put(s.getRelatore(), 1);
+			for(Docente d : rapprCompatta.keySet()){
+				b.add(new JLabel(d.getNome() + " " + rapprCompatta.get(d)));
+			}
 		}
 		b.add(new JLabel("Commissioni Triennali"));
 		for(Commissione cgm : this.listaCommissioni.getCommTri()){
@@ -267,12 +272,20 @@ public class Controller {
 			b.add(new JLabel("Slot scelto = " + cgm.getSlotScelto()));
 			b.add(new JLabel("Presidente : " + cgm.getPresidente().getNome()));
 			b.add(new JLabel("Commissari :"));
+			b.add(new JLabel("Commissari :"));
+			for(int i =0;i<cgm.getNumeroCommissari();i++)
+				b.add(new JLabel(cgm.getListacommissari().get(i).toString()));
 			b.add(new JLabel("numero massimo studenti : "+cgm.getMaxStudComm()));
-			for(Docente d : cgm.getMappatura().values())
-				b.add(new JLabel(d.getNome() + " " + d.getRuolo()));
 			b.add(new JLabel("Laureandi :"));
+			Map<Docente,Integer> rapprCompatta=new HashMap<>();
 			for(Studente s:cgm.getLaureandi())
-				b.add(new JLabel(s.toString()));
+				if(rapprCompatta.containsKey(s.getRelatore()))
+					rapprCompatta.put(s.getRelatore(), rapprCompatta.get(s.getRelatore())+1);
+				else
+					rapprCompatta.put(s.getRelatore(), 1);
+			for(Docente d : rapprCompatta.keySet()){
+				b.add(new JLabel(d.getNome() + " " + rapprCompatta.get(d)));
+			}
 		}
 
 
@@ -331,19 +344,19 @@ public class Controller {
 	}
 
 	public void modificaPotenzialiCommissari(Docente item, Commissione cgm, int indiceJComboBox) {
+		cgm.setListacommissari(this.listaSenzaDoppi(cgm.getListacommissari()));
 		cgm.aggiornaDisponibilita(item.getDisponibilita());
 		//		cgm.aggiornaCommissariPossibili(item.getDisponibilita());
 
 	}
 
-	public void modificaBoxDisponibilita(Box radioBoxDisponibilita, Commissione cgm) {
-		radioBoxDisponibilita.removeAll();
-		for (Enumeration<AbstractButton> en = cgm.creaRadioBoxDisponibilita().getElements(); en.hasMoreElements();) {
-			AbstractButton b = en.nextElement();
-			radioBoxDisponibilita.add(b);
+	public void modificaBoxDisponibilita(Box checkBoxDisponibilita, Commissione cgm) {
+		checkBoxDisponibilita.removeAll();
+		List<JCheckBox> checkBox = cgm.creaCheckBoxDisponibilita();
+		for (JCheckBox jc : checkBox){
+			checkBoxDisponibilita.add(jc);
 		}
-		radioBoxDisponibilita.revalidate();
-
+		checkBoxDisponibilita.revalidate();
 	}
 
 	public void rimuoviCommissario(Docente item, Commissione cgm, int indiceJComboBox) {
@@ -380,17 +393,34 @@ public class Controller {
 		return cont;
 	}
 
-	public void aggiungiLureandiInCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,JComboBox<Integer> jc) {
-		//		modLaureandi.size()>cgm.getMaxStudComm();
-		//		modLaureandi.lastElement().
+	public void aggiungiLureandiInCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,JComboBox<Integer> jc, DefaultListModel commissariModel,JComboBox<Docente> jcomboEliminaCommissario,int numeroComm) {
+
+
+
 		String tipoCommissione=cgm.getTipoCommissione();
+
+
 		if(tipoCommissione.equals("MAGISTRALE")){
+
+			if(cgm.getListacommissari().size()>=numeroComm && !(cgm.getListacommissari().contains(item))){
+				item.setEccesso(true);
+			}
+			if(!(cgm.getListacommissari().contains(item)) && item.getLaureandiMagistrali().size()!=0 && !(cgm.getPresidente().equals(item))){
+				commissariModel.addElement(item);
+				jcomboEliminaCommissario.addItem(item);
+				jcomboEliminaCommissario.revalidate();
+			}
+
+
+
 			for(Studente s:item.getLaureandiMagistrali()){ // metodo in docente che mi seleziona il tipo di laureando
 				if(modLaureandi.size()>=cgm.getMaxStudComm())
 					s.setEccesso(true);
 				if(!(cgm.getLaureandi().contains(s))){
 					modLaureandi.addElement(s);
 					cgm.getLaureandi().add(s);
+					cgm.getListacommissari().add(item);
+
 					jc.addItem(s.getNumero());
 					jc.revalidate();
 				}
@@ -398,12 +428,24 @@ public class Controller {
 			//jc.revalidate();
 		}
 		else{
+
+			if(cgm.getListacommissari().size()>=numeroComm && !(cgm.getListacommissari().contains(item))){
+				item.setEccesso(true);
+			}
+			if(!(cgm.getListacommissari().contains(item)) && item.getLaureandiTriennali().size()!=0 && !(cgm.getPresidente().equals(item))){
+				commissariModel.addElement(item);
+				jcomboEliminaCommissario.addItem(item);
+				jcomboEliminaCommissario.revalidate();
+
+			}	
 			for(Studente s:item.getLaureandiTriennali()){  // metodo in docente che mi seleziona il tipo di laureando
 				if(modLaureandi.size()>=cgm.getMaxStudComm())
 					s.setEccesso(true);
 				if((cgm.getLaureandi().contains(s) && modLaureandi.contains(s))==false){
 					modLaureandi.addElement(s);
 					cgm.getLaureandi().add(s);
+					cgm.getListacommissari().add(item);
+
 					jc.addItem(s.getNumero());
 					jc.revalidate();
 				}
@@ -411,12 +453,11 @@ public class Controller {
 			//jc.revalidate();
 		}
 
-
-
-
-
-
 	}
+
+
+
+
 	public void togliLureandiInCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,JComboBox<Integer> jc) {
 		String tipoCommissione=cgm.getTipoCommissione();
 		if(tipoCommissione.equals("MAGISTRALE")){
@@ -440,7 +481,7 @@ public class Controller {
 
 	}
 
-	public void eliminaLaureandoDaCommissione(int numeroStudente,Commissione cgm, DefaultListModel modLaureandi, JComboBox<Integer> jc) {
+	public void eliminaLaureandoDaCommissione(int numeroStudente,Commissione cgm, DefaultListModel modLaureandi, JComboBox<Integer> jc) {   //<---------------------------------------------------------------------
 		Studente st=null;
 		modLaureandi.removeAllElements();
 		//setto eccesso studente tutti a false
@@ -452,6 +493,7 @@ public class Controller {
 				st=s;
 		}
 		cgm.getLaureandi().remove(st);
+
 
 
 
@@ -525,7 +567,22 @@ public class Controller {
 			s.setEccesso(false);
 
 	}
-	//rivedere perche non da 8 slot
+
+	public void settaEccessoDocenti(){
+		for(Docente d:this.getDocenti().getDocenti())
+			d.setEccesso(false);
+	}
+
+
+	public ListaDocenti getDocenti() {
+		return docenti;
+	}
+
+	public void setDocenti(ListaDocenti docenti) {
+		this.docenti = docenti;
+	}
+
+
 	public List<JLabel> getLabelGiorni() {
 		List<JLabel> giorni = new ArrayList<>();
 		int i =1;
@@ -654,6 +711,156 @@ public class Controller {
 
 		return result;
 	}
+
+
+	/*   Elenco dei laureandi: non lo date nel dettaglio, ma soltanto "3 di
+    Atzeni, 2 di Pascucci, ecc. specificando anche in qualche modo se
+    hanno correlatore tra i possibili commissari. Ad esempio:
+    3 di Atzeni (correlatori: Cabibbo, Weitschek)    "  */
+
+
+	// restituisce la lista di docenti che sono correlatori di qualche laureando di nomeDocente
+
+	public List<String> cercaEventualiCorrelatoriLaureandiDocente(String nomeDocente,List<Studente> laureandi,List<Docente> commissari){
+		List<String> correlatori=new ArrayList<>();
+		Map<String,Integer> corr=new HashMap<>(); // uso la mappa così non vengono doppi
+
+		for(Studente s:laureandi){
+			if(s.getRelatore().getNome().equals(nomeDocente)){
+				if(commissari.contains(s.getCorrelatore()))
+					corr.put(s.getCorrelatore().getNome(), 0);
+
+			}
+		}
+
+		for (Map.Entry<String,Integer> entry : corr.entrySet()){
+			correlatori.add(entry.getKey());
+		}
+
+
+		return correlatori;
+
+	}
+
+	public void eliminaCommissarioDaCommissione(Docente item, Commissione cgm, DefaultListModel modLaureandi,
+			JComboBox<Docente> jcomboEliminaCommissario, DefaultListModel commissariModel,int numeroComm) {
+		
+		List<Studente> listaLaurendi=new ArrayList<>();
+
+		if(cgm.getTipoCommissione().equals("MAGISTRALE")){
+			listaLaurendi=item.getLaureandiMagistrali();
+		}
+
+		else{
+			listaLaurendi=item.getLaureandiTriennali();
+		}
+
+
+		cgm.getLaureandi().removeAll(listaLaurendi);
+		modLaureandi.removeAllElements();
+		commissariModel.removeAllElements();
+
+		//---------------------------- reinizializzo modlaureandi ----------------------------------------------
+
+
+
+		for(Studente s: cgm.getLaureandi())
+			s.setEccesso(false);
+
+
+		// coloro quelli in eccesso -------------
+
+		if(cgm.getLaureandi().size()>cgm.getMaxStudComm()){
+			int cont=1;
+			for(Studente s:cgm.getLaureandi()){
+
+				if(cont>cgm.getMaxStudComm())
+					s.setEccesso(true);
+				modLaureandi.addElement(s);
+
+				cont++;
+
+			}
+		}
+		else{
+			for(Studente s:cgm.getLaureandi()){
+
+
+				modLaureandi.addElement(s);
+
+
+
+			}
+		}
+
+
+
+
+
+
+		//---------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+		cgm.getListacommissari().remove(item);
+		for(Docente d: cgm.getListacommissari())
+			d.setEccesso(false);
+
+		if(cgm.getListacommissari().size()>numeroComm){ // non viene mai verificataa
+			this.settaApartireDa(numeroComm,cgm.getListacommissari());
+
+			for(Docente d:cgm.getListacommissari()){
+
+				commissariModel.addElement(d);
+
+			}
+
+
+			//		int cont=1;
+			//		for(Docente d:cgm.getListacommissari()){
+			//			
+			//			if(cont>cgm.getNumeroCommissari())
+			//				d.setEccesso(true);
+			//			commissariModel.addElement(d);
+			//			
+			//			
+			//			cont++;
+			//			
+			//			}
+
+
+		}
+
+		else{
+			for(Docente d:cgm.getListacommissari())
+				commissariModel.addElement(d);
+		}
+
+
+
+
+
+	}
+
+
+	public void settaApartireDa(int posizione,List<Docente> listDoc){
+		int i;
+		for(i=0;i<listDoc.size();i++){
+			if(i>=posizione)
+				listDoc.get(i).setEccesso(true);
+		}
+
+
+
+
+
+
+	}
+
 
 
 

@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 import controller.Controller;
-import interfacciaGrafica.FinestraSceltaCommissioni;
+
 import interfacciaGrafica.FinestraSceltaCommissioni1;
 
 public class ListenerConfermaModificaPresidenti implements ActionListener {

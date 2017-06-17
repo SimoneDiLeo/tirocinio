@@ -16,15 +16,22 @@ public class ListenerItemSelezionaCommissario implements ItemListener{
 	private int indiceJComboBox;
 	private Box radioBoxDisponibilita;
 	private DefaultListModel modLaureandi;
+	private DefaultListModel commissariModel;
 	private JComboBox<Integer> jc;
+	private JComboBox<Docente> jcomboEliminaCommissario;
+	private int numeroComm;
 
-	public ListenerItemSelezionaCommissario(Controller controller, Commissione cgm, int i, Box radioBoxDisponibilita,DefaultListModel modLaureandi,JComboBox<Integer> jc){
+	public ListenerItemSelezionaCommissario(Controller controller, Commissione cgm, int i, Box radioBoxDisponibilita,DefaultListModel modLaureandi,JComboBox<Integer> jc,DefaultListModel commissariModel,JComboBox<Docente> jcomboEliminaCommissario,int numeroComm){
 		this.c=controller;
 		this.cgm=cgm;
 		this.indiceJComboBox=i;
 		this.radioBoxDisponibilita=radioBoxDisponibilita;
 		this.modLaureandi=modLaureandi;
+		this.commissariModel=commissariModel;
 		this.jc=jc;
+		this.jcomboEliminaCommissario=jcomboEliminaCommissario;
+		this.numeroComm=numeroComm;
+		
 	}
 
 	public void itemStateChanged(ItemEvent ie)
@@ -33,8 +40,7 @@ public class ListenerItemSelezionaCommissario implements ItemListener{
 		{
 			this.c.decrementaCommissioniInLista((Docente)ie.getItem(),this.cgm,this.indiceJComboBox);
 			this.c.rimuoviCommissario((Docente)ie.getItem(), cgm, indiceJComboBox);
-			this.c.modificaBoxDisponibilita(this.radioBoxDisponibilita,cgm);
-			this.c.togliLureandiInCommissione((Docente)ie.getItem(),this.cgm,this.modLaureandi,this.jc);
+			//this.c.togliLureandiInCommissione((Docente)ie.getItem(),this.cgm,this.modLaureandi,this.jc);
 			
 		}
 		else if(ie.getStateChange() == ItemEvent.SELECTED)
@@ -42,7 +48,8 @@ public class ListenerItemSelezionaCommissario implements ItemListener{
 			this.c.modificaSelezionatoInDocente((Docente)ie.getItem(),this.cgm,this.indiceJComboBox);
 			this.c.modificaPotenzialiCommissari((Docente)ie.getItem(), cgm, indiceJComboBox);
 			this.c.modificaBoxDisponibilita(this.radioBoxDisponibilita,cgm);
-			this.c.aggiungiLureandiInCommissione((Docente)ie.getItem(),this.cgm,this.modLaureandi,this.jc);
+			this.c.aggiungiLureandiInCommissione((Docente)ie.getItem(),this.cgm,this.modLaureandi,this.jc,this.commissariModel,this.jcomboEliminaCommissario,this.numeroComm);
+			
             
 		}
 

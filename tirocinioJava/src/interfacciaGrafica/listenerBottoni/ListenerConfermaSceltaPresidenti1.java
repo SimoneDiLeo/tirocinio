@@ -2,18 +2,13 @@ package interfacciaGrafica.listenerBottoni;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-
 import javax.swing.JFrame;
-
-import classi.Docente;
 import controller.Controller;
 
 import interfacciaGrafica.FinestraSceltaCommissioni1;
 
 public class ListenerConfermaSceltaPresidenti1 implements ActionListener {
 	private Controller controller;
-	private List<Docente> presidentiScelti;
 	private JFrame f;
 	private int numeroMagistrali;
 	private int numeroTriennali;

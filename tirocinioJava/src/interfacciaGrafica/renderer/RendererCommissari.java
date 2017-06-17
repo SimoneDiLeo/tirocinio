@@ -2,33 +2,33 @@ package interfacciaGrafica.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JComboBox;
+import java.awt.MenuContainer;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 import classi.Docente;
+import classi.Studente;
 
-public class ComboBoxRendererCommissari extends JPanel implements ListCellRenderer
-{
+public class RendererCommissari extends JPanel implements ListCellRenderer{
 
 	private static final long serialVersionUID = -1L;
-	private Color rosso=new Color(255,0,0);
-	private Color verde=new Color(0,255,0);
+	
 
 	private String[] strings;
 
 	JPanel textPanel;
 	JLabel text;
 
-	public ComboBoxRendererCommissari(JComboBox combo) {
+	public RendererCommissari(JList combo) {
 
 		textPanel = new JPanel();
 		textPanel.add(this);
 		text = new JLabel();
 		text.setOpaque(true);
-		text.setFont(combo.getFont());
+		text.setFont(((MenuContainer) combo).getFont());
 		textPanel.add(text);
 	}
 
@@ -51,18 +51,23 @@ public class ComboBoxRendererCommissari extends JPanel implements ListCellRender
 	public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		if(value!=null){
-		text.setBackground(Color.BLACK);
-		text.setText(value.toString());
-		if (index>-2) {
-			if(((Docente) value).isSelezionato())
-				text.setForeground(rosso);
-			else
-				text.setForeground(verde);
-		}}
+			text.setBackground(Color.WHITE);
+			Docente s = (Docente) value;
+			text.setText(s.toString());
+			
+			if(((Docente) value).isEccesso())
+		          text.setForeground(Color.RED);
+			else text.setForeground(Color.BLACK);
+		
+			          
+			
+		}
 		else{
 			text.setText("");
 		}
+
 		return text;
 	}
 
 }
+

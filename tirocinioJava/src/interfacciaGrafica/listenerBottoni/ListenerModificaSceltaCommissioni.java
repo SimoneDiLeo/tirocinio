@@ -23,7 +23,8 @@ public class ListenerModificaSceltaCommissioni implements ActionListener  {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-	
+		c.settaEccessoDocenti();
+		c.settaEccessoStudenti();
 		c.addFrameCorrente(f);
 		f.dispose();
 		new FinestraSceltaCommissioni2(c,numeroMagistrali,numeroTriennali);

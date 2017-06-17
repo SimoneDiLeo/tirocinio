@@ -30,8 +30,8 @@ public class FinestraSceltaCommissioni1 {
 	public FinestraSceltaCommissioni1(Controller controller, int numeroMagistrali , int numeroTriennali){
 		this.f.setName("scelta commissione");
 		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.f.setSize(900,900);
-		this.f.setLocation(500, 400);
+		f.setSize(800,1100);
+		f.setLocation(400, 0);
 		JScrollPane jScrollPane = new JScrollPane(this.p);
 		jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -67,6 +67,8 @@ public class FinestraSceltaCommissioni1 {
 		unioncommMagcommTri.addAll(commissariMagistrali);
 		unioncommMagcommTri.addAll(commissariTriennali);
 		List<Docente> union=controller.listaSenzaDoppi(unioncommMagcommTri);
+		
+		
 
 
 
@@ -84,6 +86,7 @@ public class FinestraSceltaCommissioni1 {
 				boxDestra.add(new JLabel("Presidente: "+cgm.getPresidente().getNome()+"  max Laureandi: "+cgm.getMaxStudComm()));
 
 			}
+			
 			//laurendi rimasti presidente
 			//			controller.aggiornaCommissione(cgm);
 			//			for(List<Docente> list:cgm.getCommissari()){
@@ -127,7 +130,12 @@ public class FinestraSceltaCommissioni1 {
 			commMag.rimuoviDocente(commMag.trovaDocenteDaNome(cgm.getPresidente().getNome()));
 
 			boxDestra.add(new JLabel("Membri della commissione"));
-
+			boxDestra.add(new JLabel("-------------------------------"));
+			boxDestra.add(new JLabel("Laureandi: "));
+			//boxDestra.add(new JLabel(cgm.getPresidente().getNumeroLaureandiMagistrali()+ " di "+cgm.getPresidente().getNome()));
+			
+			
+			
 			List<Studente> laureandiMagistraliDaInserire=new ArrayList<>();
 			List<Docente> docentiDaRimuovere=new ArrayList<>();
 
@@ -141,11 +149,11 @@ public class FinestraSceltaCommissioni1 {
 							if(union.contains(d)){
 								if(d.getNumeroLaureandiTriennali()!=0){
 									studentiScartatiMagitrali.addAll(d.getLaureandiTriennali());
-									boxDestra.add(new JLabel(d.getNome()+"  nLaurenadi: "+d.getNumeroLaureandiMagistrali()));
+									//boxDestra.add(new JLabel(d.getNumeroLaureandiMagistrali()+ " di "+d.getNome()));
 									laureandiMagistraliDaInserire.addAll(d.getLaureandiMagistrali());
 									docentiDaRimuovere.add(d);
 									cgm.aggiungiLaurendi(d.getLaureandiMagistrali());
-									
+									cgm.getListacommissari().add(d);
 									union.remove(d);
 									contMagInseriti++;
 
@@ -153,11 +161,11 @@ public class FinestraSceltaCommissioni1 {
 
 								}
 								else{
-									boxDestra.add(new JLabel(d.getNome()+"  nLaurenadi: "+d.getNumeroLaureandiMagistrali()));
+									//boxDestra.add(new JLabel(d.getNumeroLaureandiMagistrali()+ " di "+d.getNome()));
 									laureandiMagistraliDaInserire.addAll(d.getLaureandiMagistrali());
 									docentiDaRimuovere.add(d);
 									cgm.aggiungiLaurendi(d.getLaureandiMagistrali());
-								
+									cgm.getListacommissari().add(d);
 									union.remove(d);
 									contMagInseriti++;
 
@@ -171,9 +179,31 @@ public class FinestraSceltaCommissioni1 {
 
 
 			}
-
-
-
+			
+			
+			boxDestra.add(new JLabel("listaCommissari: "+cgm.getListacommissari().size()));
+			boxDestra.add(new JLabel("listaLaurenadi: "+cgm.getLaureandi().size()));
+			
+			
+			if(controller.cercaEventualiCorrelatoriLaureandiDocente(cgm.getPresidente().getNome(), cgm.getLaureandi(), cgm.getListacommissari()).size()!=0){
+				boxDestra.add(new JLabel(cgm.getPresidente().getNumeroLaureandiMagistrali()+ " di "+cgm.getPresidente().getNome()+ " (correlatori: "+ controller.cercaEventualiCorrelatoriLaureandiDocente(cgm.getPresidente().getNome(), cgm.getLaureandi(), cgm.getListacommissari()).toString()+" )"));
+			
+			}
+			else boxDestra.add(new JLabel(cgm.getPresidente().getNumeroLaureandiMagistrali()+ " di "+cgm.getPresidente().getNome()));
+			
+			for(Docente d:cgm.getListacommissari()){
+				if(controller.cercaEventualiCorrelatoriLaureandiDocente(d.getNome(), cgm.getLaureandi(), cgm.getListacommissari()).size()!=0)
+					boxDestra.add(new JLabel(d.getNumeroLaureandiMagistrali()+ " di "+d.getNome()+ " (correlatori: "+ controller.cercaEventualiCorrelatoriLaureandiDocente(d.getNome(), cgm.getLaureandi(), cgm.getListacommissari()).toString()+" )"));
+				else
+					boxDestra.add(new JLabel(d.getNumeroLaureandiMagistrali()+ " di "+d.getNome()));
+			}
+			
+			
+			Box radioBoxDisponibilita = controller.creaCheckBoxDisponibilita(cgm);
+			boxDestra.add(radioBoxDisponibilita);
+			
+			
+			
 			// dopo che finisce il for sopra
 			
 
@@ -188,8 +218,8 @@ public class FinestraSceltaCommissioni1 {
 			RendererLaureandi rendererLaureandi=new RendererLaureandi(listaLaureandi);
 			listaLaureandi.setCellRenderer(rendererLaureandi);
 
-
-			boxDestra.add(listaLaureandi);
+			boxDestra.add(new JLabel("--------------------"));
+			//boxDestra.add(listaLaureandi);
 
 
 
@@ -199,7 +229,7 @@ public class FinestraSceltaCommissioni1 {
 
 
 
-			boxDestra.add(new JLabel("-------------------------------FINE COMMISSIONE NUMERO "+indexCommissioneMag+" ---------------------------------"));
+		//	boxDestra.add(new JLabel("-------------------------------FINE COMMISSIONE NUMERO "+indexCommissioneMag+" ---------------------------------"));
 			indexCommissioneMag++;
 		}
 		boxDestra.add(new JLabel("lista studenti magistrali scartati (sono studenti di triennale che hanno relatore che ha laureandi sia triennali che magistrali)"));
@@ -220,7 +250,7 @@ public class FinestraSceltaCommissioni1 {
 
 		boxDestra.add(listaScarti);
 
-		boxDestra.add(new JLabel("------------------------FINE COMMISSIONI MAGISTRALI----------------------------------------------------"));
+	//	boxDestra.add(new JLabel("------------------------FINE COMMISSIONI MAGISTRALI----------------------------------------------------"));
 
 		//---------------------------------------------------- FINE COMMISSIONI MAGISTRALI--------------------------------------------------------------------
 
@@ -282,7 +312,14 @@ public class FinestraSceltaCommissioni1 {
 			commTri.rimuoviDocente(commTri.trovaDocenteDaNome(cgm.getPresidente().getNome()));
 
 			boxDestra.add(new JLabel("Membri della commissione"));
-
+			
+			boxDestra.add(new JLabel("----------------------------"));
+			boxDestra.add(new JLabel("Laureandi: "));
+			
+			
+			
+			
+			
 			List<Studente> laureandiTriennaliDaInserire=new ArrayList<>();
 			List<Docente> docentiDaRimuovereTriennali=new ArrayList<>();
 
@@ -296,22 +333,22 @@ public class FinestraSceltaCommissioni1 {
 							if(union.contains(d)){
 								if(d.getNumeroLaureandiMagistrali()!=0){
 									studentiScartatiTriennali.addAll(d.getLaureandiMagistrali());
-									boxDestra.add(new JLabel(d.getNome()+"  nLaurenadi: "+d.getNumeroLaureandiTriennali()));
+									//boxDestra.add(new JLabel(d.getNumeroLaureandiTriennali()+ " di "+d.getNome()));
 									laureandiTriennaliDaInserire.addAll(d.getLaureandiTriennali());
 									docentiDaRimuovereTriennali.add(d);
 									cgm.aggiungiLaurendi(d.getLaureandiTriennali());
-									
+									cgm.getListacommissari().add(d);
 									union.remove(d);
 									contTriInseriti++;
 
 								}
 								else{
-									boxDestra.add(new JLabel(d.getNome()+"  nLaurenadi: "+d.getNumeroLaureandiTriennali()));
+									//boxDestra.add(new JLabel(d.getNumeroLaureandiTriennali()+ " di "+d.getNome()));
 									laureandiTriennaliDaInserire.addAll(d.getLaureandiTriennali());
 									docentiDaRimuovereTriennali.add(d);
 									cgm.aggiungiLaurendi(d.getLaureandiTriennali());
 									
-									
+									cgm.getListacommissari().add(d);
 									union.remove(d);
 									contTriInseriti++;
 
@@ -323,8 +360,32 @@ public class FinestraSceltaCommissioni1 {
 				}
 
 			}
+			
+			
+
+			
+			boxDestra.add(new JLabel("size listaCommissari: "+cgm.getListacommissari().size()));
+			boxDestra.add(new JLabel("size listaLaurenadi: "+cgm.getLaureandi().size()));
+			
+			if(controller.cercaEventualiCorrelatoriLaureandiDocente(cgm.getPresidente().getNome(), cgm.getLaureandi(), cgm.getListacommissari()).size()!=0){
+				boxDestra.add(new JLabel(cgm.getPresidente().getNumeroLaureandiTriennali()+ " di "+cgm.getPresidente().getNome()+ " (correlatori: "+ controller.cercaEventualiCorrelatoriLaureandiDocente(cgm.getPresidente().getNome(), cgm.getLaureandi(), cgm.getListacommissari()).toString()+" )"));
+			}
+			
+			else boxDestra.add(new JLabel(cgm.getPresidente().getNumeroLaureandiTriennali()+ " di "+cgm.getPresidente().getNome()));
+					
+				
+			for(Docente d:cgm.getListacommissari()){
+				if(controller.cercaEventualiCorrelatoriLaureandiDocente(d.getNome(), cgm.getLaureandi(), cgm.getListacommissari()).size()!=0)
+					boxDestra.add(new JLabel(d.getNumeroLaureandiTriennali()+ " di "+d.getNome()+ " (correlatori: "+ controller.cercaEventualiCorrelatoriLaureandiDocente(d.getNome(), cgm.getLaureandi(), cgm.getListacommissari()).toString()+" )"));
+				else
+					boxDestra.add(new JLabel(d.getNumeroLaureandiTriennali()+ " di "+d.getNome()));
+			}
+			
+			//boxDestra.add(new JLabel("relatore del primo laueando: "+cgm.getLaureandi().get(0).toString()));
 
 
+			Box radioBoxDisponibilita = controller.creaCheckBoxDisponibilita(cgm);
+			boxDestra.add(radioBoxDisponibilita);
 
 
 
@@ -341,8 +402,8 @@ public class FinestraSceltaCommissioni1 {
 			RendererLaureandi rendererLaureandi=new RendererLaureandi(listaLaureandi);
 			listaLaureandi.setCellRenderer(rendererLaureandi);
 
-
-			boxDestra.add(listaLaureandi);
+			boxDestra.add(new JLabel("--------------------"));
+			//boxDestra.add(listaLaureandi);
 
 
 
@@ -352,8 +413,8 @@ public class FinestraSceltaCommissioni1 {
 
 
 
-			boxDestra.add(new JLabel("-------------------------------FINE COMMISSIONE NUMERO "+indexCommissioneTri+" ---------------------------------"));
-			indexCommissioneMag++;
+		//	boxDestra.add(new JLabel("-------------------------------FINE COMMISSIONE NUMERO "+indexCommissioneTri+" ---------------------------------"));
+			indexCommissioneTri++;
 		}
 		boxDestra.add(new JLabel("lista studenti triennali scartati (sono studenti di magistrale che hanno relatore che ha laureandi sia triennali che magistrali)"));
 
@@ -374,7 +435,7 @@ public class FinestraSceltaCommissioni1 {
 
 		boxDestra.add(listaScar);
 
-		boxDestra.add(new JLabel("------------------------FINE COMMISSIONI TRIENNALI----------------------------------------------------"));
+	//	boxDestra.add(new JLabel("------------------------FINE COMMISSIONI TRIENNALI----------------------------------------------------"));
 
 
 		//--------------------------------------------------------------------------------------		

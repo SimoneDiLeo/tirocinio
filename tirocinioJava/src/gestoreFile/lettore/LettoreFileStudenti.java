@@ -86,7 +86,9 @@ public class LettoreFileStudenti extends LettoreFile{
 		String argomento=lineaFile[this.indiceArgomento];
 		String nomeRelatore=lineaFile[this.indiceRelatore];
 		Docente relatore = docenti.trovaDocenteDaNome(nomeRelatore.toUpperCase());
-		String nomeCorrelatore=lineaFile[this.indiceCorelatore];
+		//String nomeCorrelatore=lineaFile[this.indiceCorelatore];
+		String nomeCorrelatore=lineaFile[5];
+		
 		Docente correlatore = docenti.trovaDocenteDaNome(nomeCorrelatore.toUpperCase());
 		Studente stud=new Studente(Integer.parseInt(lineaFile[0]),nome,matricola,relatore,correlatore,this.tipoLaurea,argomento,note);
 		relatore.addLaureando(stud);

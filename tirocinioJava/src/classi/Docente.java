@@ -16,6 +16,7 @@ public class Docente {
 	private int numeroCommissioniPartecipanti=0;
 	private boolean isInUnaCommissione;
 	private JLabel jlabel;
+	private boolean eccesso;
 
 	public Docente(String nome,String ruolo,List<Integer> disponibilita2,String note){
 		this.nome=nome;
@@ -25,6 +26,7 @@ public class Docente {
 		this.laureandi=new ArrayList<>();
 		this.isInUnaCommissione=false;
 		this.jlabel=new JLabel(this.toString());
+		this.setEccesso(false);
 	}
 
 	public boolean isInUnaCommissione() {
@@ -215,6 +217,14 @@ public class Docente {
 
 	public void setColoreDefaultLabel() {
 		this.jlabel.setForeground(Color.BLACK);		
+	}
+
+	public boolean isEccesso() {
+		return eccesso;
+	}
+
+	public void setEccesso(boolean eccesso) {
+		this.eccesso = eccesso;
 	}
 
 }	
